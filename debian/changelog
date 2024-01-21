@@ -1,0 +1,23 @@
+lingmo-filemanager (1.9.9-18) UNRELEASED; urgency=high
+
+  * Initial release (LingmoOS)  <lingmo@lingmo.org>
+
+ -- Lingmo OS Team <lingmo@lingmo.org>  Sun, 21 Jan 2023 10:10:21 +0800
+
+lingmo-filemanager (1.9.9-10) UNRELEASED; urgency=high
+
+  * Initial release (LingmoOS)  <lingmo@lingmo.org>
+
+ -- Lingmo OS Team <lingmo@lingmo.org>  Sun, 24 Dec 2023 16:10:21 +0800
+
+lingmo-filemanager (0.9-1) UNRELEASED; urgency=high
+
+  * Initial release (LingmoOS)  <support@lingmo.org>
+
+ -- LingmoOS Packaging Team <support@lingmo.org>  Tue, 05 Jul 2022 10:50:07 +0800
+
+lingmo-filemanager (0.8-1) UNRELEASED; urgency=high
+
+  * Initial release (LingmoOS)  <support@lingmo.org>
+
+ -- LingmoOS Packaging Team <support@lingmo.org>  Wed, 15 Jun 2022 03:21:19 +0800
