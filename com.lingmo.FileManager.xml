@@ -8,5 +8,6 @@
       <arg type="as" direction="in"/>
     </method>
     <method name="emptyTrash"></method>
+    <method name="setDesktopIcons"><arg name="iconSize" type="i" direction="in"/></method>
   </interface>
 </node>

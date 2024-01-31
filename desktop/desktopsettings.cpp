@@ -24,6 +24,8 @@
 
 DesktopSettings::DesktopSettings(QObject *parent)
     : QObject(parent)
+    , m_DesktopSettings(0)
+    , m_settings(new QSettings(QSettings::UserScope, "lingmoos", "desktop"))
     , m_interface("com.lingmo.Settings",
                   "/Theme", "com.lingmo.Theme",
                   QDBusConnection::sessionBus(), this)
@@ -32,6 +34,12 @@ DesktopSettings::DesktopSettings(QObject *parent)
     watcher->setConnection(QDBusConnection::sessionBus());
     watcher->addWatchedService("com.lingmo.Settings");
     connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, &DesktopSettings::init);
+    if (!m_settings->contains("iconSize"))
+        m_settings->setValue("iconSize", 75);
+    
+    m_settings->sync();
+
+    m_DesktopSettings = m_settings->value("iconSize").toInt();
 
     init();
 }
@@ -49,6 +57,20 @@ bool DesktopSettings::backgroundVisible() const
 bool DesktopSettings::dimsWallpaper() const
 {
     return m_interface.property("darkModeDimsWallpaer").toBool();
+}
+
+int DesktopSettings::iconSize() const
+{
+    return m_DesktopSettings;
+}
+
+void DesktopSettings::setDesktopIcons(int desktopIconSize)
+{
+    if (m_iconSize != desktopIconSize) {
+        m_iconSize = desktopIconSize;
+        m_settings->setValue("IconSize", desktopIconSize);
+        emit desktopiconSizeChanged();
+    }
 }
 
 int DesktopSettings::backgroundType() const
@@ -89,3 +111,5 @@ void DesktopSettings::onWallpaperChanged(QString path)
         emit wallpaperChanged();
     }
 }
+
+void DesktopSettings::setBackgroundVisible(bool visible)
