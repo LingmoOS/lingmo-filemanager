@@ -1,3 +1,9 @@
+lingmo-filemanager (2.0.0-3) UNRELEASED; urgency=high
+
+  * Initial release (LingmoOS)  <lingmo@lingmo.org>
+
+ -- Lingmo OS Team <lingmo@lingmo.org>  Sat, 10 Feb 2024 17:54:36 +0800
+
 lingmo-filemanager (2.0.0-2) UNRELEASED; urgency=high
 
   * Initial release (LingmoOS)  <lingmo@lingmo.org>

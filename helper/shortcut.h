@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright 2024 Lingmo OS Team <lingmo@lingmo.org>                      *
+ *   Copyright 2021 Reion Wong <reion@lingmoos.com>                      *
  *   Copyright Ken <https://stackoverflow.com/users/1568857/ken>           *
  *   Copyright 2016 Leslie Zhai <xiangzhai83@gmail.com>                    *
  *                                                                         *

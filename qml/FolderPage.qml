@@ -106,6 +106,11 @@ Item {
                 text: qsTr("About")
                 onTriggered: _aboutDialog.show()
             }
+
+            MenuItem {
+                text: qsTr("About Lingmo OS")
+                onTriggered: _aboutLingmoDialog.show()
+            }
         }
     }
 
@@ -114,6 +119,13 @@ Item {
         name: qsTr("File Manager")
         description: qsTr("A file manager designed for LingmoOS.")
         iconSource: "image://icontheme/file-system-manager"
+    }
+
+    LingmoUI.AboutDialog {
+        id: _aboutLingmoDialog
+        name: qsTr("Lingmo OS")
+        description: qsTr("Lingmo OS Polaris Beta.4")
+        iconSource: "qrc:/images/lingmo-logo.png"
     }
 
     Rectangle {
@@ -447,6 +459,35 @@ Item {
     function openUrl(url) {
         dirModel.url = url
         _viewLoader.item.forceActiveFocus()
+    }
+
+    // function keyboardSearch(text) {
+    //     dirModel.keyboardSearch(text)
+    //     _viewLoader.item.forceActiveFocus()
+    // }
+
+    function recursiveSearch(text, dirModel, index=0) {
+        if(index >= dirModel.length) {
+            return; 
+        }
+
+        if(dirModel[index].name.includes(text)) {
+            // item found
+            return dirModel[index];
+        }
+
+        return recursiveSearch(text, dirModel, index+1);
+    }
+
+    function keyboardSearch(text) {
+    const foundItem = recursiveSearch(text, dirModel);
+
+    if(foundItem) {
+        // item was found, focus it
+        _viewLoader.item.forceActiveFocus(); 
+    } else {
+        // item not found
+    }
     }
 
     function goBack() {
