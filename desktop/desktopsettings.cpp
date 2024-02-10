@@ -64,7 +64,7 @@ int DesktopSettings::iconSize() const
     return m_DesktopSettings;
 }
 
-void DesktopSettings::setDesktopIcons(int desktopIconSize)
+/** void DesktopSettings::setDesktopIcons(int desktopIconSize)
 {
     if (m_iconSize != desktopIconSize) {
         m_iconSize = desktopIconSize;
@@ -72,6 +72,7 @@ void DesktopSettings::setDesktopIcons(int desktopIconSize)
         emit desktopiconSizeChanged();
     }
 }
+*/
 
 int DesktopSettings::backgroundType() const
 {
