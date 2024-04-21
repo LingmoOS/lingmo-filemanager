@@ -97,7 +97,7 @@ foreach(filepath ${TS_FILES})
 endforeach()
 qt5_create_translation(QM_FILES ${CMAKE_CURRENT_SOURCE_DIR} ${ts_files_replaced})
 
-add_custom_target(translations ADD DEPENDS ${QM_FILES} SOURCES ${ts_files_replaced})
+add_custom_target(translations ALL DEPENDS ${QM_FILES} SOURCES ${ts_files_replaced})
 
 install(TARGETS lingmo-filemanager RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(FILES lingmo-filemanager.desktop DESTINATION "/usr/share/applications")
