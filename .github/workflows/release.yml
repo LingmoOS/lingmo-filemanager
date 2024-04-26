@@ -16,7 +16,7 @@ jobs:
       - name: Build Tarball
         run: |
           mkdir -p lingmo-filemanager
-          cp -R $(ls | grep -v lingmo-filemanager) lingmo-filemanager/
+          cp -R $(ls | grep -xv lingmo-filemanager) lingmo-filemanager/
           tar -cJf lingmo-filemanager.tar.xz lingmo-filemanager
 
       - name: Create Release
