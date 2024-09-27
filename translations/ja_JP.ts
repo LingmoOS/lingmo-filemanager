@@ -159,7 +159,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1455"/>
         <source>Open with</source>
-        <translation type="unfinished"></translation>
+        <translation>で開く</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1458"/>
@@ -174,7 +174,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1464"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>ペースト</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1467"/>
@@ -293,7 +293,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="94"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>ペースト</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="100"/>
@@ -303,7 +303,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="103"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>について</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="244"/>
@@ -351,7 +351,7 @@
     <message>
         <location filename="../dialogs/openwithdialog.cpp" line="32"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>で開く</translation>
     </message>
 </context>
 <context>
@@ -374,7 +374,7 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="165"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>日付</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="189"/>
@@ -392,7 +392,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="39"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>家</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="47"/>
@@ -433,7 +433,7 @@
         <location filename="../model/placesmodel.cpp" line="117"/>
         <location filename="../model/placesmodel.cpp" line="265"/>
         <source>Drives</source>
-        <translation type="unfinished"></translation>
+        <translation>ドライブ</translation>
     </message>
 </context>
 <context>
