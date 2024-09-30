@@ -139,7 +139,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="400"/>
         <source>The file or folder %1 does not exist.</source>
-        <translation>文件或文件夹 %1 不存在</translation>
+        <translation>文件或文件夹 %1 不存在。</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1256"/>
@@ -326,7 +326,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation>专为 LingmoOS 打造的文件管理器</translation>
+        <translation>专为 LingmoOS 打造的文件管理器。</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
