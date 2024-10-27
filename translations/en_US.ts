@@ -186,13 +186,13 @@
         <location filename="../model/foldermodel.cpp" line="920"/>
         <location filename="../model/foldermodel.cpp" line="1710"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>New Text</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1259"/>
         <location filename="../model/foldermodel.cpp" line="1709"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>New Document</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1714"/>
@@ -247,7 +247,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1746"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Open in new window</translation>
     </message>
 </context>
 <context>
@@ -321,12 +321,12 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished">File Manager</translation>
+        <translation>File Manager</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>A file manager designed for LingmoOS.</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
@@ -461,7 +461,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Computer</translation>
     </message>
 </context>
 <context>
@@ -517,22 +517,22 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">Open</translation>
+        <translation>Open</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Open in new window</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Eject</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Unmount</translation>
     </message>
 </context>
 <context>
