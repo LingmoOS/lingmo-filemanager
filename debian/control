@@ -1,7 +1,7 @@
 Source: lingmo-filemanager
 Section: devel
 Priority: optional
-Maintainer: LingmoOS <support@lingmoos.com>
+Maintainer: Lingmo OS Team <team@lingmo.org>
 Build-Depends: cmake,
                debhelper (>= 9),
                extra-cmake-modules,
@@ -16,7 +16,7 @@ Build-Depends: cmake,
                qttools5-dev,
                qttools5-dev-tools
 Standards-Version: 4.5.0
-Homepage: https://lingmoos.com
+Homepage: https://lingmo.org
 
 Package: lingmo-filemanager
 Architecture: any

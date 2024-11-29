@@ -21,6 +21,7 @@
 
 #include <QDBusServiceWatcher>
 #include <QProcess>
+#include <QSettings>
 
 DesktopSettings::DesktopSettings(QObject *parent)
     : QObject(parent)
@@ -32,6 +33,8 @@ DesktopSettings::DesktopSettings(QObject *parent)
     watcher->setConnection(QDBusConnection::sessionBus());
     watcher->addWatchedService("com.lingmo.Settings");
     connect(watcher, &QDBusServiceWatcher::serviceRegistered, this, &DesktopSettings::init);
+    QSettings settings("/etc/os-release",QSettings::IniFormat);
+    m_currentVersion = settings.value("PRETTY_NAME").toString();
 
     init();
 }
@@ -88,4 +91,9 @@ void DesktopSettings::onWallpaperChanged(QString path)
         m_wallpaper = path;
         emit wallpaperChanged();
     }
+}
+
+QString DesktopSettings::version()
+{
+    return m_currentVersion;
 }

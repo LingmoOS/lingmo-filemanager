@@ -14,12 +14,12 @@
         <translation>תיקייה חדשה</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="79"/>
+        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="81"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="85"/>
+        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
         <source>OK</source>
         <translation type="unfinished">אישור</translation>
     </message>
@@ -65,17 +65,17 @@
 <context>
     <name>DeleteDialog</name>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="47"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
         <source>Do you want to delete it permanently?</source>
         <translation type="unfinished">האם ברצונך למחוק אותו לצמיתות?</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="62"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
@@ -83,7 +83,7 @@
 <context>
     <name>DesktopView</name>
     <message>
-        <location filename="../desktop/desktopview.cpp" line="44"/>
+        <location filename="../desktop/desktopview.cpp" line="48"/>
         <source>Desktop</source>
         <translation>שולחן העבודה</translation>
     </message>
@@ -96,17 +96,17 @@
         <translation>מנהל הקבצים</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="60"/>
+        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="77"/>
         <source>Do you want to permanently delete all files from the Trash?</source>
         <translation>האם אתה בטוח כי ברצונך למחוק לצמיתות את כל הקבצים בפח האשפה?</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="69"/>
+        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="86"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="75"/>
+        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="92"/>
         <source>Empty Trash</source>
         <translation>רוקן את פח האשפה</translation>
     </message>
@@ -114,12 +114,12 @@
 <context>
     <name>FilePropertiesDialog</name>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="179"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="193"/>
         <source>Properties</source>
         <translation>מאפיינים</translation>
     </message>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="227"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="246"/>
         <source>%1 files</source>
         <translation>%1 קבצים</translation>
     </message>
@@ -127,191 +127,223 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="184"/>
+        <location filename="../model/foldermodel.cpp" line="276"/>
         <source>%1 item</source>
         <translation type="unfinished">פריט אחד</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="184"/>
+        <location filename="../model/foldermodel.cpp" line="276"/>
         <source>%1 items</source>
         <translation>%1 פריטים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="249"/>
+        <location filename="../model/foldermodel.cpp" line="381"/>
         <source>The file or folder %1 does not exist.</source>
         <translation type="unfinished">הקובץ או התיקייה %1 לא קיימת.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="981"/>
+        <location filename="../model/foldermodel.cpp" line="1272"/>
         <source>Select All</source>
         <translation>בחר הכל</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1088"/>
         <source>File Manager</source>
-        <translation>מנהל הקבצים</translation>
+        <translation type="vanished">מנהל הקבצים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1281"/>
+        <location filename="../model/foldermodel.cpp" line="1764"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1284"/>
+        <location filename="../model/foldermodel.cpp" line="1767"/>
         <source>Open with</source>
         <translation>פתח באמצעות</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1287"/>
+        <location filename="../model/foldermodel.cpp" line="1770"/>
         <source>Cut</source>
         <translation>גזור</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1290"/>
+        <location filename="../model/foldermodel.cpp" line="1773"/>
         <source>Copy</source>
         <translation>העתק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1293"/>
+        <location filename="../model/foldermodel.cpp" line="1776"/>
         <source>Paste</source>
         <translation>הדבק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1296"/>
+        <location filename="../model/foldermodel.cpp" line="880"/>
+        <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Folder</source>
         <translation>תיקייה חדשה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1299"/>
+        <location filename="../model/foldermodel.cpp" line="902"/>
+        <location filename="../model/foldermodel.cpp" line="1783"/>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1278"/>
+        <location filename="../model/foldermodel.cpp" line="1782"/>
+        <source>New Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1787"/>
         <source>Move To Trash</source>
         <translation>העבר לאשפה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1302"/>
+        <location filename="../model/foldermodel.cpp" line="1790"/>
         <source>Empty Trash</source>
         <translation>רוקן את פח האשפה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1305"/>
+        <location filename="../model/foldermodel.cpp" line="1793"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1308"/>
+        <location filename="../model/foldermodel.cpp" line="1796"/>
         <source>Rename</source>
         <translation>שנה שם</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1311"/>
+        <location filename="../model/foldermodel.cpp" line="1799"/>
         <source>Open in Terminal</source>
         <translation>פתח בשורת הפקודות</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1314"/>
+        <location filename="../model/foldermodel.cpp" line="1802"/>
         <source>Set as Wallpaper</source>
         <translation>קבע כרקע שולחן העבודה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1317"/>
+        <location filename="../model/foldermodel.cpp" line="1805"/>
         <source>Properties</source>
         <translation>מאפיינים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1320"/>
+        <location filename="../model/foldermodel.cpp" line="1808"/>
         <source>Change background</source>
         <translation>שנה רקע</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1323"/>
+        <location filename="../model/foldermodel.cpp" line="1811"/>
         <source>Restore</source>
         <translation>שחזר</translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1814"/>
+        <source>Show hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1819"/>
+        <source>Open in new window</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FolderPage</name>
     <message>
-        <location filename="../qml/FolderPage.qml" line="134"/>
+        <location filename="../qml/FolderPage.qml" line="147"/>
         <source>Empty folder</source>
         <translation>מחק את הקבצים בתיקייה</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="174"/>
+        <location filename="../qml/FolderPage.qml" line="200"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="60"/>
-        <location filename="../qml/FolderPage.qml" line="179"/>
+        <location filename="../qml/FolderPage.qml" line="64"/>
+        <location filename="../qml/FolderPage.qml" line="205"/>
         <source>Properties</source>
         <translation>מאפיינים</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="50"/>
+        <location filename="../qml/FolderPage.qml" line="54"/>
         <source>File</source>
         <translation>קובץ</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="53"/>
+        <location filename="../qml/FolderPage.qml" line="57"/>
         <source>New Folder</source>
         <translation>קובץ חדש</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="67"/>
+        <location filename="../qml/FolderPage.qml" line="71"/>
         <source>Quit</source>
         <translation>יציאה</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="73"/>
+        <location filename="../qml/FolderPage.qml" line="77"/>
         <source>Edit</source>
         <translation>ערוך</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="76"/>
+        <location filename="../qml/FolderPage.qml" line="80"/>
         <source>Select All</source>
         <translation>בחר הכל</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="83"/>
+        <location filename="../qml/FolderPage.qml" line="87"/>
         <source>Cut</source>
         <translation>גזור</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="88"/>
+        <location filename="../qml/FolderPage.qml" line="92"/>
         <source>Copy</source>
         <translation>העתק</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="93"/>
+        <location filename="../qml/FolderPage.qml" line="97"/>
         <source>Paste</source>
         <translation>הדבק</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="99"/>
+        <location filename="../qml/FolderPage.qml" line="103"/>
         <source>Help</source>
         <translation>עזרה</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="102"/>
+        <location filename="../qml/FolderPage.qml" line="106"/>
         <source>About</source>
         <translation>אודות</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="241"/>
+        <location filename="../qml/FolderPage.qml" line="114"/>
+        <source>File Manager</source>
+        <translation type="unfinished">מנהל הקבצים</translation>
+    </message>
+    <message>
+        <location filename="../qml/FolderPage.qml" line="115"/>
+        <source>A file manager designed for LingmoOS.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
         <translation>פריט אחד</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="242"/>
+        <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
         <translation>%1 פריטים</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="248"/>
+        <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
         <translation type="unfinished">%1 נבחרו</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="259"/>
+        <location filename="../qml/FolderPage.qml" line="300"/>
         <source>Empty Trash</source>
         <translation>רוקן את פח האשפה</translation>
     </message>
@@ -319,22 +351,22 @@
 <context>
     <name>OpenWithDialog</name>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="78"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="89"/>
         <source>No applications</source>
         <translation>אין אפליקציות</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="142"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="156"/>
         <source>Set as default</source>
         <translation>קבע כברירת מחדל</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="151"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="160"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
@@ -421,57 +453,94 @@
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="117"/>
-        <location filename="../model/placesmodel.cpp" line="265"/>
+        <location filename="../model/placesmodel.cpp" line="288"/>
         <source>Drives</source>
         <translation type="unfinished">כוננים</translation>
+    </message>
+    <message>
+        <location filename="../model/placesmodel.cpp" line="169"/>
+        <source>Computer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PropertiesDialog</name>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="94"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="100"/>
         <source>Type:</source>
         <translation>סוג:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="107"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="113"/>
         <source>Location:</source>
         <translation>מיקום:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="118"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="124"/>
         <source>Size:</source>
         <translation>גודל:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="125"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="131"/>
         <source>Calculating...</source>
         <translation>מחשב...</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="129"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="135"/>
         <source>Created:</source>
         <translation>תאריך יצירה:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="142"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="148"/>
         <source>Modified:</source>
         <translation>תאריך שינוי:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="155"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="161"/>
         <source>Accessed:</source>
         <translation type="unfinished">פעם אחרונה נפתח:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="177"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
         <source>Cancel</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="189"/>
         <source>OK</source>
         <translation>אישור</translation>
+    </message>
+</context>
+<context>
+    <name>SideBar</name>
+    <message>
+        <location filename="../qml/SideBar.qml" line="126"/>
+        <source>Open</source>
+        <translation type="unfinished">פתח</translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="137"/>
+        <source>Open in new window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="151"/>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="164"/>
+        <source>Unmount</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Wallpaper</name>
+    <message>
+        <location filename="../qml/Desktop/Wallpaper.qml" line="68"/>
+        <source>%1
+Lingmo OS Developer preview version</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
