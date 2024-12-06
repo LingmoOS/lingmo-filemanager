@@ -127,7 +127,7 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="+276"/>
+        <location filename="../model/foldermodel.cpp" line="+278"/>
         <source>%1 item</source>
         <translation>%1 वस्तु</translation>
     </message>
@@ -142,7 +142,7 @@
         <translation>फ़ाइल या फ़ोल्डर %1 मौजूद नहीं है।</translation>
     </message>
     <message>
-        <location line="+891"/>
+        <location line="+885"/>
         <source>Select All</source>
         <translation>सब चुने</translation>
     </message>
@@ -176,14 +176,14 @@
         <translation>(पेस्ट) यहाँ रखे</translation>
     </message>
     <message>
-        <location line="-896"/>
-        <location line="+899"/>
+        <location line="-890"/>
+        <location line="+893"/>
         <source>New Folder</source>
         <translation>नया फोल्डर</translation>
     </message>
     <message>
-        <location line="-877"/>
-        <location line="+881"/>
+        <location line="-872"/>
+        <location line="+876"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>

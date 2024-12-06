@@ -72,9 +72,11 @@
 #include <KIO/Paste>
 #include <KIO/PasteJob>
 #include <KIO/RestoreJob>
+#include <KIO/MkdirJob>
 #include <KUrlMimeData>
 #include <KFileItemListProperties>
 #include <KDesktopFile>
+#include <KIO/DeleteOrTrashJob>
 
 static bool isDropBetweenSharedViews(const QList<QUrl> &urls, const QUrl &folderUrl)
 {
@@ -118,9 +120,9 @@ FolderModel::FolderModel(QObject *parent)
 
     m_dirLister = new DirLister(this);
     m_dirLister->setDelayedMimeTypes(true);
-    m_dirLister->setAutoErrorHandlingEnabled(false, nullptr);
+    m_dirLister->setAutoErrorHandlingEnabled(false);
     m_dirLister->setAutoUpdate(true);
-    m_dirLister->setShowingDotFiles(m_showHiddenFiles);
+    m_dirLister->setShowHiddenFiles(m_showHiddenFiles);
     // connect(dirLister, &DirLister::error, this, &FolderModel::notification);
 
     connect(m_dirLister, &KCoreDirLister::started, this, std::bind(&FolderModel::setStatus, this, Status::Listing));
@@ -736,7 +738,7 @@ void FolderModel::refresh()
 
 void FolderModel::undo()
 {
-    if (KIO::FileUndoManager::self()->undoAvailable()) {
+    if (KIO::FileUndoManager::self()->isUndoAvailable()) {
         KIO::FileUndoManager::self()->undo();
     }
 }
@@ -891,7 +893,6 @@ void FolderModel::newFolder()
     }
 
     m_newDocumentUrl = QUrl(rootItem().url().toString() + "/" + newName);
-
     auto job = KIO::mkdir(QUrl(rootItem().url().toString() + "/" + newName));
     job->start();
 }
@@ -1106,15 +1107,10 @@ void FolderModel::moveSelectedToTrash()
             return;
         }
     }
-
-    const QList<QUrl> urls = selectedUrls();
-    KIO::JobUiDelegate uiDelegate;
-
-    if (uiDelegate.askDeleteConfirmation(urls, KIO::JobUiDelegate::Trash, KIO::JobUiDelegate::DefaultConfirmation)) {
-        KIO::Job *job = KIO::trash(urls);
-        job->uiDelegate()->setAutoErrorHandlingEnabled(true);
-        KIO::FileUndoManager::self()->recordJob(KIO::FileUndoManager::Trash, urls, QUrl(QStringLiteral("trash:/")), job);
-    }
+  
+    using Iface = KIO::AskUserActionInterface;
+    auto *job = new KIO::DeleteOrTrashJob(selectedUrls(), Iface::Trash, Iface::DefaultConfirmation, this);
+    job->start();
 }
 
 void FolderModel::emptyTrash()
@@ -1714,7 +1710,7 @@ void FolderModel::setShowHiddenFiles(bool showHiddenFiles)
     if (m_showHiddenFiles != showHiddenFiles) {
         m_showHiddenFiles = showHiddenFiles;
 
-        m_dirLister->setShowingDotFiles(m_showHiddenFiles);
+        m_dirLister->setShowHiddenFiles(showHiddenFiles);
         m_dirLister->emitChanges();
 
         QSettings settings("lingmoos", qApp->applicationName());

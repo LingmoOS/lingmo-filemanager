@@ -127,22 +127,22 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="276"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
         <translation>%1 elemento</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="276"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
         <translation>%1 elementos</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="381"/>
+        <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
         <translation>El archivo o carpeta %1 no existe.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1272"/>
+        <location filename="../model/foldermodel.cpp" line="1268"/>
         <source>Select All</source>
         <translation>Seleccionar Todo</translation>
     </message>
@@ -151,100 +151,100 @@
         <translation type="vanished">Administrador de archivos</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1764"/>
+        <location filename="../model/foldermodel.cpp" line="1760"/>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1767"/>
+        <location filename="../model/foldermodel.cpp" line="1763"/>
         <source>Open with</source>
         <translation>Abrir con</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1770"/>
+        <location filename="../model/foldermodel.cpp" line="1766"/>
         <source>Cut</source>
         <translation>Cortar</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1773"/>
+        <location filename="../model/foldermodel.cpp" line="1769"/>
         <source>Copy</source>
         <translation>Copiar</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1776"/>
+        <location filename="../model/foldermodel.cpp" line="1772"/>
         <source>Paste</source>
         <translation>Pegar</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="880"/>
-        <location filename="../model/foldermodel.cpp" line="1779"/>
+        <location filename="../model/foldermodel.cpp" line="882"/>
+        <location filename="../model/foldermodel.cpp" line="1775"/>
         <source>New Folder</source>
         <translation>Nueva Carpeta</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="902"/>
-        <location filename="../model/foldermodel.cpp" line="1783"/>
+        <location filename="../model/foldermodel.cpp" line="903"/>
+        <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1278"/>
-        <location filename="../model/foldermodel.cpp" line="1782"/>
+        <location filename="../model/foldermodel.cpp" line="1274"/>
+        <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1787"/>
+        <location filename="../model/foldermodel.cpp" line="1783"/>
         <source>Move To Trash</source>
         <translation>Mover a la Papelera</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1790"/>
+        <location filename="../model/foldermodel.cpp" line="1786"/>
         <source>Empty Trash</source>
         <translation>Papelera vacía</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1793"/>
+        <location filename="../model/foldermodel.cpp" line="1789"/>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1796"/>
+        <location filename="../model/foldermodel.cpp" line="1792"/>
         <source>Rename</source>
         <translation>Renombrar</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1799"/>
+        <location filename="../model/foldermodel.cpp" line="1795"/>
         <source>Open in Terminal</source>
         <translation>Abrir en la Terminal</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1802"/>
+        <location filename="../model/foldermodel.cpp" line="1798"/>
         <source>Set as Wallpaper</source>
         <translation>Establecer como fondo de pantalla</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1805"/>
+        <location filename="../model/foldermodel.cpp" line="1801"/>
         <source>Properties</source>
         <translation>Propiedades</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1808"/>
+        <location filename="../model/foldermodel.cpp" line="1804"/>
         <source>Change background</source>
         <translation>Cambiar fondo</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1811"/>
+        <location filename="../model/foldermodel.cpp" line="1807"/>
         <source>Restore</source>
         <translation>Restaurar</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1814"/>
+        <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1819"/>
+        <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
         <translation type="unfinished"></translation>
     </message>

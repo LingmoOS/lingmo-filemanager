@@ -127,22 +127,22 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="276"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
         <translation type="unfinished">פריט אחד</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="276"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
         <translation>%1 פריטים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="381"/>
+        <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
         <translation type="unfinished">הקובץ או התיקייה %1 לא קיימת.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1272"/>
+        <location filename="../model/foldermodel.cpp" line="1268"/>
         <source>Select All</source>
         <translation>בחר הכל</translation>
     </message>
@@ -151,100 +151,100 @@
         <translation type="vanished">מנהל הקבצים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1764"/>
+        <location filename="../model/foldermodel.cpp" line="1760"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1767"/>
+        <location filename="../model/foldermodel.cpp" line="1763"/>
         <source>Open with</source>
         <translation>פתח באמצעות</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1770"/>
+        <location filename="../model/foldermodel.cpp" line="1766"/>
         <source>Cut</source>
         <translation>גזור</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1773"/>
+        <location filename="../model/foldermodel.cpp" line="1769"/>
         <source>Copy</source>
         <translation>העתק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1776"/>
+        <location filename="../model/foldermodel.cpp" line="1772"/>
         <source>Paste</source>
         <translation>הדבק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="880"/>
-        <location filename="../model/foldermodel.cpp" line="1779"/>
+        <location filename="../model/foldermodel.cpp" line="882"/>
+        <location filename="../model/foldermodel.cpp" line="1775"/>
         <source>New Folder</source>
         <translation>תיקייה חדשה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="902"/>
-        <location filename="../model/foldermodel.cpp" line="1783"/>
+        <location filename="../model/foldermodel.cpp" line="903"/>
+        <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1278"/>
-        <location filename="../model/foldermodel.cpp" line="1782"/>
+        <location filename="../model/foldermodel.cpp" line="1274"/>
+        <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1787"/>
+        <location filename="../model/foldermodel.cpp" line="1783"/>
         <source>Move To Trash</source>
         <translation>העבר לאשפה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1790"/>
+        <location filename="../model/foldermodel.cpp" line="1786"/>
         <source>Empty Trash</source>
         <translation>רוקן את פח האשפה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1793"/>
+        <location filename="../model/foldermodel.cpp" line="1789"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1796"/>
+        <location filename="../model/foldermodel.cpp" line="1792"/>
         <source>Rename</source>
         <translation>שנה שם</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1799"/>
+        <location filename="../model/foldermodel.cpp" line="1795"/>
         <source>Open in Terminal</source>
         <translation>פתח בשורת הפקודות</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1802"/>
+        <location filename="../model/foldermodel.cpp" line="1798"/>
         <source>Set as Wallpaper</source>
         <translation>קבע כרקע שולחן העבודה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1805"/>
+        <location filename="../model/foldermodel.cpp" line="1801"/>
         <source>Properties</source>
         <translation>מאפיינים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1808"/>
+        <location filename="../model/foldermodel.cpp" line="1804"/>
         <source>Change background</source>
         <translation>שנה רקע</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1811"/>
+        <location filename="../model/foldermodel.cpp" line="1807"/>
         <source>Restore</source>
         <translation>שחזר</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1814"/>
+        <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1819"/>
+        <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
         <translation type="unfinished"></translation>
     </message>
