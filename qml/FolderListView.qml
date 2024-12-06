@@ -19,7 +19,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import LingmoUI 1.0 as LingmoUI
+import LingmoUI.CompatibleModule 3.0 as LingmoUI
 import Lingmo.FileManager 1.0
 import Lingmo.DragDrop 1.0 as DragDrop
 

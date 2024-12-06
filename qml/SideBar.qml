@@ -23,7 +23,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Window 2.12
 import QtGraphicalEffects 1.0
 
-import LingmoUI 1.0 as LingmoUI
+import LingmoUI.CompatibleModule 3.0 as LingmoUI
 import Lingmo.FileManager 1.0
 
 ListView {
