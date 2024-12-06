@@ -35,7 +35,8 @@ Q_SIGNALS:
     void error(const QString &string);
 
 protected:
-    void handleError(KIO::Job *job) override;
+    // TODO: Remove this as it is nolonger used in KF6
+    void handleError(KIO::Job *job);
 };
 
 #endif // DIRLISTER_H

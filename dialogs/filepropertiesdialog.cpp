@@ -27,6 +27,7 @@
 #include <QDir>
 
 #include <KIO/CopyJob>
+#include <qnamespace.h>
 
 inline QString concatPaths(const QString &path1, const QString &path2)
 {
@@ -223,13 +224,9 @@ void FilePropertiesDialog::init()
         m_size = KIO::convertSize(m_items.first().size());
         m_location = info.dir().path();
 
-        m_creationTime = info.birthTime().toString(Qt::SystemLocaleLongDate);
-        m_modifiedTime = info.lastModified().toString(Qt::SystemLocaleLongDate);
-        m_accessedTime = info.lastRead().toString(Qt::SystemLocaleLongDate);
-
-//        m_creationTime = item.time(KFileItem::CreationTime).toString();
-//        m_modifiedTime = item.time(KFileItem::ModificationTime).toString();
-//        m_accessedTime = item.time(KFileItem::AccessTime).toString();
+        m_creationTime = QLocale::system().toString(info.birthTime(), QLocale::LongFormat);
+        m_modifiedTime = QLocale::system().toString(info.lastModified(), QLocale::LongFormat);
+        m_accessedTime = QLocale::system().toString(info.lastRead(), QLocale::LongFormat);
 
         m_isWritable = m_items.first().isWritable();
 

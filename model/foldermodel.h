@@ -40,6 +40,8 @@
 #include <KDirWatch>
 #include <KActionCollection>
 
+#include <QRegExp>
+
 class QDrag;
 class CFileSizeJob;
 class FolderModel : public QSortFilterProxyModel, public QQmlParserStatus

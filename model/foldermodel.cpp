@@ -46,7 +46,6 @@
 #include <QDBusInterface>
 #include <QStandardPaths>
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QMimeDatabase>
 #include <QMimeData>
 #include <QClipboard>
@@ -103,12 +102,13 @@ FolderModel::FolderModel(QObject *parent)
     , m_actionCollection(this)
     , m_dragInProgress(false)
     , m_dropTargetPositionsCleanup(new QTimer(this))
-    , m_viewAdapter(nullptr)
-    , m_mimeAppManager(MimeAppManager::self())
-    , m_sizeJob(nullptr)
+    , m_sizeJob{new CFileSizeJob(this)}
     , m_currentIndex(-1)
     , m_updateNeedSelectTimer(new QTimer(this))
 {
+    m_viewAdapter = new ItemViewAdapter(this);
+    m_mimeAppManager = MimeAppManager::self();
+
     QSettings settings("lingmoos", qApp->applicationName());
     m_showHiddenFiles = settings.value("showHiddenFiles", false).toBool();
 
