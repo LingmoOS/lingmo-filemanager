@@ -14,12 +14,12 @@
         <translation>Ny mappe</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="79"/>
+        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="81"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="85"/>
+        <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -27,37 +27,37 @@
 <context>
     <name>DateHelper</name>
     <message>
-        <location filename="../helper/datehelper.cpp" line="15"/>
+        <location filename="../helper/datehelper.cpp" line="16"/>
         <source>Now</source>
         <translation>Nu</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="17"/>
+        <location filename="../helper/datehelper.cpp" line="18"/>
         <source>1 minute ago</source>
         <translation>1 minut siden</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="19"/>
+        <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
         <translation>%1 minut siden</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="23"/>
+        <location filename="../helper/datehelper.cpp" line="24"/>
         <source>1 hour ago</source>
         <translation>1 time siden</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="25"/>
+        <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
         <translation>%1 timer siden</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="29"/>
+        <location filename="../helper/datehelper.cpp" line="30"/>
         <source>1 day ago</source>
         <translation>1 dag siden</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="31"/>
+        <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
         <translation>%1 dage siden</translation>
     </message>
@@ -65,17 +65,17 @@
 <context>
     <name>DeleteDialog</name>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="47"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
         <source>Do you want to delete it permanently?</source>
         <translation>Vil du slette det permanent?</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuller</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="62"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
         <source>Delete</source>
         <translation type="unfinished">Slet</translation>
     </message>
@@ -83,7 +83,7 @@
 <context>
     <name>DesktopView</name>
     <message>
-        <location filename="../desktop/desktopview.cpp" line="44"/>
+        <location filename="../desktop/desktopview.cpp" line="49"/>
         <source>Desktop</source>
         <translation>Skrivebord</translation>
     </message>
@@ -96,17 +96,17 @@
         <translation>File Manager</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="60"/>
+        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="77"/>
         <source>Do you want to permanently delete all files from the Trash?</source>
         <translation>Ønsker du at slette alle filer permanent fra papirkurven?</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="69"/>
+        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="86"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="75"/>
+        <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="92"/>
         <source>Empty Trash</source>
         <translation>Tøm papirkurven</translation>
     </message>
@@ -114,12 +114,12 @@
 <context>
     <name>FilePropertiesDialog</name>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="179"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="194"/>
         <source>Properties</source>
         <translation type="unfinished">Egenskaber</translation>
     </message>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="227"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
         <translation type="unfinished">%1 filer</translation>
     </message>
@@ -127,191 +127,223 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="184"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
         <translation>%1 element</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="184"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
         <translation>%1 elementer</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="249"/>
+        <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
         <translation>Filen eller mappen %1 findes ikke.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="981"/>
+        <location filename="../model/foldermodel.cpp" line="1268"/>
         <source>Select All</source>
         <translation>Vælg alle</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1088"/>
         <source>File Manager</source>
-        <translation type="unfinished">File Manager</translation>
+        <translation type="obsolete">File Manager</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1281"/>
+        <location filename="../model/foldermodel.cpp" line="1760"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1284"/>
+        <location filename="../model/foldermodel.cpp" line="1763"/>
         <source>Open with</source>
         <translation>Åbn med</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1287"/>
+        <location filename="../model/foldermodel.cpp" line="1766"/>
         <source>Cut</source>
         <translation>Skær</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1290"/>
+        <location filename="../model/foldermodel.cpp" line="1769"/>
         <source>Copy</source>
         <translation>Kopier</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1293"/>
+        <location filename="../model/foldermodel.cpp" line="1772"/>
         <source>Paste</source>
         <translation>Indsæt</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1296"/>
+        <location filename="../model/foldermodel.cpp" line="882"/>
+        <location filename="../model/foldermodel.cpp" line="1775"/>
         <source>New Folder</source>
         <translation>Ny mappe</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1299"/>
+        <location filename="../model/foldermodel.cpp" line="903"/>
+        <location filename="../model/foldermodel.cpp" line="1779"/>
+        <source>New Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1274"/>
+        <location filename="../model/foldermodel.cpp" line="1778"/>
+        <source>New Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1783"/>
         <source>Move To Trash</source>
         <translation>Flyt til papirkurven</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1302"/>
+        <location filename="../model/foldermodel.cpp" line="1786"/>
         <source>Empty Trash</source>
         <translation>Tøm papirkurven</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1305"/>
+        <location filename="../model/foldermodel.cpp" line="1789"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1308"/>
+        <location filename="../model/foldermodel.cpp" line="1792"/>
         <source>Rename</source>
         <translation>Omdøb</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1311"/>
+        <location filename="../model/foldermodel.cpp" line="1795"/>
         <source>Open in Terminal</source>
         <translation>Åbn i Terminal</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1314"/>
+        <location filename="../model/foldermodel.cpp" line="1798"/>
         <source>Set as Wallpaper</source>
         <translation>Indstille som tapet</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1317"/>
+        <location filename="../model/foldermodel.cpp" line="1801"/>
         <source>Properties</source>
         <translation>Egenskaber</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1320"/>
+        <location filename="../model/foldermodel.cpp" line="1804"/>
         <source>Change background</source>
         <translation>Ændre baggrund</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1323"/>
+        <location filename="../model/foldermodel.cpp" line="1807"/>
         <source>Restore</source>
         <translation>Gendan</translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1810"/>
+        <source>Show hidden files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1815"/>
+        <source>Open in new window</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FolderPage</name>
     <message>
-        <location filename="../qml/FolderPage.qml" line="134"/>
+        <location filename="../qml/FolderPage.qml" line="147"/>
         <source>Empty folder</source>
         <translation>Tomme mapper</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="174"/>
+        <location filename="../qml/FolderPage.qml" line="200"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="60"/>
-        <location filename="../qml/FolderPage.qml" line="179"/>
+        <location filename="../qml/FolderPage.qml" line="64"/>
+        <location filename="../qml/FolderPage.qml" line="205"/>
         <source>Properties</source>
         <translation>Egenskaber</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="50"/>
+        <location filename="../qml/FolderPage.qml" line="54"/>
         <source>File</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="53"/>
+        <location filename="../qml/FolderPage.qml" line="57"/>
         <source>New Folder</source>
         <translation type="unfinished">Ny mappe</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="67"/>
+        <location filename="../qml/FolderPage.qml" line="71"/>
         <source>Quit</source>
         <translation>Forlade</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="73"/>
+        <location filename="../qml/FolderPage.qml" line="77"/>
         <source>Edit</source>
         <translation>Redigere</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="76"/>
+        <location filename="../qml/FolderPage.qml" line="80"/>
         <source>Select All</source>
         <translation type="unfinished">Vælg alle</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="83"/>
+        <location filename="../qml/FolderPage.qml" line="87"/>
         <source>Cut</source>
         <translation type="unfinished">Skær</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="88"/>
+        <location filename="../qml/FolderPage.qml" line="92"/>
         <source>Copy</source>
         <translation type="unfinished">Kopier</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="93"/>
+        <location filename="../qml/FolderPage.qml" line="97"/>
         <source>Paste</source>
         <translation type="unfinished">Indsæt</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="99"/>
+        <location filename="../qml/FolderPage.qml" line="103"/>
         <source>Help</source>
         <translation>Hjælp</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="102"/>
+        <location filename="../qml/FolderPage.qml" line="106"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="241"/>
+        <location filename="../qml/FolderPage.qml" line="114"/>
+        <source>File Manager</source>
+        <translation type="unfinished">File Manager</translation>
+    </message>
+    <message>
+        <location filename="../qml/FolderPage.qml" line="115"/>
+        <source>A file manager designed for LingmoOS.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
         <translation>%1 element</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="242"/>
+        <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
         <translation>%1 elementer</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="248"/>
+        <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
         <translation>%1 valgt</translation>
     </message>
     <message>
-        <location filename="../qml/FolderPage.qml" line="259"/>
+        <location filename="../qml/FolderPage.qml" line="300"/>
         <source>Empty Trash</source>
         <translation>Tøm papirkurven</translation>
     </message>
@@ -319,22 +351,22 @@
 <context>
     <name>OpenWithDialog</name>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="78"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="89"/>
         <source>No applications</source>
         <translation>Ingen ansøgninger</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="142"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="156"/>
         <source>Set as default</source>
         <translation>Indstil som standard</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="151"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
         <translation type="unfinished">Annuller</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="160"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
         <source>Open</source>
         <translation type="unfinished">Åbn</translation>
     </message>
@@ -421,9 +453,14 @@
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="117"/>
-        <location filename="../model/placesmodel.cpp" line="265"/>
+        <location filename="../model/placesmodel.cpp" line="288"/>
         <source>Drives</source>
         <translation>Kører</translation>
+    </message>
+    <message>
+        <location filename="../model/placesmodel.cpp" line="169"/>
+        <source>Computer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -433,53 +470,76 @@
         <translation type="vanished">Egenskaber</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="94"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="100"/>
         <source>Type:</source>
         <translation>Type:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="107"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="113"/>
         <source>Location:</source>
         <translation>Beliggenhed:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="118"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="124"/>
         <source>Size:</source>
         <translation>Størrelse:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="125"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="131"/>
         <source>Calculating...</source>
         <translation>Beregning...</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="129"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="135"/>
         <source>Created:</source>
         <translation>Oprettet:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="142"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="148"/>
         <source>Modified:</source>
         <translation>Ændret:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="155"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="161"/>
         <source>Accessed:</source>
         <translation>Tilgået:</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="177"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
+        <location filename="../qml/Dialogs/PropertiesDialog.qml" line="189"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
         <source>%1 files</source>
         <translation type="vanished">%1 filer</translation>
+    </message>
+</context>
+<context>
+    <name>SideBar</name>
+    <message>
+        <location filename="../qml/SideBar.qml" line="126"/>
+        <source>Open</source>
+        <translation type="unfinished">Åbn</translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="137"/>
+        <source>Open in new window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="151"/>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="164"/>
+        <source>Unmount</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

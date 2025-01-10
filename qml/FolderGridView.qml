@@ -22,7 +22,7 @@ import QtQuick.Layouts 1.15
 
 import Lingmo.FileManager 1.0
 import Lingmo.DragDrop 1.0 as DragDrop
-import LingmoUI 1.0 as LingmoUI
+import LingmoUI.CompatibleModule 3.0 as LingmoUI
 
 GridView {
     id: control

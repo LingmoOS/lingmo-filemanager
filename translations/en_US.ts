@@ -27,37 +27,37 @@
 <context>
     <name>DateHelper</name>
     <message>
-        <location filename="../helper/datehelper.cpp" line="15"/>
+        <location filename="../helper/datehelper.cpp" line="16"/>
         <source>Now</source>
         <translation>Now</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="17"/>
+        <location filename="../helper/datehelper.cpp" line="18"/>
         <source>1 minute ago</source>
         <translation>1 minute ago</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="19"/>
+        <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
         <translation>%1 minutes ago</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="23"/>
+        <location filename="../helper/datehelper.cpp" line="24"/>
         <source>1 hour ago</source>
         <translation>1 hour ago</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="25"/>
+        <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
         <translation>%1 hours ago</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="29"/>
+        <location filename="../helper/datehelper.cpp" line="30"/>
         <source>1 day ago</source>
         <translation>1 day ago</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="31"/>
+        <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
         <translation>%1 days ago</translation>
     </message>
@@ -65,17 +65,17 @@
 <context>
     <name>DeleteDialog</name>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="47"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
         <source>Do you want to delete it permanently?</source>
         <translation>Do you want to delete it permanently?</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/DeleteDialog.qml" line="62"/>
+        <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
@@ -83,7 +83,7 @@
 <context>
     <name>DesktopView</name>
     <message>
-        <location filename="../desktop/desktopview.cpp" line="46"/>
+        <location filename="../desktop/desktopview.cpp" line="49"/>
         <source>Desktop</source>
         <translation>Desktop</translation>
     </message>
@@ -114,12 +114,12 @@
 <context>
     <name>FilePropertiesDialog</name>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="192"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="194"/>
         <source>Properties</source>
         <translation>Properties</translation>
     </message>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="245"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
         <translation>%1 files</translation>
     </message>
@@ -127,125 +127,124 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="295"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
         <translation>%1 item</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="295"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
         <translation>%1 items</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="400"/>
+        <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
         <translation>The file or folder %1 does not exist.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1256"/>
+        <location filename="../model/foldermodel.cpp" line="1268"/>
         <source>Select All</source>
         <translation>Select All</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1373"/>
         <source>File Manager</source>
-        <translation>File Manager</translation>
+        <translation type="vanished">File Manager</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1691"/>
+        <location filename="../model/foldermodel.cpp" line="1760"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1694"/>
+        <location filename="../model/foldermodel.cpp" line="1763"/>
         <source>Open with</source>
         <translation>Open with</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1697"/>
+        <location filename="../model/foldermodel.cpp" line="1766"/>
         <source>Cut</source>
         <translation>Cut</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1700"/>
+        <location filename="../model/foldermodel.cpp" line="1769"/>
         <source>Copy</source>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1703"/>
+        <location filename="../model/foldermodel.cpp" line="1772"/>
         <source>Paste</source>
         <translation>Paste</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="898"/>
-        <location filename="../model/foldermodel.cpp" line="1706"/>
+        <location filename="../model/foldermodel.cpp" line="882"/>
+        <location filename="../model/foldermodel.cpp" line="1775"/>
         <source>New Folder</source>
         <translation>New Folder</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="920"/>
-        <location filename="../model/foldermodel.cpp" line="1710"/>
+        <location filename="../model/foldermodel.cpp" line="903"/>
+        <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
         <translation>New Text</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1259"/>
-        <location filename="../model/foldermodel.cpp" line="1709"/>
+        <location filename="../model/foldermodel.cpp" line="1274"/>
+        <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
         <translation>New Document</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1714"/>
+        <location filename="../model/foldermodel.cpp" line="1783"/>
         <source>Move To Trash</source>
         <translation>Move To Trash</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1717"/>
+        <location filename="../model/foldermodel.cpp" line="1786"/>
         <source>Empty Trash</source>
         <translation>Empty Trash</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1720"/>
+        <location filename="../model/foldermodel.cpp" line="1789"/>
         <source>Delete</source>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1723"/>
+        <location filename="../model/foldermodel.cpp" line="1792"/>
         <source>Rename</source>
         <translation>Rename</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1726"/>
+        <location filename="../model/foldermodel.cpp" line="1795"/>
         <source>Open in Terminal</source>
         <translation>Open in Terminal</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1729"/>
+        <location filename="../model/foldermodel.cpp" line="1798"/>
         <source>Set as Wallpaper</source>
         <translation>Set as Wallpaper</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1732"/>
+        <location filename="../model/foldermodel.cpp" line="1801"/>
         <source>Properties</source>
         <translation>Properties</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1735"/>
+        <location filename="../model/foldermodel.cpp" line="1804"/>
         <source>Change background</source>
         <translation>Change background</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1738"/>
+        <location filename="../model/foldermodel.cpp" line="1807"/>
         <source>Restore</source>
         <translation>Restore</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1741"/>
+        <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
         <translation>Show hidden files</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1746"/>
+        <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
         <translation>Open in new window</translation>
     </message>
@@ -352,22 +351,22 @@
 <context>
     <name>OpenWithDialog</name>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="80"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="89"/>
         <source>No applications</source>
         <translation>No applications</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="144"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="156"/>
         <source>Set as default</source>
         <translation>Set as default</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="159"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
         <translation>Cancel</translation>
     </message>
     <message>
-        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="168"/>
+        <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
         <source>Open</source>
         <translation>Open</translation>
     </message>
