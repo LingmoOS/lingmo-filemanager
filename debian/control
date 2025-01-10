@@ -5,6 +5,7 @@ Maintainer: LingmoOS <support@lingmoos.com>
 Build-Depends: cmake,
                debhelper (>= 9),
                extra-cmake-modules,
+               lingmoui3,
                libkf6kio-dev,
                libkf6solid-dev,
                libkf6windowsystem-dev,
@@ -30,6 +31,7 @@ Depends: qml6-module-qtquick-controls,
          qml6-module-qtquick-window,
          qml6-module-qtquick-shapes,
          qml6-module-qt5compat-graphicaleffects,
+         lingmoui3,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: LingmoOS File Manager
