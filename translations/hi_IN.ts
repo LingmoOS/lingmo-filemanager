@@ -514,7 +514,7 @@
 <context>
     <name>SideBar</name>
     <message>
-        <location filename="../qml/SideBar.qml" line="+126"/>
+        <location filename="../qml/SideBar.qml" line="+132"/>
         <source>Open</source>
         <translation type="unfinished">खोले</translation>
     </message>
@@ -531,15 +531,6 @@
     <message>
         <location line="+13"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Wallpaper</name>
-    <message>
-        <location filename="../qml/Desktop/Wallpaper.qml" line="+68"/>
-        <source>%1
-Lingmo OS Developer preview version</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

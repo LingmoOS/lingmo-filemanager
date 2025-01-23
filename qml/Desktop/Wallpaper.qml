@@ -63,17 +63,17 @@ Item {
         }
     }
 
-    Text {
-        id: desktopWatermark
-        text: qsTr("%1\nLingmo OS Developer preview version").arg(settings.version)
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 29
-        font.pixelSize: 24 
-        color: "#80FFFFFF" // 半透明颜色
-        opacity: 0.76 // 透明度
-        horizontalAlignment: Text.AlignRight
-        renderType: Text.NativeRendering // 使用本地渲染以提高性能
-    }
+    // Text {
+    //     id: desktopWatermark
+    //     text: qsTr("%1\nLingmo OS Developer preview version").arg(settings.version)
+    //     anchors.right: parent.right
+    //     anchors.rightMargin: 10
+    //     anchors.top: parent.top
+    //     anchors.topMargin: 29
+    //     font.pixelSize: 24 
+    //     color: "#80FFFFFF" // 半透明颜色
+    //     opacity: 0.76 // 透明度
+    //     horizontalAlignment: Text.AlignRight
+    //     renderType: Text.NativeRendering // 使用本地渲染以提高性能
+    // }
 }

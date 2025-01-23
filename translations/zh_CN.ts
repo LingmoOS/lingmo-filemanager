@@ -514,22 +514,22 @@
 <context>
     <name>SideBar</name>
     <message>
-        <location filename="../qml/SideBar.qml" line="126"/>
+        <location filename="../qml/SideBar.qml" line="132"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../qml/SideBar.qml" line="137"/>
+        <location filename="../qml/SideBar.qml" line="143"/>
         <source>Open in new window</source>
         <translation>在新窗口中打开</translation>
     </message>
     <message>
-        <location filename="../qml/SideBar.qml" line="151"/>
+        <location filename="../qml/SideBar.qml" line="157"/>
         <source>Eject</source>
         <translation>弹出</translation>
     </message>
     <message>
-        <location filename="../qml/SideBar.qml" line="164"/>
+        <location filename="../qml/SideBar.qml" line="170"/>
         <source>Unmount</source>
         <translation>卸载</translation>
     </message>
@@ -537,10 +537,9 @@
 <context>
     <name>Wallpaper</name>
     <message>
-        <location filename="../qml/Desktop/Wallpaper.qml" line="68"/>
         <source>%1
 Lingmo OS Developer preview version</source>
-        <translation>%1
+        <translation type="vanished">%1
 灵墨操作系统 开发者预览版本</translation>
     </message>
 </context>
