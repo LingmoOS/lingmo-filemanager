@@ -196,32 +196,32 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1429"/>
         <source>Compress</source>
-        <translation type="unfinished"></translation>
+        <translation>圧縮</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1400"/>
         <source>Extract</source>
-        <translation type="unfinished"></translation>
+        <translation>解凍</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1404"/>
         <source>Extract Here</source>
-        <translation type="unfinished"></translation>
+        <translation>ここに解凍</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1415"/>
         <source>Extract To...</source>
-        <translation type="unfinished"></translation>
+        <translation>解凍先を指定...</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1419"/>
         <source>Select Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>保存先を選択</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1439"/>
         <source>ZIP Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>ZIP アーカイブ</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1466"/>
@@ -347,7 +347,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="2054"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -621,22 +621,22 @@
     <message>
         <location filename="../qml/SideBar.qml" line="132"/>
         <source>Open</source>
-        <translation type="unfinished">開く</translation>
+        <translation>開く</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="143"/>
         <source>Open in new window</source>
-        <translation type="unfinished">新しいウィンドウで開く</translation>
+        <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="157"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>取り出し</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="170"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>マウント解除</translation>
     </message>
 </context>
 <context>

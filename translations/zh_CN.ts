@@ -196,63 +196,63 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1404"/>
         <source>Extract Here</source>
-        <translation type="unfinished"></translation>
+        <translation>解压到此处</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1415"/>
         <source>Extract To...</source>
-        <translation type="unfinished"></translation>
+        <translation>解压到...</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1419"/>
         <source>Select Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>选择目标位置</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1439"/>
         <source>ZIP Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>ZIP 压缩包</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1466"/>
         <source>TAR Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR 压缩包</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1452"/>
         <source>7-Zip Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>7-Zip 压缩包</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1293"/>
         <location filename="../model/foldermodel.cpp" line="2082"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1477"/>
         <source>TAR Archive (gzip)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR 压缩包 (gzip)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1478"/>
         <source>TAR Archive (bzip2)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR 压缩包 (bzip2)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1479"/>
         <source>TAR Archive (xz)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR 压缩包 (xz)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1480"/>
         <source>TAR Archive (zstd)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR 压缩包 (zstd)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1481"/>
         <source>TAR Archive (uncompressed)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR 压缩包 (未压缩)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1970"/>
@@ -321,27 +321,27 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="2016"/>
         <source>Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>图标大小</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2020"/>
         <source>Huge</source>
-        <translation type="unfinished"></translation>
+        <translation>超大</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2024"/>
         <source>Large</source>
-        <translation type="unfinished"></translation>
+        <translation>大</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2028"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>中</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2032"/>
         <source>Small</source>
-        <translation type="unfinished"></translation>
+        <translation>小</translation>
     </message>
     <message>
         <source>Auto Arrange</source>

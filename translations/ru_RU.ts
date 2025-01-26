@@ -185,84 +185,84 @@
         <location filename="../model/foldermodel.cpp" line="908"/>
         <location filename="../model/foldermodel.cpp" line="1964"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Новый текст</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1285"/>
         <location filename="../model/foldermodel.cpp" line="1961"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Новые документы</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1429"/>
         <source>Compress</source>
-        <translation type="unfinished"></translation>
+        <translation>Сжать</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1400"/>
         <source>Extract</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковать</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1404"/>
         <source>Extract Here</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковать здесь</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1415"/>
         <source>Extract To...</source>
-        <translation type="unfinished"></translation>
+        <translation>Распаковать в...</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1419"/>
         <source>Select Destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите место назначения</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1439"/>
         <source>ZIP Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>ZIP архив</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1466"/>
         <source>TAR Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR архив</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1452"/>
         <source>7-Zip Archive</source>
-        <translation type="unfinished"></translation>
+        <translation>7-Zip архив</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1293"/>
         <location filename="../model/foldermodel.cpp" line="2082"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1477"/>
         <source>TAR Archive (gzip)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR архив (gzip)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1478"/>
         <source>TAR Archive (bzip2)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR архив (bzip2)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1479"/>
         <source>TAR Archive (xz)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR архив (xz)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1480"/>
         <source>TAR Archive (zstd)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR архив (zstd)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1481"/>
         <source>TAR Archive (uncompressed)</source>
-        <translation type="unfinished"></translation>
+        <translation>TAR архив (без сжатия)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1970"/>
@@ -312,42 +312,42 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="2006"/>
         <source>Show hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать скрытые файлы</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2012"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Открыть в новом окне</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2016"/>
         <source>Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер значков</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2020"/>
         <source>Huge</source>
-        <translation type="unfinished"></translation>
+        <translation>Огромный</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2024"/>
         <source>Large</source>
-        <translation type="unfinished"></translation>
+        <translation>Большой</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2028"/>
         <source>Normal</source>
-        <translation type="unfinished"></translation>
+        <translation>Обычный</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2032"/>
         <source>Small</source>
-        <translation type="unfinished"></translation>
+        <translation>Маленький</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="2054"/>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Вид</translation>
     </message>
     <message>
         <source>Cancel</source>
