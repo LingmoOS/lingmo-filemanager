@@ -127,22 +127,22 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="276"/>
+        <location filename="../model/foldermodel.cpp" line="282"/>
         <source>%1 item</source>
         <translation type="unfinished">פריט אחד</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="276"/>
+        <location filename="../model/foldermodel.cpp" line="282"/>
         <source>%1 items</source>
         <translation>%1 פריטים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="381"/>
+        <location filename="../model/foldermodel.cpp" line="387"/>
         <source>The file or folder %1 does not exist.</source>
         <translation type="unfinished">הקובץ או התיקייה %1 לא קיימת.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1272"/>
+        <location filename="../model/foldermodel.cpp" line="1278"/>
         <source>Select All</source>
         <translation>בחר הכל</translation>
     </message>
@@ -151,102 +151,201 @@
         <translation type="vanished">מנהל הקבצים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1764"/>
+        <location filename="../model/foldermodel.cpp" line="1922"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1767"/>
+        <location filename="../model/foldermodel.cpp" line="1926"/>
         <source>Open with</source>
         <translation>פתח באמצעות</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1770"/>
+        <location filename="../model/foldermodel.cpp" line="1930"/>
         <source>Cut</source>
         <translation>גזור</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1773"/>
+        <location filename="../model/foldermodel.cpp" line="1934"/>
         <source>Copy</source>
         <translation>העתק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1776"/>
+        <location filename="../model/foldermodel.cpp" line="1938"/>
         <source>Paste</source>
         <translation>הדבק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="880"/>
-        <location filename="../model/foldermodel.cpp" line="1779"/>
+        <location filename="../model/foldermodel.cpp" line="886"/>
+        <location filename="../model/foldermodel.cpp" line="1942"/>
         <source>New Folder</source>
         <translation>תיקייה חדשה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="902"/>
-        <location filename="../model/foldermodel.cpp" line="1783"/>
+        <location filename="../model/foldermodel.cpp" line="908"/>
+        <location filename="../model/foldermodel.cpp" line="1949"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1278"/>
-        <location filename="../model/foldermodel.cpp" line="1782"/>
+        <location filename="../model/foldermodel.cpp" line="1285"/>
+        <location filename="../model/foldermodel.cpp" line="1946"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1787"/>
+        <location filename="../model/foldermodel.cpp" line="1414"/>
+        <source>Compress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1385"/>
+        <source>Extract</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1389"/>
+        <source>Extract Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1400"/>
+        <source>Extract To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1404"/>
+        <source>Select Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1424"/>
+        <source>ZIP Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1451"/>
+        <source>TAR Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1437"/>
+        <source>7-Zip Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1462"/>
+        <source>TAR Archive (gzip)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1463"/>
+        <source>TAR Archive (bzip2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1464"/>
+        <source>TAR Archive (xz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1465"/>
+        <source>TAR Archive (zstd)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1466"/>
+        <source>TAR Archive (uncompressed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1955"/>
         <source>Move To Trash</source>
         <translation>העבר לאשפה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1790"/>
+        <location filename="../model/foldermodel.cpp" line="1959"/>
         <source>Empty Trash</source>
         <translation>רוקן את פח האשפה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1793"/>
+        <location filename="../model/foldermodel.cpp" line="1963"/>
         <source>Delete</source>
         <translation>מחק</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1796"/>
+        <location filename="../model/foldermodel.cpp" line="1967"/>
         <source>Rename</source>
         <translation>שנה שם</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1799"/>
+        <location filename="../model/foldermodel.cpp" line="1971"/>
         <source>Open in Terminal</source>
         <translation>פתח בשורת הפקודות</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1802"/>
+        <location filename="../model/foldermodel.cpp" line="1975"/>
         <source>Set as Wallpaper</source>
         <translation>קבע כרקע שולחן העבודה</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1805"/>
+        <location filename="../model/foldermodel.cpp" line="1979"/>
         <source>Properties</source>
         <translation>מאפיינים</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1808"/>
+        <location filename="../model/foldermodel.cpp" line="1983"/>
         <source>Change background</source>
         <translation>שנה רקע</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1811"/>
+        <location filename="../model/foldermodel.cpp" line="1987"/>
         <source>Restore</source>
         <translation>שחזר</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1814"/>
+        <location filename="../model/foldermodel.cpp" line="1991"/>
         <source>Show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1819"/>
+        <location filename="../model/foldermodel.cpp" line="1997"/>
         <source>Open in new window</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="2001"/>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="2005"/>
+        <source>Huge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="2009"/>
+        <source>Large</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="2013"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="2017"/>
+        <source>Small</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="2039"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">ביטול</translation>
     </message>
 </context>
 <context>

@@ -49,7 +49,7 @@ ListView {
         anchors.fill: parent
         color: LingmoUI.Theme.darkMode ? Qt.lighter(LingmoUI.Theme.backgroundColor, 1.5)
                                      : Qt.darker(LingmoUI.Theme.backgroundColor, 1.05)
-        opacity: rootWindow.compositing ? 0.3 : 0.4
+        opacity: root.compositing ? 0.3 : 0.4
 
         Behavior on color {
             ColorAnimation {

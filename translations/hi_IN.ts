@@ -127,7 +127,7 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="+276"/>
+        <location filename="../model/foldermodel.cpp" line="+282"/>
         <source>%1 item</source>
         <translation>%1 वस्तु</translation>
     </message>
@@ -151,102 +151,201 @@
         <translation type="vanished">फ़ाइल प्रबंधक</translation>
     </message>
     <message>
-        <location line="+492"/>
+        <location line="+644"/>
         <source>Open</source>
         <translation>खोले</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Open with</source>
         <translation>अन्य अनुप्रयोग में खोले</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Cut</source>
         <translation>कट करना</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Copy</source>
         <translation>प्रतिलिपि बनाना</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Paste</source>
         <translation>(पेस्ट) यहाँ रखे</translation>
     </message>
     <message>
-        <location line="-896"/>
-        <location line="+899"/>
+        <location line="-1052"/>
+        <location line="+1056"/>
         <source>New Folder</source>
         <translation>नया फोल्डर</translation>
     </message>
     <message>
-        <location line="-877"/>
-        <location line="+881"/>
+        <location line="-1034"/>
+        <location line="+1041"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-505"/>
-        <location line="+504"/>
+        <location line="-664"/>
+        <location line="+661"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="-532"/>
+        <source>Compress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-29"/>
+        <source>Extract</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Extract Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Extract To...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Select Destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>ZIP Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>TAR Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-14"/>
+        <source>7-Zip Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>TAR Archive (gzip)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>TAR Archive (bzip2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>TAR Archive (xz)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>TAR Archive (zstd)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>TAR Archive (uncompressed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+489"/>
         <source>Move To Trash</source>
         <translation>ट्रैश में भेजो</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Empty Trash</source>
         <translation>ट्रैश खाली करो</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Delete</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Rename</source>
         <translation>मिटाये</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Open in Terminal</source>
         <translation>टर्मिनल में खोलें</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Set as Wallpaper</source>
         <translation>वॉलपेपर के रूप में सेट</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Properties</source>
         <translation>गुण</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Change background</source>
         <translation>बैकग्राउंड बदलें</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Restore</source>
         <translation>लौटाए</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Open in new window</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Icon Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Huge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Large</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Small</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">निरस्त करें</translation>
     </message>
 </context>
 <context>

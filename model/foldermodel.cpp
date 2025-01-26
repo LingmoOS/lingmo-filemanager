@@ -57,6 +57,7 @@
 #include <QSettings>
 #include <QDesktopServices>
 #include <QPixmapCache>
+#include <QFileDialog>
 
 // Qt Quick
 #include <QQuickItem>
@@ -76,6 +77,11 @@
 #include <KUrlMimeData>
 #include <KFileItemListProperties>
 #include <KDesktopFile>
+
+// KService
+#include <KServiceTypeTrader>
+#include <KRun>
+
 
 static bool isDropBetweenSharedViews(const QList<QUrl> &urls, const QUrl &folderUrl)
 {
@@ -1270,12 +1276,15 @@ void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifier
     // Open folder menu.
     if (indexes.isEmpty()) {
         QAction *selectAll = new QAction(tr("Select All"), this);
+        selectAll->setIcon(QIcon::fromTheme("edit-select-all")); // 添加全选图标
         connect(selectAll, &QAction::triggered, this, &FolderModel::selectAll);
 
         menu->addAction(m_actionCollection.action("newFolder"));
 
         if (!isTrash) {
             QMenu *newMenu = new QMenu(tr("New Documents"));
+            newMenu->setIcon(QIcon::fromTheme("document-new")); // 添加新建文档图标
+            newMenu->menuAction()->setIconVisibleInMenu(true);
             newMenu->addAction(m_actionCollection.action("newTextFile"));
             menu->addMenu(newMenu);
         }
@@ -1290,6 +1299,7 @@ void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifier
 
         if (m_isDesktop) {
             menu->addAction(m_actionCollection.action("changeBackground"));
+            menu->addAction(m_actionCollection.action("iconSizeMenu"));
         }
 
         menu->addSeparator();
@@ -1323,6 +1333,156 @@ void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifier
         menu->addAction(m_actionCollection.action("wallpaper"));
         menu->addSeparator();
         menu->addAction(m_actionCollection.action("properties"));
+    }
+
+    // 添加压缩/解压缩菜单
+    if (!indexes.isEmpty()) {
+        const KFileItem item = itemForIndex(indexes.first());
+        const QString mimetype = item.mimetype();
+        
+        // 支持的压缩文件 MIME 类型列表
+        QStringList supportedMimeTypes = {
+            "application/x-lrzip",
+            "application/x-cd-image",
+            "application/x-iso9660-appimage", 
+            "application/x-lzip-compressed-tar",
+            "application/x-bcpio",
+            "application/x-lzop",
+            "application/x-archive",
+            "application/x-source-rpm",
+            "application/x-sv4cpio",
+            "application/x-compress",
+            "application/x-xar",
+            "application/x-xz",
+            "application/x-tar",
+            "application/x-tarz",
+            "application/zstd",
+            "application/x-lzma",
+            "application/x-lzip",
+            "application/x-xz-compressed-tar",
+            "application/gzip",
+            "application/x-lz4",
+            "application/x-rpm",
+            "application/x-bzip-compressed-tar",
+            "application/x-bzip",
+            "application/x-deb",
+            "application/zlib",
+            "application/vnd.ms-cab-compressed",
+            "application/x-lzma-compressed-tar",
+            "application/x-cpio",
+            "application/x-java-archive",
+            "application/zip",
+            "application/x-cpio-compressed",
+            "application/x-zstd-compressed-tar",
+            "application/vnd.debian.binary-package",
+            "application/x-compressed-tar",
+            "application/x-sv4crc"
+        };
+        
+        if (supportedMimeTypes.contains(mimetype)) {
+            // 如果是支持的压缩文件，添加解压菜单
+            menu->addSeparator();
+            QMenu *extractMenu = menu->addMenu(tr("Extract"));
+            extractMenu->setIcon(QIcon::fromTheme("archive-extract"));
+
+            // 添加"解压到当前文件夹"选项
+            QAction *extractHere = new QAction(tr("Extract Here"), this);
+            extractHere->setIcon(QIcon::fromTheme("archive-extract"));
+            connect(extractHere, &QAction::triggered, this, [this]() {
+                QString archivePath = selectedUrls().first().toLocalFile();
+                QString destPath = QFileInfo(archivePath).path();
+                QProcess::startDetached("ark", QStringList() << "--batch" << "--autosubfolder" 
+                                     << "--destination" << destPath << archivePath);
+            });
+            extractMenu->addAction(extractHere);
+
+            // 添加"解压到..."选项
+            QAction *extractTo = new QAction(tr("Extract To..."), this);
+            extractTo->setIcon(QIcon::fromTheme("archive-extract"));
+            connect(extractTo, &QAction::triggered, this, [this]() {
+                QString archivePath = selectedUrls().first().toLocalFile();
+                QString destPath = QFileDialog::getExistingDirectory(nullptr, tr("Select Destination"));
+                if (!destPath.isEmpty()) {
+                    QProcess::startDetached("ark", QStringList() << "--batch" << "--autosubfolder" 
+                                         << "--destination" << destPath << archivePath);
+                }
+            });
+            extractMenu->addAction(extractTo);
+        } else {
+            // 如果不是压缩文件，添加压缩菜单
+            menu->addSeparator();
+            QMenu *compressMenu = menu->addMenu(tr("Compress"));
+            compressMenu->setIcon(QIcon::fromTheme("archive-insert"));
+
+            // 添加常用压缩格式
+            struct CompressFormat {
+                QString name;
+                QString extension;
+                QString mimeType;
+            };
+            
+            QAction *zipAction = new QAction(tr("ZIP Archive"), this);
+            zipAction->setIcon(QIcon::fromTheme("archive-insert"));
+            connect(zipAction, &QAction::triggered, this, [this]() {
+                QStringList files;
+                for (const QUrl &url : selectedUrls()) {
+                    files << url.toLocalFile();
+                }
+                QString baseName = QFileInfo(files.first()).baseName();
+                QString archivePath = QFileInfo(files.first()).path() + "/" + baseName + ".zip";
+                QProcess::startDetached("ark", QStringList() << "--batch" << "--add-to" << archivePath << files);
+            });
+            compressMenu->addAction(zipAction);
+
+            QAction *sevenZAction = new QAction(tr("7-Zip Archive"), this);
+            sevenZAction->setIcon(QIcon::fromTheme("archive-insert"));
+            connect(sevenZAction, &QAction::triggered, this, [this]() {
+                QStringList files;
+                for (const QUrl &url : selectedUrls()) {
+                    files << url.toLocalFile();
+                }
+                QString baseName = QFileInfo(files.first()).baseName();
+                QString archivePath = QFileInfo(files.first()).path() + "/" + baseName + ".7z";
+                QProcess::startDetached("ark", QStringList() << "--batch" << "--add-to" << archivePath << files);
+            });
+            compressMenu->addAction(sevenZAction);
+
+            // TAR 子菜单
+            QMenu *tarMenu = new QMenu(tr("TAR Archive"), compressMenu);
+            tarMenu->setIcon(QIcon::fromTheme("archive-insert"));
+
+            // TAR 压缩选项
+            struct TarFormat {
+                QString name;
+                QString extension;
+                QString mimeType;
+            };
+
+            QList<TarFormat> tarFormats = {
+                {tr("TAR Archive (gzip)"), "tar.gz", "application/x-compressed-tar"},
+                {tr("TAR Archive (bzip2)"), "tar.bz2", "application/x-bzip-compressed-tar"},
+                {tr("TAR Archive (xz)"), "tar.xz", "application/x-xz-compressed-tar"},
+                {tr("TAR Archive (zstd)"), "tar.zst", "application/x-zstd-compressed-tar"},
+                {tr("TAR Archive (uncompressed)"), "tar", "application/x-tar"}
+            };
+
+            for (const auto &format : tarFormats) {
+                QAction *action = new QAction(format.name, this);
+                action->setIcon(QIcon::fromTheme("archive-insert"));
+                connect(action, &QAction::triggered, this, [this, format]() {
+                    QStringList files;
+                    for (const QUrl &url : selectedUrls()) {
+                        files << url.toLocalFile();
+                    }
+                    
+                    QString baseName = QFileInfo(files.first()).baseName();
+                    QString archivePath = QFileInfo(files.first()).path() + "/" + baseName + "." + format.extension;
+                    
+                    QProcess::startDetached("ark", QStringList() << "--batch" << "--add-to" << archivePath << files);
+                });
+                compressMenu->addAction(action);
+            }
+        }
     }
 
     QPoint position;
@@ -1651,10 +1811,8 @@ bool FolderModel::isSupportThumbnails(const QString &mimeType) const
                                            /*"application/pdf", "application/rtf", "application/doc", "application/odf",
                                            "audio/mpeg", "video/mp4"*/};
 
-    if (supportsMimetypes.contains(mimeType))
-        return true;
-
-    return false;
+    // 直接检查传入的 mimeType 参数
+    return supportsMimetypes.contains(mimeType);
 }
 
 bool FolderModel::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
@@ -1762,62 +1920,128 @@ void FolderModel::invalidateFilterIfComplete()
 void FolderModel::createActions()
 {
     QAction *open = new QAction(tr("Open"), this);
+    open->setIcon(QIcon::fromTheme("document-open"));
     connect(open, &QAction::triggered, this, &FolderModel::openSelected);
 
     QAction *openWith = new QAction(tr("Open with"), this);
+    openWith->setIcon(QIcon::fromTheme("document-open-with")); 
     connect(openWith, &QAction::triggered, this, &FolderModel::showOpenWithDialog);
 
     QAction *cut = new QAction(tr("Cut"), this);
+    cut->setIcon(QIcon::fromTheme("edit-cut"));
     connect(cut, &QAction::triggered, this, &FolderModel::cut);
 
     QAction *copy = new QAction(tr("Copy"), this);
+    copy->setIcon(QIcon::fromTheme("edit-copy"));
     connect(copy, &QAction::triggered, this, &FolderModel::copy);
 
     QAction *paste = new QAction(tr("Paste"), this);
+    paste->setIcon(QIcon::fromTheme("edit-paste"));
     connect(paste, &QAction::triggered, this, &FolderModel::paste);
 
     QAction *newFolder = new QAction(tr("New Folder"), this);
+    newFolder->setIcon(QIcon::fromTheme("folder-new"));
     connect(newFolder, &QAction::triggered, this, &FolderModel::newFolder);
 
     QMenu *newDocuments = new QMenu(tr("New Documents"));
+    newDocuments->setIcon(QIcon::fromTheme("document-new"));
+    newDocuments->menuAction()->setIconVisibleInMenu(true);
     QAction *newTextFile = new QAction(tr("New Text"), this);
+    newTextFile->setIcon(QIcon::fromTheme("text-x-generic"));
+    newTextFile->setIconVisibleInMenu(true);
     connect(newTextFile, &QAction::triggered, this, &FolderModel::newTextFile);
     newDocuments->addAction(newTextFile);
 
     QAction *trash = new QAction(tr("Move To Trash"), this);
+    trash->setIcon(QIcon::fromTheme("user-trash"));
     connect(trash, &QAction::triggered, this, &FolderModel::moveSelectedToTrash);
 
     QAction *emptyTrash = new QAction(tr("Empty Trash"), this);
+    emptyTrash->setIcon(QIcon::fromTheme("trash-empty"));
     connect(emptyTrash, &QAction::triggered, this, &FolderModel::emptyTrash);
 
     QAction *del = new QAction(tr("Delete"), this);
+    del->setIcon(QIcon::fromTheme("edit-delete"));
     connect(del, &QAction::triggered, this, &FolderModel::openDeleteDialog);
 
     QAction *rename = new QAction(tr("Rename"), this);
+    rename->setIcon(QIcon::fromTheme("edit-rename"));
     connect(rename, &QAction::triggered, this, &FolderModel::requestRename);
 
     QAction *terminal = new QAction(tr("Open in Terminal"), this);
+    terminal->setIcon(QIcon::fromTheme("utilities-terminal"));
     connect(terminal, &QAction::triggered, this, &FolderModel::openInTerminal);
 
     QAction *wallpaper = new QAction(tr("Set as Wallpaper"), this);
+    wallpaper->setIcon(QIcon::fromTheme("preferences-desktop-wallpaper"));
     connect(wallpaper, &QAction::triggered, this, &FolderModel::setWallpaperSelected);
 
     QAction *properties = new QAction(tr("Properties"), this);
+    properties->setIcon(QIcon::fromTheme("document-properties"));
     QObject::connect(properties, &QAction::triggered, this, &FolderModel::openPropertiesDialog);
 
     QAction *changeBackground = new QAction(tr("Change background"), this);
+    changeBackground->setIcon(QIcon::fromTheme("preferences-desktop-wallpaper"));
     QObject::connect(changeBackground, &QAction::triggered, this, &FolderModel::openChangeWallpaperDialog);
 
     QAction *restore = new QAction(tr("Restore"), this);
+    restore->setIcon(QIcon::fromTheme("edit-undo"));
     QObject::connect(restore, &QAction::triggered, this, &FolderModel::restoreFromTrash);
 
     QAction *showHidden = new QAction(tr("Show hidden files"), this);
+    showHidden->setIcon(QIcon::fromTheme("view-hidden"));
     QObject::connect(showHidden, &QAction::triggered, this, [=] {
         setShowHiddenFiles(!m_showHiddenFiles);
     });
 
     QAction *openInNewWindow = new QAction(tr("Open in new window"), this);
+    openInNewWindow->setIcon(QIcon::fromTheme("window-new"));
     QObject::connect(openInNewWindow, &QAction::triggered, this, [=] { this->openInNewWindow(); });
+
+    QMenu *iconSizeMenu = new QMenu(tr("Icon Size"));
+    iconSizeMenu->setIcon(QIcon::fromTheme("preferences-desktop-icons"));
+    iconSizeMenu->menuAction()->setIconVisibleInMenu(true);
+    
+    QAction *hugeIcon = new QAction(tr("Huge"), this);
+    hugeIcon->setIcon(QIcon::fromTheme("zoom-in"));
+    hugeIcon->setIconVisibleInMenu(true);
+    
+    QAction *largeIcon = new QAction(tr("Large"), this);
+    largeIcon->setIcon(QIcon::fromTheme("zoom-in"));
+    largeIcon->setIconVisibleInMenu(true);
+    
+    QAction *normalIcon = new QAction(tr("Normal"), this);
+    normalIcon->setIcon(QIcon::fromTheme("zoom-original"));
+    normalIcon->setIconVisibleInMenu(true);
+    
+    QAction *smallIcon = new QAction(tr("Small"), this);
+    smallIcon->setIcon(QIcon::fromTheme("zoom-out"));
+    smallIcon->setIconVisibleInMenu(true);
+
+    connect(hugeIcon, &QAction::triggered, this, [=] {
+        emit changeIconSize(96); // hugeIconSize
+    });
+    connect(largeIcon, &QAction::triggered, this, [=] {
+        emit changeIconSize(72); // largeIconSize  
+    });
+    connect(normalIcon, &QAction::triggered, this, [=] {
+        emit changeIconSize(64); // normalIconSize
+    });
+    connect(smallIcon, &QAction::triggered, this, [=] {
+        emit changeIconSize(48); // smallIconSize
+    });
+
+    iconSizeMenu->addAction(hugeIcon);
+    iconSizeMenu->addAction(largeIcon); 
+    iconSizeMenu->addAction(normalIcon);
+    iconSizeMenu->addAction(smallIcon);
+
+    QMenu *viewMenu = new QMenu(tr("View"));
+    viewMenu->addMenu(iconSizeMenu);
+    viewMenu->addSeparator();
+    viewMenu->addAction(showHidden);
+
+    m_actionCollection.addAction(QStringLiteral("iconSizeMenu"), iconSizeMenu->menuAction());
 
     m_actionCollection.addAction(QStringLiteral("open"), open);
     m_actionCollection.addAction(QStringLiteral("openWith"), openWith);
@@ -1837,6 +2061,7 @@ void FolderModel::createActions()
     m_actionCollection.addAction(QStringLiteral("restore"), restore);
     m_actionCollection.addAction(QStringLiteral("showHidden"), showHidden);
     m_actionCollection.addAction(QStringLiteral("openInNewWindow"), openInNewWindow);
+    m_actionCollection.addAction(QStringLiteral("viewMenu"), viewMenu->menuAction());
 }
 
 void FolderModel::updateActions()
@@ -1964,6 +2189,14 @@ void FolderModel::updateActions()
 
     if (QAction *openInNewWindow = m_actionCollection.action("openInNewWindow")) {
         openInNewWindow->setVisible(hasDir && !isTrash);
+    }
+
+    if (QAction *iconSizeMenu = m_actionCollection.action("iconSizeMenu")) {
+        iconSizeMenu->setVisible(m_isDesktop);
+    }
+
+    if (QAction *viewMenu = m_actionCollection.action("viewMenu")) {
+        viewMenu->setVisible(m_isDesktop);
     }
 }
 

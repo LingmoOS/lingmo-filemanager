@@ -39,6 +39,10 @@
 #include <KDirModel>
 #include <KDirWatch>
 #include <KActionCollection>
+#include <KService>
+#include <KServiceTypeTrader>
+#include <KRun>
+#include <KFileItemActions>
 
 class QDrag;
 class CFileSizeJob;
@@ -256,6 +260,7 @@ signals:
     void move(int x, int y, QList<QUrl> urls);
 
     void currentIndexChanged();
+    void changeIconSize(int size);
 
 private slots:
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
@@ -328,6 +333,8 @@ private:
     int m_currentIndex;
 
     QTimer *m_updateNeedSelectTimer;
+
+    void compressFiles(const QString &archivePath, const QStringList &files);
 };
 
 #endif // FOLDERMODEL_H
