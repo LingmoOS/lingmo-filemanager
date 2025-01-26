@@ -1289,7 +1289,15 @@ void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifier
             menu->addMenu(newMenu);
         }
 
+        // 添加刷新菜单
+        QAction *refresh = new QAction(tr("Refresh"), this);
+        refresh->setIcon(QIcon::fromTheme("view-refresh"));
+        connect(refresh, &QAction::triggered, this, [this]() {
+            m_dirLister->updateDirectory(m_dirLister->url());
+        });
+
         menu->addSeparator();
+        menu->addAction(refresh);  // 添加到空白区域的右键菜单
         menu->addAction(m_actionCollection.action("paste"));
         menu->addAction(selectAll);
         if (m_actionCollection.action("terminal")->isVisible()) {
@@ -1301,6 +1309,13 @@ void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifier
             menu->addAction(m_actionCollection.action("changeBackground"));
             menu->addAction(m_actionCollection.action("iconSizeMenu"));
         }
+
+        menu->addSeparator();
+        menu->addAction(m_actionCollection.action("showHidden"));
+
+        menu->addSeparator();
+        menu->addAction(m_actionCollection.action("emptyTrash"));
+        menu->addAction(m_actionCollection.action("properties"));
 
         menu->addSeparator();
         menu->addAction(m_actionCollection.action("showHidden"));
@@ -2062,6 +2077,11 @@ void FolderModel::createActions()
     m_actionCollection.addAction(QStringLiteral("showHidden"), showHidden);
     m_actionCollection.addAction(QStringLiteral("openInNewWindow"), openInNewWindow);
     m_actionCollection.addAction(QStringLiteral("viewMenu"), viewMenu->menuAction());
+
+    // 添加刷新菜单
+    QAction *refresh = new QAction(tr("Refresh"), this);
+    refresh->setIcon(QIcon::fromTheme("view-refresh"));
+    m_actionCollection.addAction(QStringLiteral("refresh"), refresh);
 }
 
 void FolderModel::updateActions()
@@ -2197,6 +2217,10 @@ void FolderModel::updateActions()
 
     if (QAction *viewMenu = m_actionCollection.action("viewMenu")) {
         viewMenu->setVisible(m_isDesktop);
+    }
+
+    if (QAction *refresh = m_actionCollection.action("refresh")) {
+        refresh->setVisible(!isTrash);
     }
 }
 

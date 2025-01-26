@@ -151,195 +151,201 @@
         <translation type="obsolete">檔案管理員</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1922"/>
+        <location filename="../model/foldermodel.cpp" line="1937"/>
         <source>Open</source>
         <translation>開啟</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1926"/>
+        <location filename="../model/foldermodel.cpp" line="1941"/>
         <source>Open with</source>
         <translation>用什麼打開</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1930"/>
+        <location filename="../model/foldermodel.cpp" line="1945"/>
         <source>Cut</source>
         <translation>剪下</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1934"/>
+        <location filename="../model/foldermodel.cpp" line="1949"/>
         <source>Copy</source>
         <translation>拷貝</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1938"/>
+        <location filename="../model/foldermodel.cpp" line="1953"/>
         <source>Paste</source>
         <translation>貼上</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="886"/>
-        <location filename="../model/foldermodel.cpp" line="1942"/>
+        <location filename="../model/foldermodel.cpp" line="1957"/>
         <source>New Folder</source>
         <translation>新建資料夾</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="908"/>
-        <location filename="../model/foldermodel.cpp" line="1949"/>
+        <location filename="../model/foldermodel.cpp" line="1964"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1285"/>
-        <location filename="../model/foldermodel.cpp" line="1946"/>
+        <location filename="../model/foldermodel.cpp" line="1961"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1414"/>
+        <location filename="../model/foldermodel.cpp" line="1429"/>
         <source>Compress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1385"/>
+        <location filename="../model/foldermodel.cpp" line="1400"/>
         <source>Extract</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1389"/>
+        <location filename="../model/foldermodel.cpp" line="1404"/>
         <source>Extract Here</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1400"/>
+        <location filename="../model/foldermodel.cpp" line="1415"/>
         <source>Extract To...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1404"/>
+        <location filename="../model/foldermodel.cpp" line="1419"/>
         <source>Select Destination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1424"/>
+        <location filename="../model/foldermodel.cpp" line="1439"/>
         <source>ZIP Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1451"/>
+        <location filename="../model/foldermodel.cpp" line="1466"/>
         <source>TAR Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1437"/>
+        <location filename="../model/foldermodel.cpp" line="1452"/>
         <source>7-Zip Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1462"/>
+        <location filename="../model/foldermodel.cpp" line="1293"/>
+        <location filename="../model/foldermodel.cpp" line="2082"/>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../model/foldermodel.cpp" line="1477"/>
         <source>TAR Archive (gzip)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1463"/>
+        <location filename="../model/foldermodel.cpp" line="1478"/>
         <source>TAR Archive (bzip2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1464"/>
+        <location filename="../model/foldermodel.cpp" line="1479"/>
         <source>TAR Archive (xz)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1465"/>
+        <location filename="../model/foldermodel.cpp" line="1480"/>
         <source>TAR Archive (zstd)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1466"/>
+        <location filename="../model/foldermodel.cpp" line="1481"/>
         <source>TAR Archive (uncompressed)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1955"/>
+        <location filename="../model/foldermodel.cpp" line="1970"/>
         <source>Move To Trash</source>
         <translation>移至回收筒</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1959"/>
+        <location filename="../model/foldermodel.cpp" line="1974"/>
         <source>Empty Trash</source>
         <translation>清空回收筒</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1963"/>
+        <location filename="../model/foldermodel.cpp" line="1978"/>
         <source>Delete</source>
         <translation>刪除</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1967"/>
+        <location filename="../model/foldermodel.cpp" line="1982"/>
         <source>Rename</source>
         <translation>重新命名</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1971"/>
+        <location filename="../model/foldermodel.cpp" line="1986"/>
         <source>Open in Terminal</source>
         <translation>在終端機中開啓</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1975"/>
+        <location filename="../model/foldermodel.cpp" line="1990"/>
         <source>Set as Wallpaper</source>
         <translation>設為桌布</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1979"/>
+        <location filename="../model/foldermodel.cpp" line="1994"/>
         <source>Properties</source>
         <translation>屬性</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1983"/>
+        <location filename="../model/foldermodel.cpp" line="1998"/>
         <source>Change background</source>
         <translation>更換背景</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1987"/>
+        <location filename="../model/foldermodel.cpp" line="2002"/>
         <source>Restore</source>
         <translation>還原</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1991"/>
+        <location filename="../model/foldermodel.cpp" line="2006"/>
         <source>Show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1997"/>
+        <location filename="../model/foldermodel.cpp" line="2012"/>
         <source>Open in new window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2001"/>
+        <location filename="../model/foldermodel.cpp" line="2016"/>
         <source>Icon Size</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2005"/>
+        <location filename="../model/foldermodel.cpp" line="2020"/>
         <source>Huge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2009"/>
+        <location filename="../model/foldermodel.cpp" line="2024"/>
         <source>Large</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2013"/>
+        <location filename="../model/foldermodel.cpp" line="2028"/>
         <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2017"/>
+        <location filename="../model/foldermodel.cpp" line="2032"/>
         <source>Small</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2039"/>
+        <location filename="../model/foldermodel.cpp" line="2054"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>

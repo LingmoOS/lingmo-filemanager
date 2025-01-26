@@ -151,7 +151,7 @@
         <translation type="vanished">फ़ाइल प्रबंधक</translation>
     </message>
     <message>
-        <location line="+644"/>
+        <location line="+659"/>
         <source>Open</source>
         <translation>खोले</translation>
     </message>
@@ -176,20 +176,20 @@
         <translation>(पेस्ट) यहाँ रखे</translation>
     </message>
     <message>
-        <location line="-1052"/>
-        <location line="+1056"/>
+        <location line="-1067"/>
+        <location line="+1071"/>
         <source>New Folder</source>
         <translation>नया फोल्डर</translation>
     </message>
     <message>
-        <location line="-1034"/>
-        <location line="+1041"/>
+        <location line="-1049"/>
+        <location line="+1056"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-664"/>
-        <location line="+661"/>
+        <location line="-679"/>
+        <location line="+676"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -234,7 +234,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="-159"/>
+        <location line="+789"/>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-605"/>
         <source>TAR Archive (gzip)</source>
         <translation type="unfinished"></translation>
     </message>
