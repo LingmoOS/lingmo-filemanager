@@ -46,6 +46,7 @@ add_executable(lingmo-filemanager
   dialogs/createfolderdialog.cpp
   dialogs/filepropertiesdialog.cpp
   dialogs/openwithdialog.cpp
+  dialogs/deletedialog.cpp
   widgets/rubberband.cpp
   widgets/itemviewadapter.cpp
 

@@ -1,3 +1,15 @@
+lingmo-filemanager (1.5.3-1~lingmo3) helium; urgency=high
+
+  * Add key delete forever function.
+
+ -- Lingmo OS Team <team@lingmo.org>  Thu, 30 Jan 2025 23:00:00 +0800
+
+lingmo-filemanager (1.5.0-1~lingmo3) helium; urgency=high
+
+  * Add key delete forever function.
+
+ -- Lingmo OS Team <team@lingmo.org>  Thu, 30 Jan 2025 19:00:00 +0800
+
 lingmo-filemanager (1.4) helium; urgency=high
 
   * Add icon size menu

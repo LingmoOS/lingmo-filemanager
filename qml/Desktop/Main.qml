@@ -153,6 +153,9 @@ Item {
         onDeleteFile: {
             dirModel.keyDeletePress()
         }
+        onDeleteFileForever: {
+            dirModel.keyDeleteForever()
+        }
         onKeyPressed: {
             dirModel.keyboardSearch(text)
         }

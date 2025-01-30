@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2021 LingmoOS Team.
+ * Copyright (C) 2025 Lingmo OS Team.
  *
- * Author:     Reion Wong <reionwong@gmail.com>
+ * Author:     Lingmo OS Team <team@lingmo.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,9 +53,19 @@ LingmoUI.Window {
         spacing: LingmoUI.Units.largeSpacing
 
         Label {
-            text: qsTr("Do you want to delete it permanently?")
+            text: fileCount === 1 ? qsTr("Are you sure you want to permanently delete \"%1\"?")
+                                   .arg(urls[0].toString().split('/').pop())
+                                 : qsTr("Are you sure you want to permanently delete %1 files?")
+                                   .arg(fileCount)
             Layout.fillWidth: true
             wrapMode: Text.Wrap
+        }
+
+        Label {
+            text: qsTr("Once deleted, these files cannot be recovered.")
+            Layout.fillWidth: true
+            wrapMode: Text.Wrap
+            color: LingmoUI.Theme.disabledTextColor
         }
 
         RowLayout {
@@ -72,11 +82,11 @@ LingmoUI.Window {
                 focus: true
                 Layout.fillWidth: true
                 onClicked: {
-                    model.deleteSelected()
                     control.close()
+                    model.deleteSelected()
                 }
                 flat: true
             }
         }
     }
-}
+} 

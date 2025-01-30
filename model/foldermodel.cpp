@@ -30,6 +30,7 @@
 #include "../dialogs/filepropertiesdialog.h"
 #include "../dialogs/createfolderdialog.h"
 #include "../dialogs/openwithdialog.h"
+#include "../dialogs/deletedialog.h"
 
 #include "../helper/datehelper.h"
 #include "../helper/filelauncher.h"
@@ -2264,4 +2265,14 @@ void FolderModel::addDragImage(QDrag *drag, int x, int y)
 
     drag->setPixmap(QPixmap::fromImage(dragImage));
     drag->setHotSpot(QPoint(x - offset.x(), y - offset.y()));
+}
+
+void FolderModel::keyDeleteForever()
+{
+    if (!m_selectionModel->hasSelection())
+        return;
+
+    DeleteDialog *dlg = new DeleteDialog(selectedUrls());
+    dlg->setAttribute(Qt::WA_DeleteOnClose);
+    dlg->show();
 }

@@ -45,19 +45,19 @@ ListView {
         onDeviceSetupDone: sideBar.clicked(filePath)    // 设备挂载上后，模拟点击了该设备以打开该页面
     }
 
-    Rectangle {
-        anchors.fill: parent
-        color: LingmoUI.Theme.darkMode ? Qt.lighter(LingmoUI.Theme.backgroundColor, 1.5)
-                                     : Qt.darker(LingmoUI.Theme.backgroundColor, 1.05)
-        opacity: root.compositing ? 0.3 : 0.4
+    // Rectangle {
+    //     anchors.fill: parent
+    //     color: LingmoUI.Theme.darkMode ? Qt.lighter(LingmoUI.Theme.backgroundColor, 1.5)
+    //                                  : Qt.darker(LingmoUI.Theme.backgroundColor, 1.05)
+    //     opacity: root.compositing ? 0.3 : 0.4
 
-        Behavior on color {
-            ColorAnimation {
-                duration: 250
-                easing.type: Easing.Linear
-            }
-        }
-    }
+    //     Behavior on color {
+    //         ColorAnimation {
+    //             duration: 250
+    //             easing.type: Easing.Linear
+    //         }
+    //     }
+    // }
 
     model: placesModel
     clip: true
@@ -76,10 +76,18 @@ ListView {
     highlightResizeDuration : 0
 
     highlight: Rectangle {
-                radius: LingmoUI.Theme.mediumRadius
-                color: LingmoUI.Theme.highlightColor
-                smooth: true
-            }
+        radius: LingmoUI.Theme.mediumRadius
+        color: LingmoUI.Theme.secondBackgroundColor
+        smooth: true
+
+        Rectangle {
+            anchors.fill: parent
+            radius: LingmoUI.Theme.mediumRadius
+            color: Qt.rgba(LingmoUI.Theme.highlightColor.r,
+                           LingmoUI.Theme.highlightColor.g,
+                           LingmoUI.Theme.highlightColor.b, LingmoUI.Theme.darkMode ? 0.3 : 0.2)
+        }
+    }
 
     section.property: "category"
     section.delegate: Item {

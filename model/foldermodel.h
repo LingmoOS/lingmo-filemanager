@@ -234,6 +234,8 @@ public:
     bool showHiddenFiles() const;
     void setShowHiddenFiles(bool showHiddenFiles);
 
+    Q_INVOKABLE void keyDeleteForever();
+
 signals:
     void urlChanged();
     void listingCompleted() const;

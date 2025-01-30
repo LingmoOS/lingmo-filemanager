@@ -71,13 +71,58 @@
     </message>
     <message>
         <location line="+9"/>
+        <location filename="../dialogs/deletedialog.cpp" line="+34"/>
         <source>Cancel</source>
         <translation>निरस्त करें</translation>
     </message>
     <message>
         <location line="+6"/>
+        <location filename="../dialogs/deletedialog.cpp" line="+1"/>
         <source>Delete</source>
         <translation>मिटाये</translation>
+    </message>
+    <message>
+        <location filename="../dialogs/deletedialog.cpp" line="-22"/>
+        <source>Delete Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Are you sure you want to permanently delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Are you sure you want to permanently delete %1 files?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeleteDialogForever</name>
+    <message>
+        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="+56"/>
+        <source>Are you sure you want to permanently delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Are you sure you want to permanently delete %1 files?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Once deleted, these files cannot be recovered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Cancel</source>
+        <translation type="unfinished">निरस्त करें</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Delete</source>
+        <translation type="unfinished">मिटाये</translation>
     </message>
 </context>
 <context>
@@ -127,7 +172,7 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="+282"/>
+        <location filename="../model/foldermodel.cpp" line="+283"/>
         <source>%1 item</source>
         <translation>%1 वस्तु</translation>
     </message>
@@ -454,6 +499,19 @@
     </message>
 </context>
 <context>
+    <name>Main</name>
+    <message>
+        <location filename="../qml/Desktop/Main.qml" line="+175"/>
+        <source>File Manager</source>
+        <translation type="unfinished">फ़ाइल प्रबंधक</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Open</source>
+        <translation type="unfinished">खोले</translation>
+    </message>
+</context>
+<context>
     <name>OpenWithDialog</name>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="+89"/>
@@ -619,7 +677,7 @@
 <context>
     <name>SideBar</name>
     <message>
-        <location filename="../qml/SideBar.qml" line="+132"/>
+        <location filename="../qml/SideBar.qml" line="+140"/>
         <source>Open</source>
         <translation type="unfinished">खोले</translation>
     </message>

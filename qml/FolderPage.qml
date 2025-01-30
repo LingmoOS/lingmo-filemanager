@@ -427,6 +427,9 @@ Item {
         onDeleteFile: {
             dirModel.keyDeletePress()
         }
+        onDeleteFileForever: {
+            dirModel.keyDeleteForever()
+        }
         onRefresh: {
             dirModel.refresh()
         }
