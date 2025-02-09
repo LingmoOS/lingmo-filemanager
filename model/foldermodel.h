@@ -211,6 +211,7 @@ public:
     Q_INVOKABLE void drop(QQuickItem *target, QObject *dropEvent, int row);
 
     Q_INVOKABLE void setWallpaperSelected();
+    Q_INVOKABLE void setLoginWallpaperSelected();
 
     Q_INVOKABLE void openContextMenu(QQuickItem *visualParent = nullptr, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
     Q_INVOKABLE void openPropertiesDialog();

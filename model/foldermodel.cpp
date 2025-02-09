@@ -6,6 +6,7 @@
  *   Copyright (C) 2014 by Eike Hein <hein@kde.org>                        *
  *   Copyright (C) 2021 Reven Martin <revenmartin@gmail.com>               *
  *   Copyright (C) 2021 Reion Wong <reionwong@gmail.com>                   *
+ *   Copyright (C) 2025 Lingmo OS Team <team@lingmo.org>                   *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -1264,6 +1265,24 @@ void FolderModel::setWallpaperSelected()
         iface.call("setWallpaper", url.toLocalFile());
 }
 
+void FolderModel::setLoginWallpaperSelected()
+{
+    if (!m_selectionModel)
+        return;
+
+    QUrl url = selectedUrls().first();
+
+    if (!url.isLocalFile())
+        return;
+
+    // Define the target directory and new file name
+    QString srcFilePath = selectedUrls().first().toLocalFile();
+    qDebug() << srcFilePath;
+    QString targetDir = "/etc/system/wallpaper/";
+    QString targetFilePath = targetDir + "img.jpg";
+    QProcess::startDetached("pkexec", QStringList() << "cp" << srcFilePath << targetFilePath);
+}
+
 void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifiers modifiers)
 {
     Q_UNUSED(modifiers);
@@ -1346,7 +1365,7 @@ void FolderModel::openContextMenu(QQuickItem *visualParent, Qt::KeyboardModifier
             menu->addAction(m_actionCollection.action("terminal"));
         }
 
-        menu->addAction(m_actionCollection.action("wallpaper"));
+        menu->addAction(m_actionCollection.action("setWallpaperMenu"));
         menu->addSeparator();
         menu->addAction(m_actionCollection.action("properties"));
     }
@@ -1988,9 +2007,21 @@ void FolderModel::createActions()
     terminal->setIcon(QIcon::fromTheme("utilities-terminal"));
     connect(terminal, &QAction::triggered, this, &FolderModel::openInTerminal);
 
-    QAction *wallpaper = new QAction(tr("Set as Wallpaper"), this);
-    wallpaper->setIcon(QIcon::fromTheme("preferences-desktop-wallpaper"));
-    connect(wallpaper, &QAction::triggered, this, &FolderModel::setWallpaperSelected);
+    QMenu *setWallpaperMenu = new QMenu(tr("Set as ..."));
+    setWallpaperMenu->setIcon(QIcon::fromTheme("preferences-desktop-wallpaper"));
+    setWallpaperMenu->menuAction()->setIconVisibleInMenu(true);
+
+    QAction *setWallpaper = new QAction(tr("Set as Wallpaper"), this);
+    setWallpaper->setIcon(QIcon::fromTheme("preferences-desktop-wallpaper"));
+    setWallpaper->setIconVisibleInMenu(true);
+    connect(setWallpaper, &QAction::triggered, this, &FolderModel::setWallpaperSelected);
+    setWallpaperMenu->addAction(setWallpaper);
+
+    QAction *wallpaperLogin = new QAction(tr("Set as Login Screen"), this);
+    wallpaperLogin->setIcon(QIcon::fromTheme("preferences-desktop-wallpaper"));
+    wallpaperLogin->setIconVisibleInMenu(true);
+    connect(wallpaperLogin, &QAction::triggered, this, &FolderModel::setLoginWallpaperSelected);
+    setWallpaperMenu->addAction(wallpaperLogin);
 
     QAction *properties = new QAction(tr("Properties"), this);
     properties->setIcon(QIcon::fromTheme("document-properties"));
@@ -2071,7 +2102,9 @@ void FolderModel::createActions()
     m_actionCollection.addAction(QStringLiteral("del"), del);
     m_actionCollection.addAction(QStringLiteral("rename"), rename);
     m_actionCollection.addAction(QStringLiteral("terminal"), terminal);
-    m_actionCollection.addAction(QStringLiteral("wallpaper"), wallpaper);
+    m_actionCollection.addAction(QStringLiteral("setWallpaperMenu"), setWallpaperMenu->menuAction());
+    m_actionCollection.addAction(QStringLiteral("setWallpaper"), setWallpaper);
+    m_actionCollection.addAction(QStringLiteral("wallpaperLogin"), wallpaperLogin);
     m_actionCollection.addAction(QStringLiteral("properties"), properties);
     m_actionCollection.addAction(QStringLiteral("changeBackground"), changeBackground);
     m_actionCollection.addAction(QStringLiteral("restore"), restore);
@@ -2192,7 +2225,13 @@ void FolderModel::updateActions()
         terminal->setVisible(items.size() == 1 && items.first().isDir() && !isTrash);
     }
 
-    if (QAction *terminal = m_actionCollection.action("wallpaper")) {
+    if (QAction *terminal = m_actionCollection.action("setWallpaper")) {
+        terminal->setVisible(items.size() == 1 &&
+                             !isTrash &&
+                             supportSetAsWallpaper(items.first().mimetype()));
+    }
+
+    if (QAction *terminal = m_actionCollection.action("wallpaperLogin")) {
         terminal->setVisible(items.size() == 1 &&
                              !isTrash &&
                              supportSetAsWallpaper(items.first().mimetype()));

@@ -172,7 +172,7 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="+283"/>
+        <location filename="../model/foldermodel.cpp" line="+284"/>
         <source>%1 item</source>
         <translation>%1 वस्तु</translation>
     </message>
@@ -187,7 +187,7 @@
         <translation>फ़ाइल या फ़ोल्डर %1 मौजूद नहीं है।</translation>
     </message>
     <message>
-        <location line="+891"/>
+        <location line="+909"/>
         <source>Select All</source>
         <translation>सब चुने</translation>
     </message>
@@ -221,14 +221,14 @@
         <translation>(पेस्ट) यहाँ रखे</translation>
     </message>
     <message>
-        <location line="-1067"/>
-        <location line="+1071"/>
+        <location line="-1085"/>
+        <location line="+1089"/>
         <source>New Folder</source>
         <translation>नया फोल्डर</translation>
     </message>
     <message>
-        <location line="-1049"/>
-        <location line="+1056"/>
+        <location line="-1067"/>
+        <location line="+1074"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -280,12 +280,12 @@
     </message>
     <message>
         <location line="-159"/>
-        <location line="+789"/>
+        <location line="+803"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-605"/>
+        <location line="-619"/>
         <source>TAR Archive (gzip)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -336,11 +336,21 @@
     </message>
     <message>
         <location line="+4"/>
+        <source>Set as ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Set as Wallpaper</source>
         <translation>वॉलपेपर के रूप में सेट</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
+        <source>Set as Login Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Properties</source>
         <translation>गुण</translation>
     </message>
@@ -501,14 +511,12 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../qml/Desktop/Main.qml" line="+175"/>
         <source>File Manager</source>
-        <translation type="unfinished">फ़ाइल प्रबंधक</translation>
+        <translation type="obsolete">फ़ाइल प्रबंधक</translation>
     </message>
     <message>
-        <location line="+3"/>
         <source>Open</source>
-        <translation type="unfinished">खोले</translation>
+        <translation type="obsolete">खोले</translation>
     </message>
 </context>
 <context>
