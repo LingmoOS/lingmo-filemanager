@@ -20,7 +20,7 @@
 #include "application.h"
 #include "dbusinterface.h"
 #include "window.h"
-#include "desktop/desktop.h"
+#include "runtime/runtime.h"
 #include "thumbnailer/thumbnailprovider.h"
 #include "filemanageradaptor.h"
 
@@ -143,8 +143,10 @@ bool Application::parseCommandLineArgs()
 
     parser.addPositionalArgument("files", "Files", "[FILE1, FILE2,...]");
 
-    QCommandLineOption desktopOption(QStringList() << "d" << "desktop" << "Desktop Mode");
-    parser.addOption(desktopOption);
+    // QCommandLineOption desktopOption(QStringList() << "d" << "desktop" << "Desktop Mode");
+    // parser.addOption(desktopOption);
+    QCommandLineOption runtimeOption(QStringList() << "r" << "runtime" << "Run");
+    parser.addOption(runtimeOption);
 
     QCommandLineOption emptyTrashOption(QStringList() << "e" << "empty-trash" << "Empty Trash");
     parser.addOption(emptyTrashOption);
@@ -157,8 +159,13 @@ bool Application::parseCommandLineArgs()
     if (m_instance) {
         QPixmapCache::setCacheLimit(2048);
 
-        if (parser.isSet(desktopOption)) {
-            Desktop desktop;
+        // if (parser.isSet(desktopOption)) {
+        //     Desktop desktop;
+        // } else {
+        //     openFiles(formatUriList(parser.positionalArguments()));
+        // }
+        if (parser.isSet(runtimeOption)) {
+            RunTime runtime;
         } else {
             openFiles(formatUriList(parser.positionalArguments()));
         }
