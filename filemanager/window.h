@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2021 LingmoOS Team.
  *
- * Author:     Reion Wong <reionwong@gmail.com>
+ * Author:     Reion Wong <reion@lingmoos.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,28 +17,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DESKTOP_H
-#define DESKTOP_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
-#include <QObject>
-#include <QScreen>
-#include <QDBusInterface>
+#include <QQmlApplicationEngine>
 
-#include "desktopview.h"
-
-class Desktop : public QObject
+class Window : public QQmlApplicationEngine
 {
     Q_OBJECT
 
 public:
-    explicit Desktop(QObject *parent = nullptr);
+    explicit Window(QObject *parent = nullptr);
 
-private slots:
-    void screenAdded(QScreen *qscreen);
-    void screenRemoved(QScreen *qscreen);
+    void load(const QUrl &url);
 
-private:
-    QMap<QScreen *, DesktopView *> m_list;
+protected:
+    bool eventFilter(QObject *o, QEvent *e);
 };
 
-#endif // DESKTOP_H
+#endif // WINDOW_H

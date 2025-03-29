@@ -17,33 +17,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DESKTOPVIEW_H
-#define DESKTOPVIEW_H
+#ifndef RUBBERBAND_H
+#define RUBBERBAND_H
 
-#include <QQuickView>
-#include <QScreen>
+#include <QQuickPaintedItem>
 
-class Desktop;
-class DesktopView : public QQuickView
+class RubberBand : public QQuickPaintedItem
 {
     Q_OBJECT
-    Q_PROPERTY(QRect screenRect READ screenRect NOTIFY screenRectChanged)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
 
 public:
-    explicit DesktopView(QScreen *screen = nullptr, QQuickView *parent = nullptr);
+    explicit RubberBand(QQuickItem *parent = nullptr);
+    ~RubberBand() override;
 
-    QRect screenRect();
+    void paint(QPainter *painter) override;
+
+    Q_INVOKABLE bool intersects(const QRectF &rect) const;
+
+    QColor color() const;
+    void setColor(QColor color);
 
 signals:
-    void screenRectChanged();
+    void colorChanged();
 
-private slots:
-    void onPrimaryScreenChanged(QScreen *screen);
-    void onGeometryChanged();
+protected:
+    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
 
 private:
-    QScreen *m_screen;
-    QRect m_screenRect;
+    QRectF m_geometry;
+    QColor m_color;
 };
 
-#endif // DESKTOPVIEW_H
+#endif
