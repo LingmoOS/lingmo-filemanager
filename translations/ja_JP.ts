@@ -185,13 +185,13 @@
         <location filename="../model/foldermodel.cpp" line="903"/>
         <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新しいテキスト</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1274"/>
         <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新しいドキュメント</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
@@ -320,7 +320,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>ファイルマネージャー</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
@@ -539,7 +539,7 @@
     <message>
         <location filename="../qml/main.qml" line="35"/>
         <source>File Manager</source>
-        <translation>ファイルマネージャ</translation>
+        <translation>ファイルマネージャー</translation>
     </message>
 </context>
 </TS>
