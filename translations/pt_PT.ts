@@ -185,13 +185,13 @@
         <location filename="../model/foldermodel.cpp" line="903"/>
         <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Novo texto</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1274"/>
         <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Novos documentos</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
@@ -241,7 +241,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar ficheiros ocultos</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1815"/>
@@ -320,7 +320,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished">Gestor de Ficheiros</translation>
+        <translation>Gestor de ficheiros</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Computador</translation>
     </message>
 </context>
 <context>
@@ -524,7 +524,7 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">Abrir</translation>
+        <translation>Abrir</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
@@ -534,12 +534,12 @@
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejetar</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Desmontar</translation>
     </message>
 </context>
 <context>
