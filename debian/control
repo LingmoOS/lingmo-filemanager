@@ -1,7 +1,7 @@
 Source: lingmo-filemanager
 Section: devel
 Priority: optional
-Maintainer: LingmoOS <support@lingmoos.com>
+Maintainer: Lingmo OS Team <team@lingmo.org>
 Build-Depends: cmake,
                debhelper (>= 9),
                extra-cmake-modules,
@@ -18,7 +18,7 @@ Build-Depends: cmake,
                libkf6xmlgui-dev,
                qt6-5compat-dev
 Standards-Version: 4.5.0
-Homepage: https://lingmoos.com
+Homepage: https://lingmo.org
 
 Package: lingmo-filemanager
 Architecture: any
@@ -35,3 +35,19 @@ Depends: qml6-module-qtquick-controls,
          ${misc:Depends},
          ${shlibs:Depends}
 Description: LingmoOS File Manager
+
+Package: liblingmo-filemanager
+Architecture: any
+Depends: qml-module-qtquick-controls2,
+         qml-module-qtquick2,
+         qml-module-qtquick-layouts,
+         qml-module-qt-labs-platform,
+         qml-module-qt-labs-settings,
+         qml-module-qtqml,
+         qml-module-qtquick-window2,
+         qml-module-qtquick-shapes,
+         qml-module-qtquick-dialogs,
+         qml-module-qtgraphicaleffects,
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: LingmoOS File Manager Lib

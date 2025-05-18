@@ -72,8 +72,8 @@ LingmoUI.Window {
                 focus: true
                 Layout.fillWidth: true
                 onClicked: {
-                    control.close()
                     model.deleteSelected()
+                    control.close()
                 }
                 flat: true
             }

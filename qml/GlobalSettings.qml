@@ -38,4 +38,12 @@ Settings {
     property int minimumIconSize: 64
 
     property int gridIconSize: 64
+
+    // 添加桌面图标预设尺寸
+    readonly property int hugeIconSize: 96
+    readonly property int largeIconSize: 72
+    readonly property int normalIconSize: 64
+    readonly property int smallIconSize: 48
+
+    property bool autoArrange: true  // 默认开启自动排列
 }

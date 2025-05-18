@@ -51,6 +51,11 @@ Item {
         onCurrentIndexChanged: {
             _folderView.currentIndex = dirModel.currentIndex
         }
+
+        onChangeIconSize: {
+            _folderView.iconSize = size
+            globalSettings.desktopIconSize = size
+        }
     }
 
     FM.ItemViewAdapter {
@@ -78,6 +83,9 @@ Item {
         focus: true
         model: dirModel
 
+        cellWidth: iconSize + 32
+        cellHeight: iconSize + 48
+
         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
 
         // Handle for topbar
@@ -92,10 +100,6 @@ Item {
 
         delegate: FolderGridItem {}
 
-        onIconSizeChanged: {
-            globalSettings.desktopIconSize = _folderView.iconSize
-        }
-
         onActiveFocusChanged: {
             if (!activeFocus) {
                 _folderView.cancelRename()
@@ -105,6 +109,16 @@ Item {
 
         Component.onCompleted: {
             dirModel.requestRename.connect(rename)
+        }
+
+        Connections {
+            target: dirModel
+            function onChangeIconSize(size) {
+                var newSize = Math.min(Math.max(size, minimumIconSize), maximumIconSize)
+                iconSize = newSize
+                cellWidth = newSize + 32
+                cellHeight = newSize + 48
+            }
         }
     }
 
@@ -138,6 +152,9 @@ Item {
         }
         onDeleteFile: {
             dirModel.keyDeletePress()
+        }
+        onDeleteFileForever: {
+            dirModel.keyDeleteForever()
         }
         onKeyPressed: {
             dirModel.keyboardSearch(text)
