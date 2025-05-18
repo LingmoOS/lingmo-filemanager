@@ -27,7 +27,7 @@
 <context>
     <name>DateHelper</name>
     <message>
-        <location filename="../helper/datehelper.cpp" line="+15"/>
+        <location filename="../helper/datehelper.cpp" line="+16"/>
         <source>Now</source>
         <translation>अभी</translation>
     </message>
@@ -71,64 +71,19 @@
     </message>
     <message>
         <location line="+9"/>
-        <location filename="../dialogs/deletedialog.cpp" line="+34"/>
         <source>Cancel</source>
         <translation>निरस्त करें</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../dialogs/deletedialog.cpp" line="+1"/>
         <source>Delete</source>
         <translation>मिटाये</translation>
-    </message>
-    <message>
-        <location filename="../dialogs/deletedialog.cpp" line="-22"/>
-        <source>Delete Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Are you sure you want to permanently delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Are you sure you want to permanently delete %1 files?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DeleteDialogForever</name>
-    <message>
-        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="+56"/>
-        <source>Are you sure you want to permanently delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Are you sure you want to permanently delete %1 files?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Once deleted, these files cannot be recovered.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Cancel</source>
-        <translation type="unfinished">निरस्त करें</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Delete</source>
-        <translation type="unfinished">मिटाये</translation>
     </message>
 </context>
 <context>
     <name>DesktopView</name>
     <message>
-        <location filename="../desktop/desktopview.cpp" line="+48"/>
+        <location filename="../desktop/desktopview.cpp" line="+49"/>
         <source>Desktop</source>
         <translation>डेस्कटॉप</translation>
     </message>
@@ -159,12 +114,12 @@
 <context>
     <name>FilePropertiesDialog</name>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="+193"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="+194"/>
         <source>Properties</source>
         <translation>गुण</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+49"/>
         <source>%1 files</source>
         <translation>%1 फ़ाइलें</translation>
     </message>
@@ -172,7 +127,7 @@
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="+284"/>
+        <location filename="../model/foldermodel.cpp" line="+278"/>
         <source>%1 item</source>
         <translation>%1 वस्तु</translation>
     </message>
@@ -187,7 +142,7 @@
         <translation>फ़ाइल या फ़ोल्डर %1 मौजूद नहीं है।</translation>
     </message>
     <message>
-        <location line="+909"/>
+        <location line="+885"/>
         <source>Select All</source>
         <translation>सब चुने</translation>
     </message>
@@ -196,217 +151,102 @@
         <translation type="vanished">फ़ाइल प्रबंधक</translation>
     </message>
     <message>
-        <location line="+659"/>
+        <location line="+492"/>
         <source>Open</source>
         <translation>खोले</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Open with</source>
         <translation>अन्य अनुप्रयोग में खोले</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Cut</source>
         <translation>कट करना</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Copy</source>
         <translation>प्रतिलिपि बनाना</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Paste</source>
         <translation>(पेस्ट) यहाँ रखे</translation>
     </message>
     <message>
-        <location line="-1085"/>
-        <location line="+1089"/>
+        <location line="-890"/>
+        <location line="+893"/>
         <source>New Folder</source>
         <translation>नया फोल्डर</translation>
     </message>
     <message>
-        <location line="-1067"/>
-        <location line="+1074"/>
+        <location line="-872"/>
+        <location line="+876"/>
         <source>New Text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-679"/>
-        <location line="+676"/>
+        <location line="-505"/>
+        <location line="+504"/>
         <source>New Documents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-532"/>
-        <source>Compress</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-29"/>
-        <source>Extract</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Extract Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Extract To...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Select Destination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>ZIP Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>TAR Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-14"/>
-        <source>7-Zip Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-159"/>
-        <location line="+803"/>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-619"/>
-        <source>TAR Archive (gzip)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>TAR Archive (bzip2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>TAR Archive (xz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>TAR Archive (zstd)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>TAR Archive (uncompressed)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+489"/>
+        <location line="+5"/>
         <source>Move To Trash</source>
         <translation>ट्रैश में भेजो</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Empty Trash</source>
         <translation>ट्रैश खाली करो</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Delete</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Rename</source>
         <translation>मिटाये</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Open in Terminal</source>
         <translation>टर्मिनल में खोलें</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Set as ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Set as Wallpaper</source>
         <translation>वॉलपेपर के रूप में सेट</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Set as Login Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>Properties</source>
         <translation>गुण</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Change background</source>
         <translation>बैकग्राउंड बदलें</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Restore</source>
         <translation>लौटाए</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Show hidden files</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Open in new window</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Icon Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Huge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Large</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Small</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>View</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">निरस्त करें</translation>
     </message>
 </context>
 <context>
@@ -506,17 +346,6 @@
         <location line="+25"/>
         <source>Empty Trash</source>
         <translation>कचरा (ट्रैश) खाली करें</translation>
-    </message>
-</context>
-<context>
-    <name>Main</name>
-    <message>
-        <source>File Manager</source>
-        <translation type="obsolete">फ़ाइल प्रबंधक</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation type="obsolete">खोले</translation>
     </message>
 </context>
 <context>
@@ -685,7 +514,7 @@
 <context>
     <name>SideBar</name>
     <message>
-        <location filename="../qml/SideBar.qml" line="+140"/>
+        <location filename="../qml/SideBar.qml" line="+126"/>
         <source>Open</source>
         <translation type="unfinished">खोले</translation>
     </message>

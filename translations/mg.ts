@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ie">
+<TS version="2.1" language="mg">
 <context>
     <name>CreateFolderDialog</name>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="28"/>
         <source>New folder name</source>
-        <translation>Nómine del nov fólder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="55"/>
         <source>New folder</source>
-        <translation>Nov fólder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="81"/>
         <source>Cancel</source>
-        <translation>Anullar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -29,37 +29,37 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="16"/>
         <source>Now</source>
-        <translation>Nu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="18"/>
         <source>1 minute ago</source>
-        <translation>ante 1 minute</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
-        <translation>ante %1 minutes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="24"/>
         <source>1 hour ago</source>
-        <translation>ante 1 hor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
-        <translation>ante %1 hores</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="30"/>
         <source>1 day ago</source>
-        <translation>ante 1 die</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
-        <translation>ante %1 dies</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -72,12 +72,12 @@
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
         <source>Cancel</source>
-        <translation type="unfinished">Anullar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
         <source>Delete</source>
-        <translation type="unfinished">Remover</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -85,7 +85,7 @@
     <message>
         <location filename="../desktop/desktopview.cpp" line="49"/>
         <source>Desktop</source>
-        <translation>Pupitre</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -93,22 +93,22 @@
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="30"/>
         <source>File Manager</source>
-        <translation>Gerente de files</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="77"/>
         <source>Do you want to permanently delete all files from the Trash?</source>
-        <translation>Esque vu vole remover permanentmen omni files ex li Paper-corb?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="86"/>
         <source>Cancel</source>
-        <translation>Anullar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="92"/>
         <source>Empty Trash</source>
-        <translation>Vacuar li Paper-corb</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -116,12 +116,12 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="194"/>
         <source>Properties</source>
-        <translation type="unfinished">Proprietás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation type="unfinished">%1 files</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -129,12 +129,12 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
-        <translation>%1 element</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
-        <translation>%1 elementes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
@@ -144,16 +144,16 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1268"/>
         <source>Select All</source>
-        <translation>Selecter omnicos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File Manager</source>
-        <translation type="obsolete">Gerente de files</translation>
+        <translation type="vanished">مدير الملفات</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1760"/>
         <source>Open</source>
-        <translation>Aperter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1763"/>
@@ -163,23 +163,23 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1766"/>
         <source>Cut</source>
-        <translation>Exciser</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1769"/>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1772"/>
         <source>Paste</source>
-        <translation>Collar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="882"/>
         <location filename="../model/foldermodel.cpp" line="1775"/>
         <source>New Folder</source>
-        <translation>Crear un fólder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="903"/>
@@ -196,42 +196,42 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
         <source>Move To Trash</source>
-        <translation>Mover al Paper-corb</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1786"/>
         <source>Empty Trash</source>
-        <translation>Vacuar li Paper-corb</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1789"/>
         <source>Delete</source>
-        <translation>Remover</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1792"/>
         <source>Rename</source>
-        <translation>Renominar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1795"/>
         <source>Open in Terminal</source>
-        <translation>Aperter in li terminale</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1798"/>
         <source>Set as Wallpaper</source>
-        <translation>Assignar quam tapete</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1801"/>
         <source>Properties</source>
-        <translation>Proprietás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1804"/>
         <source>Change background</source>
-        <translation>Cambiar li funde</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1807"/>
@@ -254,18 +254,18 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="147"/>
         <source>Empty folder</source>
-        <translation>Vacui fólder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="200"/>
         <source>Open</source>
-        <translation>Aperter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="64"/>
         <location filename="../qml/FolderPage.qml" line="205"/>
         <source>Properties</source>
-        <translation>Proprietás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="54"/>
@@ -275,7 +275,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="57"/>
         <source>New Folder</source>
-        <translation type="unfinished">Crear un fólder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="71"/>
@@ -290,22 +290,22 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="80"/>
         <source>Select All</source>
-        <translation type="unfinished">Selecter omnicos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="87"/>
         <source>Cut</source>
-        <translation type="unfinished">Exciser</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="92"/>
         <source>Copy</source>
-        <translation type="unfinished">Copiar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="97"/>
         <source>Paste</source>
-        <translation type="unfinished">Collar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="103"/>
@@ -320,7 +320,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished">Gerente de files</translation>
+        <translation type="unfinished">مدير الملفات</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
@@ -330,22 +330,22 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
-        <translation>%1 element</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
-        <translation>%1 elementes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
-        <translation>%1 selectet</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="300"/>
         <source>Empty Trash</source>
-        <translation>Vacuar li Paper-corb</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -363,12 +363,12 @@
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
-        <translation type="unfinished">Anullar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
         <source>Open</source>
-        <translation type="unfinished">Aperter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../dialogs/openwithdialog.cpp" line="32"/>
@@ -381,22 +381,22 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="47"/>
         <source>Icons</source>
-        <translation>Icones</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="85"/>
         <source>List</source>
-        <translation>Liste</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="127"/>
         <source>Name</source>
-        <translation>Nómine</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="165"/>
         <source>Date</source>
-        <translation>Date</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="189"/>
@@ -406,7 +406,7 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="227"/>
         <source>Size</source>
-        <translation>Grandore</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -414,42 +414,42 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="39"/>
         <source>Home</source>
-        <translation>Hem-fólder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="47"/>
         <source>Desktop</source>
-        <translation>Pupitre</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="55"/>
         <source>Documents</source>
-        <translation>Documentes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="63"/>
         <source>Downloads</source>
-        <translation>Descargates</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="71"/>
         <source>Music</source>
-        <translation>Musica</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="79"/>
         <source>Pictures</source>
-        <translation>Images</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="87"/>
         <source>Videos</source>
-        <translation>Videos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="93"/>
         <source>Trash</source>
-        <translation>Paper-corb</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="117"/>
@@ -466,57 +466,49 @@
 <context>
     <name>PropertiesDialog</name>
     <message>
-        <source>Properties</source>
-        <translation type="vanished">Proprietás</translation>
-    </message>
-    <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="100"/>
         <source>Type:</source>
-        <translation>Tip:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="113"/>
         <source>Location:</source>
-        <translation>Localisation:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="124"/>
         <source>Size:</source>
-        <translation>Grandore:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="131"/>
         <source>Calculating...</source>
-        <translation>Calculante...</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="135"/>
         <source>Created:</source>
-        <translation>Creat:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="148"/>
         <source>Modified:</source>
-        <translation>Modificat:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="161"/>
         <source>Accessed:</source>
-        <translation>Accessat:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
         <source>Cancel</source>
-        <translation>Anullar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="189"/>
         <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>%1 files</source>
-        <translation type="vanished">%1 files</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -524,7 +516,7 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">Aperter</translation>
+        <translation type="unfinished">فتح</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
@@ -547,7 +539,7 @@
     <message>
         <location filename="../qml/main.qml" line="35"/>
         <source>File Manager</source>
-        <translation>Gerente de files</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

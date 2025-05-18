@@ -35,5 +35,4 @@ void DirLister::handleError(KIO::Job *job)
         return;
     }
 
-    KDirLister::handleError(job);
 }

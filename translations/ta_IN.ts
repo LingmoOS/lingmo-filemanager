@@ -6,60 +6,60 @@
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="28"/>
         <source>New folder name</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய கோப்புறை பெயர்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="55"/>
         <source>New folder</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய கோப்புறை</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="81"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>சரி</translation>
     </message>
 </context>
 <context>
     <name>DateHelper</name>
     <message>
-        <location filename="../helper/datehelper.cpp" line="15"/>
+        <location filename="../helper/datehelper.cpp" line="16"/>
         <source>Now</source>
-        <translation type="unfinished"></translation>
+        <translation>இப்போது</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="17"/>
+        <location filename="../helper/datehelper.cpp" line="18"/>
         <source>1 minute ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 மணித்துளி முன்பு</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="19"/>
+        <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 நிமிடங்களுக்கு முன்பு</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="23"/>
+        <location filename="../helper/datehelper.cpp" line="24"/>
         <source>1 hour ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 மணி நேரத்திற்கு முன்பு</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="25"/>
+        <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 மணி நேரத்திற்கு முன்பு</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="29"/>
+        <location filename="../helper/datehelper.cpp" line="30"/>
         <source>1 day ago</source>
-        <translation type="unfinished"></translation>
+        <translation>1 நாள் முன்பு</translation>
     </message>
     <message>
-        <location filename="../helper/datehelper.cpp" line="31"/>
+        <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 நாட்களுக்கு முன்பு</translation>
     </message>
 </context>
 <context>
@@ -67,70 +67,25 @@
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
         <source>Do you want to delete it permanently?</source>
-        <translation type="unfinished"></translation>
+        <translation>அதை நிரந்தரமாக நீக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
-        <location filename="../dialogs/deletedialog.cpp" line="34"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
-        <location filename="../dialogs/deletedialog.cpp" line="35"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/deletedialog.cpp" line="13"/>
-        <source>Delete Files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/deletedialog.cpp" line="20"/>
-        <source>Are you sure you want to permanently delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../dialogs/deletedialog.cpp" line="23"/>
-        <source>Are you sure you want to permanently delete %1 files?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DeleteDialogForever</name>
-    <message>
-        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="56"/>
-        <source>Are you sure you want to permanently delete &quot;%1&quot;?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="58"/>
-        <source>Are you sure you want to permanently delete %1 files?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="65"/>
-        <source>Once deleted, these files cannot be recovered.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="75"/>
-        <source>Cancel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/Dialogs/DeleteDialogForever.qml" line="81"/>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>நீக்கு</translation>
     </message>
 </context>
 <context>
     <name>DesktopView</name>
     <message>
-        <location filename="../desktop/desktopview.cpp" line="48"/>
+        <location filename="../desktop/desktopview.cpp" line="49"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>டெச்க்டாப்</translation>
     </message>
 </context>
 <context>
@@ -138,267 +93,156 @@
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="30"/>
         <source>File Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>கோப்பு மேலாளர்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="77"/>
         <source>Do you want to permanently delete all files from the Trash?</source>
-        <translation type="unfinished"></translation>
+        <translation>குப்பைகளிலிருந்து எல்லா கோப்புகளையும் நிரந்தரமாக நீக்க விரும்புகிறீர்களா?</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="86"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="92"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>வெற்று குப்பை</translation>
     </message>
 </context>
 <context>
     <name>FilePropertiesDialog</name>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="193"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="194"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>பண்புகள்</translation>
     </message>
     <message>
-        <location filename="../dialogs/filepropertiesdialog.cpp" line="246"/>
+        <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 கோப்புகள்</translation>
     </message>
 </context>
 <context>
     <name>FolderModel</name>
     <message>
-        <location filename="../model/foldermodel.cpp" line="284"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 உருப்படி</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="284"/>
+        <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 உருப்படிகள்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="389"/>
+        <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>கோப்பு அல்லது கோப்புறை %1 இல்லை.</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1298"/>
+        <location filename="../model/foldermodel.cpp" line="1268"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>அனைத்தையும் தெரிவுசெய்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1957"/>
+        <location filename="../model/foldermodel.cpp" line="1760"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>திற</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1961"/>
+        <location filename="../model/foldermodel.cpp" line="1763"/>
         <source>Open with</source>
-        <translation type="unfinished"></translation>
+        <translation>உடன் திறந்திருக்கும்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1965"/>
+        <location filename="../model/foldermodel.cpp" line="1766"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>வெட்டு</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1969"/>
+        <location filename="../model/foldermodel.cpp" line="1769"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>நகலெடு</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1973"/>
+        <location filename="../model/foldermodel.cpp" line="1772"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>ஒட்டு</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="888"/>
-        <location filename="../model/foldermodel.cpp" line="1977"/>
+        <location filename="../model/foldermodel.cpp" line="882"/>
+        <location filename="../model/foldermodel.cpp" line="1775"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய கோப்புறை</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="910"/>
-        <location filename="../model/foldermodel.cpp" line="1984"/>
+        <location filename="../model/foldermodel.cpp" line="903"/>
+        <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய உரை</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1305"/>
-        <location filename="../model/foldermodel.cpp" line="1981"/>
+        <location filename="../model/foldermodel.cpp" line="1274"/>
+        <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய ஆவணங்கள்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1449"/>
-        <source>Compress</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1420"/>
-        <source>Extract</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1424"/>
-        <source>Extract Here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1435"/>
-        <source>Extract To...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1439"/>
-        <source>Select Destination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1459"/>
-        <source>ZIP Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1486"/>
-        <source>TAR Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1472"/>
-        <source>7-Zip Archive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1313"/>
-        <location filename="../model/foldermodel.cpp" line="2116"/>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1497"/>
-        <source>TAR Archive (gzip)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1498"/>
-        <source>TAR Archive (bzip2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1499"/>
-        <source>TAR Archive (xz)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1500"/>
-        <source>TAR Archive (zstd)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1501"/>
-        <source>TAR Archive (uncompressed)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="1990"/>
+        <location filename="../model/foldermodel.cpp" line="1783"/>
         <source>Move To Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>குப்பைக்கு நகர்த்தவும்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1994"/>
+        <location filename="../model/foldermodel.cpp" line="1786"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>வெற்று குப்பை</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="1998"/>
+        <location filename="../model/foldermodel.cpp" line="1789"/>
         <source>Delete</source>
-        <translation type="unfinished"></translation>
+        <translation>நீக்கு</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2002"/>
+        <location filename="../model/foldermodel.cpp" line="1792"/>
         <source>Rename</source>
-        <translation type="unfinished"></translation>
+        <translation>மறுபெயரிடுங்கள்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2006"/>
+        <location filename="../model/foldermodel.cpp" line="1795"/>
         <source>Open in Terminal</source>
-        <translation type="unfinished"></translation>
+        <translation>முனையத்தில் திறந்திருக்கும்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2010"/>
-        <source>Set as ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2014"/>
+        <location filename="../model/foldermodel.cpp" line="1798"/>
         <source>Set as Wallpaper</source>
-        <translation type="unfinished"></translation>
+        <translation>வால்பேப்பராக அமைக்கவும்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2020"/>
-        <source>Set as Login Screen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2026"/>
+        <location filename="../model/foldermodel.cpp" line="1801"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>பண்புகள்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2030"/>
+        <location filename="../model/foldermodel.cpp" line="1804"/>
         <source>Change background</source>
-        <translation type="unfinished"></translation>
+        <translation>பின்னணியை மாற்றவும்</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2034"/>
+        <location filename="../model/foldermodel.cpp" line="1807"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>மீட்டமை</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2038"/>
+        <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>மறைக்கப்பட்ட கோப்புகளைக் காட்டு</translation>
     </message>
     <message>
-        <location filename="../model/foldermodel.cpp" line="2044"/>
+        <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2048"/>
-        <source>Icon Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2052"/>
-        <source>Huge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2056"/>
-        <source>Large</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2060"/>
-        <source>Normal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2064"/>
-        <source>Small</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../model/foldermodel.cpp" line="2086"/>
-        <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய சாளரத்தில் திறக்கவும்</translation>
     </message>
 </context>
 <context>
@@ -406,98 +250,98 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="147"/>
         <source>Empty folder</source>
-        <translation type="unfinished"></translation>
+        <translation>வெற்று கோப்புறை</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="200"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>திற</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="64"/>
         <location filename="../qml/FolderPage.qml" line="205"/>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>பண்புகள்</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="54"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>கோப்பு</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="57"/>
         <source>New Folder</source>
-        <translation type="unfinished"></translation>
+        <translation>புதிய கோப்புறை</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="71"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>வெளியேறு</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="77"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>தொகு</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="80"/>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation>அனைத்தையும் தெரிவுசெய்</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="87"/>
         <source>Cut</source>
-        <translation type="unfinished"></translation>
+        <translation>வெட்டு</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="92"/>
         <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>நகலெடு</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="97"/>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>ஒட்டு</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="103"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>உதவி</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="106"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>பற்றி</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>கோப்பு மேலாளர்</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>லிங்மூசுக்கு வடிவமைக்கப்பட்ட ஒரு கோப்பு மேலாளர்.</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 உருப்படி</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 உருப்படிகள்</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 தேர்ந்தெடுக்கப்பட்டது</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="300"/>
         <source>Empty Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>வெற்று குப்பை</translation>
     </message>
 </context>
 <context>
@@ -505,27 +349,27 @@
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="89"/>
         <source>No applications</source>
-        <translation type="unfinished"></translation>
+        <translation>பயன்பாடுகள் இல்லை</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="156"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>இயல்புநிலையாக அமைக்கவும்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>திற</translation>
     </message>
     <message>
         <location filename="../dialogs/openwithdialog.cpp" line="32"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>உடன் திறந்திருக்கும்</translation>
     </message>
 </context>
 <context>
@@ -533,32 +377,32 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="47"/>
         <source>Icons</source>
-        <translation type="unfinished"></translation>
+        <translation>சின்னங்கள்</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="85"/>
         <source>List</source>
-        <translation type="unfinished"></translation>
+        <translation>பட்டியல்</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="127"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>பெயர்</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="165"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>திகதி</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="189"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>வகை</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="227"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>அளவு</translation>
     </message>
 </context>
 <context>
@@ -566,53 +410,53 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="39"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation>வீடு</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="47"/>
         <source>Desktop</source>
-        <translation type="unfinished"></translation>
+        <translation>டெச்க்டாப்</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="55"/>
         <source>Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>ஆவணங்கள்</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="63"/>
         <source>Downloads</source>
-        <translation type="unfinished"></translation>
+        <translation>பதிவிறக்கங்கள்</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="71"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation>இசை</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="79"/>
         <source>Pictures</source>
-        <translation type="unfinished"></translation>
+        <translation>படங்கள்</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="87"/>
         <source>Videos</source>
-        <translation type="unfinished"></translation>
+        <translation>வீடியோக்கள்</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="93"/>
         <source>Trash</source>
-        <translation type="unfinished"></translation>
+        <translation>குப்பை</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="117"/>
         <location filename="../model/placesmodel.cpp" line="288"/>
         <source>Drives</source>
-        <translation type="unfinished"></translation>
+        <translation>இயக்கிகள்</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>கணிப்பொறி, கணிணி</translation>
     </message>
 </context>
 <context>
@@ -620,70 +464,70 @@
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="100"/>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>தட்டச்சு:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="113"/>
         <source>Location:</source>
-        <translation type="unfinished"></translation>
+        <translation>இடம்:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="124"/>
         <source>Size:</source>
-        <translation type="unfinished"></translation>
+        <translation>அளவு:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="131"/>
         <source>Calculating...</source>
-        <translation type="unfinished"></translation>
+        <translation>கணக்கிடுதல் ...</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="135"/>
         <source>Created:</source>
-        <translation type="unfinished"></translation>
+        <translation>உருவாக்கப்பட்டது:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="148"/>
         <source>Modified:</source>
-        <translation type="unfinished"></translation>
+        <translation>மாற்றியமைக்கப்பட்ட:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="161"/>
         <source>Accessed:</source>
-        <translation type="unfinished"></translation>
+        <translation>அணுகப்பட்டது:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ரத்துசெய்</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="189"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>சரி</translation>
     </message>
 </context>
 <context>
     <name>SideBar</name>
     <message>
-        <location filename="../qml/SideBar.qml" line="140"/>
+        <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>திற</translation>
+    </message>
+    <message>
+        <location filename="../qml/SideBar.qml" line="137"/>
+        <source>Open in new window</source>
+        <translation>புதிய சாளரத்தில் திறக்கவும்</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
-        <source>Open in new window</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/SideBar.qml" line="165"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>வெளியேற்ற</translation>
     </message>
     <message>
-        <location filename="../qml/SideBar.qml" line="178"/>
+        <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>உமிழ்தல்</translation>
     </message>
 </context>
 <context>
@@ -691,7 +535,7 @@
     <message>
         <location filename="../qml/main.qml" line="35"/>
         <source>File Manager</source>
-        <translation type="unfinished"></translation>
+        <translation>கோப்பு மேலாளர்</translation>
     </message>
 </context>
 </TS>
