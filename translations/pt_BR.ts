@@ -39,7 +39,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
-        <translation>%1 minutos atrás</translation>
+        <translation>1 minuto(s) atrás</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="24"/>
