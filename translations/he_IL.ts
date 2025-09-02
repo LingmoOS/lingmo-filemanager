@@ -21,7 +21,7 @@
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
         <source>OK</source>
-        <translation type="unfinished">אישור</translation>
+        <translation>אישור</translation>
     </message>
 </context>
 <context>
@@ -39,7 +39,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
-        <translation>לפני %1 דקות</translation>
+        <translation>%1 minutes ago</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="24"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
-        <translation>לפני %1 שעות</translation>
+        <translation>%1 hours ago</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="30"/>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
-        <translation>לפני %1 ימים</translation>
+        <translation>%1 days ago</translation>
     </message>
 </context>
 <context>
@@ -67,7 +67,7 @@
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
         <source>Do you want to delete it permanently?</source>
-        <translation type="unfinished">האם ברצונך למחוק אותו לצמיתות?</translation>
+        <translation>האם ברצונך למחוק את זה לצמיתות?</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation>%1 קבצים</translation>
+        <translation>%1 files</translation>
     </message>
 </context>
 <context>
@@ -129,17 +129,17 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
-        <translation type="unfinished">פריט אחד</translation>
+        <translation>%1 item</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
-        <translation>%1 פריטים</translation>
+        <translation>%1 items</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
-        <translation type="unfinished">הקובץ או התיקייה %1 לא קיימת.</translation>
+        <translation>הקובץ או התיקייה %1 לא קיימת.</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1268"/>
@@ -185,13 +185,13 @@
         <location filename="../model/foldermodel.cpp" line="903"/>
         <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>טקסט חדש</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1274"/>
         <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>מסמכים חדשים</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
@@ -241,12 +241,12 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>הצג קבצים מוסתרים</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>פתח בחלון חדש</translation>
     </message>
 </context>
 <context>
@@ -320,27 +320,27 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished">מנהל הקבצים</translation>
+        <translation>מנהל הקבצים</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>מנהל קבצים שנועד ל-LingmoOS.</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
-        <translation>פריט אחד</translation>
+        <translation>%1 item</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
-        <translation>%1 פריטים</translation>
+        <translation>%1 items</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
-        <translation type="unfinished">%1 נבחרו</translation>
+        <translation>%1 selected</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="300"/>
@@ -381,7 +381,7 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="47"/>
         <source>Icons</source>
-        <translation type="unfinished">אייקונים</translation>
+        <translation>סמלים</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="85"/>
@@ -455,12 +455,12 @@
         <location filename="../model/placesmodel.cpp" line="117"/>
         <location filename="../model/placesmodel.cpp" line="288"/>
         <source>Drives</source>
-        <translation type="unfinished">כוננים</translation>
+        <translation>כוננים</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>מחשב</translation>
     </message>
 </context>
 <context>
@@ -498,7 +498,7 @@
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="161"/>
         <source>Accessed:</source>
-        <translation type="unfinished">פעם אחרונה נפתח:</translation>
+        <translation>פעם אחרונה נפתח:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
@@ -516,22 +516,22 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">פתח</translation>
+        <translation>פתח</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>פתח בחלון חדש</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>פלוט</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>בטל טעינה</translation>
     </message>
 </context>
 <context>
