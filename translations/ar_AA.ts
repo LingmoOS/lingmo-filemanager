@@ -139,7 +139,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
-        <translation>الملف أو المجلد %1 غير موجود.</translation>
+        <translation>الملف أو المجلد %1 غير موجود</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1268"/>
@@ -185,13 +185,13 @@
         <location filename="../model/foldermodel.cpp" line="903"/>
         <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>نص جديد</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1274"/>
         <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>مستندات جديدة</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
@@ -241,12 +241,12 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>إظهار الملفات المخفية</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>افتح في شاشة جديدة</translation>
     </message>
 </context>
 <context>
@@ -320,12 +320,12 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished">مدير الملفات</translation>
+        <translation>مدير الملفات</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>مدير ملفات تم تصميمه لنظام تشغيل لينجمو</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>حاسب الي</translation>
     </message>
 </context>
 <context>
@@ -516,22 +516,22 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">فتح</translation>
+        <translation>فتح</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>افتح في شاشة جديدة</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>إخرج</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>الغاء التحميل</translation>
     </message>
 </context>
 <context>
