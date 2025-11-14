@@ -121,7 +121,7 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation>%1 ملف</translation>
+        <translation>%1 ملفات</translation>
     </message>
 </context>
 <context>
@@ -134,7 +134,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
-        <translation>%1 عنصر</translation>
+        <translation>%1 عناصر</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
