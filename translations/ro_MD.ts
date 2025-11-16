@@ -21,7 +21,7 @@
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
         <source>OK</source>
-        <translation>Бине</translation>
+        <translation>Конфирмаре</translation>
     </message>
 </context>
 <context>
@@ -508,7 +508,7 @@
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="189"/>
         <source>OK</source>
-        <translation>Бине</translation>
+        <translation>Конфирмаре</translation>
     </message>
 </context>
 <context>
