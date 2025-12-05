@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="28"/>
         <source>New folder name</source>
-        <translation>Нуме ноий мапе</translation>
+        <translation>Нуме пентру мапэ ноуэ</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="55"/>
