@@ -67,17 +67,17 @@
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="56"/>
         <source>Do you want to delete it permanently?</source>
-        <translation type="unfinished"></translation>
+        <translation>Apakah Anda ingin menghapusnya secara permanen?</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
         <source>Cancel</source>
-        <translation type="unfinished">Batal</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
         <source>Delete</source>
-        <translation type="unfinished">Hapus</translation>
+        <translation>Hapus</translation>
     </message>
 </context>
 <context>
@@ -116,12 +116,12 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="194"/>
         <source>Properties</source>
-        <translation type="unfinished">Properti</translation>
+        <translation>Properti</translation>
     </message>
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation type="unfinished">%1 berkas</translation>
+        <translation>%1 berkas</translation>
     </message>
 </context>
 <context>
@@ -139,7 +139,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
         <source>The file or folder %1 does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas atau folder %1 tidak ada.</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1268"/>
@@ -158,7 +158,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1763"/>
         <source>Open with</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka dengan</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1766"/>
@@ -185,13 +185,13 @@
         <location filename="../model/foldermodel.cpp" line="903"/>
         <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Teks Baru</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1274"/>
         <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished"></translation>
+        <translation>Dokumen Baru</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
@@ -236,17 +236,17 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1807"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulihkan</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1810"/>
         <source>Show hidden files</source>
-        <translation type="unfinished"></translation>
+        <translation>Tampilkan berkas tersembunyi</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka di jendela baru</translation>
     </message>
 </context>
 <context>
@@ -270,62 +270,62 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="54"/>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation>Berkas</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="57"/>
         <source>New Folder</source>
-        <translation type="unfinished">Folder Baru</translation>
+        <translation>Folder Baru</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="71"/>
         <source>Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluar</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="77"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Edit</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="80"/>
         <source>Select All</source>
-        <translation type="unfinished">Pilih Semua</translation>
+        <translation>Pilih Semua</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="87"/>
         <source>Cut</source>
-        <translation type="unfinished">Potong</translation>
+        <translation>Potong</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="92"/>
         <source>Copy</source>
-        <translation type="unfinished">Salin</translation>
+        <translation>Salin</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="97"/>
         <source>Paste</source>
-        <translation type="unfinished">Tempel</translation>
+        <translation>Tempel</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="103"/>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Bantuan</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="106"/>
         <source>About</source>
-        <translation type="unfinished"></translation>
+        <translation>Tentang</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="114"/>
         <source>File Manager</source>
-        <translation type="unfinished">Manajer Berkas</translation>
+        <translation>Pengelola Berkas</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pengelola berkas yang dirancang untuk LingmoOS.</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
@@ -353,27 +353,27 @@
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="89"/>
         <source>No applications</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidak ada aplikasi</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="156"/>
         <source>Set as default</source>
-        <translation type="unfinished"></translation>
+        <translation>Tetapkan sebagai bawaan</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
-        <translation type="unfinished">Batal</translation>
+        <translation>Batal</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
         <source>Open</source>
-        <translation type="unfinished">Buka</translation>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../dialogs/openwithdialog.cpp" line="32"/>
         <source>Open With</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka Dengan</translation>
     </message>
 </context>
 <context>
@@ -401,7 +401,7 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="189"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Jenis</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="227"/>
@@ -455,12 +455,12 @@
         <location filename="../model/placesmodel.cpp" line="117"/>
         <location filename="../model/placesmodel.cpp" line="288"/>
         <source>Drives</source>
-        <translation type="unfinished"></translation>
+        <translation>Drive</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>Komputer</translation>
     </message>
 </context>
 <context>
@@ -524,22 +524,22 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">Buka</translation>
+        <translation>Buka</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Buka di jendela baru</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation>Keluarkan</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation>Lepas mount</translation>
     </message>
 </context>
 <context>

@@ -39,7 +39,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="20"/>
         <source>%1 minutes ago</source>
-        <translation>%1 minutos atrás</translation>
+        <translation>1 minuto(s) atrás</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="24"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
-        <translation>%1 horas atrás</translation>
+        <translation>1 hora(s) atrás</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="30"/>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
-        <translation>%1 dias atrás</translation>
+        <translation>1 dia(s) atrás</translation>
     </message>
 </context>
 <context>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation>1% de arquivos</translation>
+        <translation>1 arquivo(s)</translation>
     </message>
 </context>
 <context>
@@ -129,12 +129,12 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 item</source>
-        <translation>%1 item</translation>
+        <translation>1 item(s)</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
-        <translation>%1 itens</translation>
+        <translation>1 item</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
@@ -330,17 +330,17 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
-        <translation>%1 item</translation>
+        <translation>1 item</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
-        <translation>%1 itens</translation>
+        <translation>1 item</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
-        <translation>%1 selecionado(s)</translation>
+        <translation>1 selecionado(s)</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="300"/>

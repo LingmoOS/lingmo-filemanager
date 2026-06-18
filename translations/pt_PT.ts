@@ -246,7 +246,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="1815"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir numa janela nova</translation>
     </message>
 </context>
 <context>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>Um gestor de ficheiros projetado para o LingmoOS.</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
@@ -529,7 +529,7 @@
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
         <source>Open in new window</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrir numa janela nova</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>

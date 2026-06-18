@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="28"/>
         <source>New folder name</source>
-        <translation type="unfinished">新しいフォルダ名</translation>
+        <translation>新しいフォルダ名</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="55"/>
@@ -16,7 +16,7 @@
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="81"/>
         <source>Cancel</source>
-        <translation type="unfinished">取り消し</translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/CreateFolderDialog.qml" line="87"/>
@@ -49,7 +49,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
-        <translation>%1時間前</translation>
+        <translation>%1 時間前</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="30"/>
@@ -59,7 +59,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="32"/>
         <source>%1 days ago</source>
-        <translation>%1日前</translation>
+        <translation>%1 日前</translation>
     </message>
 </context>
 <context>
@@ -72,7 +72,7 @@
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="65"/>
         <source>Cancel</source>
-        <translation type="unfinished">取り消し</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/DeleteDialog.qml" line="71"/>
@@ -98,12 +98,12 @@
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="77"/>
         <source>Do you want to permanently delete all files from the Trash?</source>
-        <translation type="unfinished">ごみ箱からすべてのファイルを永久に削除しますか?</translation>
+        <translation>ごみ箱からすべてのファイルを永久に削除しますか?</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="86"/>
         <source>Cancel</source>
-        <translation type="unfinished">取り消し</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/EmptyTrashDialog.qml" line="92"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation>% 1ファイル</translation>
+        <translation>% 1 ファイル</translation>
     </message>
 </context>
 <context>
@@ -185,13 +185,13 @@
         <location filename="../model/foldermodel.cpp" line="903"/>
         <location filename="../model/foldermodel.cpp" line="1779"/>
         <source>New Text</source>
-        <translation type="unfinished">新しいテキスト</translation>
+        <translation>新しいテキスト</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1274"/>
         <location filename="../model/foldermodel.cpp" line="1778"/>
         <source>New Documents</source>
-        <translation type="unfinished">新しいドキュメント</translation>
+        <translation type="unfinished">新規作成</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="1783"/>
@@ -310,7 +310,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="103"/>
         <source>Help</source>
-        <translation type="unfinished">ヘルプ</translation>
+        <translation>ヘルプ</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="106"/>
@@ -325,7 +325,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="115"/>
         <source>A file manager designed for LingmoOS.</source>
-        <translation type="unfinished"></translation>
+        <translation>LingmoOS向けにデザインされたファイルマネージャーです。</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
@@ -340,7 +340,7 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="275"/>
         <source>%1 selected</source>
-        <translation type="unfinished">%1 が選択ました</translation>
+        <translation>%1 が選択されました</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="300"/>
@@ -363,7 +363,7 @@
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="171"/>
         <source>Cancel</source>
-        <translation type="unfinished">取り消し</translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/OpenWithDialog.qml" line="180"/>
@@ -386,7 +386,7 @@
     <message>
         <location filename="../qml/OptionsMenu.qml" line="85"/>
         <source>List</source>
-        <translation type="unfinished">リスト</translation>
+        <translation>リスト</translation>
     </message>
     <message>
         <location filename="../qml/OptionsMenu.qml" line="127"/>
@@ -414,7 +414,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="39"/>
         <source>Home</source>
-        <translation>家</translation>
+        <translation>ホーム</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="47"/>
@@ -424,7 +424,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="55"/>
         <source>Documents</source>
-        <translation type="unfinished">書類</translation>
+        <translation type="unfinished">ドキュメント</translation>
     </message>
     <message>
         <location filename="../model/placesmodel.cpp" line="63"/>
@@ -460,7 +460,7 @@
     <message>
         <location filename="../model/placesmodel.cpp" line="169"/>
         <source>Computer</source>
-        <translation type="unfinished"></translation>
+        <translation>コンピューター</translation>
     </message>
 </context>
 <context>
@@ -488,22 +488,22 @@
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="135"/>
         <source>Created:</source>
-        <translation type="unfinished">作成時間：</translation>
+        <translation>作成日時:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="148"/>
         <source>Modified:</source>
-        <translation>変更時間：</translation>
+        <translation>変更時間:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="161"/>
         <source>Accessed:</source>
-        <translation>アクセス時間：</translation>
+        <translation>アクセス時間:</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="183"/>
         <source>Cancel</source>
-        <translation type="unfinished">取り消し</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../qml/Dialogs/PropertiesDialog.qml" line="189"/>
@@ -516,22 +516,22 @@
     <message>
         <location filename="../qml/SideBar.qml" line="126"/>
         <source>Open</source>
-        <translation type="unfinished">開く</translation>
+        <translation>開く</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="137"/>
         <source>Open in new window</source>
-        <translation type="unfinished">新しいウィンドウで開く</translation>
+        <translation>新しいウィンドウで開く</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="151"/>
         <source>Eject</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">差し込まれているカードの取り出し</translation>
     </message>
     <message>
         <location filename="../qml/SideBar.qml" line="164"/>
         <source>Unmount</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ドライブの取り出し</translation>
     </message>
 </context>
 <context>

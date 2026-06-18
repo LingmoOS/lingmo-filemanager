@@ -49,7 +49,7 @@
     <message>
         <location filename="../helper/datehelper.cpp" line="26"/>
         <source>%1 hours ago</source>
-        <translation>%1小时前</translation>
+        <translation>%1 小时前</translation>
     </message>
     <message>
         <location filename="../helper/datehelper.cpp" line="30"/>
@@ -121,7 +121,7 @@
     <message>
         <location filename="../dialogs/filepropertiesdialog.cpp" line="243"/>
         <source>%1 files</source>
-        <translation>%1 项</translation>
+        <translation>%1 文件</translation>
     </message>
 </context>
 <context>
@@ -134,7 +134,7 @@
     <message>
         <location filename="../model/foldermodel.cpp" line="278"/>
         <source>%1 items</source>
-        <translation>%1 项</translation>
+        <translation type="unfinished">%1 items</translation>
     </message>
     <message>
         <location filename="../model/foldermodel.cpp" line="383"/>
@@ -330,12 +330,12 @@
     <message>
         <location filename="../qml/FolderPage.qml" line="268"/>
         <source>%1 item</source>
-        <translation>%1 项</translation>
+        <translation type="unfinished">%1 item</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="269"/>
         <source>%1 items</source>
-        <translation>%1 项</translation>
+        <translation type="unfinished">%1 items</translation>
     </message>
     <message>
         <location filename="../qml/FolderPage.qml" line="275"/>
