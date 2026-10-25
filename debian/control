@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Lingmo OS Team <team@lingmo.org>
 Build-Depends: cmake,
                debhelper-compat (= 13),
-               lingmo-sdk,
+               lingmo-sdk-dev,
                lingmo-framework,
                libarchive-dev,
                libbz2-dev,
