@@ -1,0 +1,33 @@
+Source: lingmo-filemanager
+Section: devel
+Priority: optional
+Maintainer: Lingmo OS Team <team@lingmo.org>
+Build-Depends: cmake,
+               debhelper-compat (= 14),
+               lingmo-toolkit,
+               lingmo-framework,
+               libarchive-dev,
+               libbz2-dev,
+               libfuse3-dev,
+               libicu-dev,
+               liblzfse-dev,
+               liblzma-dev,
+               libmtp-dev,
+               libsmbclient-dev,
+               libssh-dev,
+               libudev-dev,
+               libzip-dev,
+               pkg-config,
+               zlib1g-dev
+Standards-Version: 4.7.2
+Homepage: https://github.com/lingmoos/filemanager
+
+Package: lingmo-filemanager
+Architecture: any
+Depends: udisks2,
+         fuse3,
+         lingmo-toolkit,
+         lingmo-framework,
+         ${misc:Depends},
+         ${shlibs:Depends}
+Description: Lingmo OS File Manager
