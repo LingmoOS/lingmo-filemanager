@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(GNUInstallDirs)
 include(CTest)
 
-find_package(LingmoToolkit REQUIRED)
+find_package(LingmoSDK REQUIRED)
 find_package(CutefishFiles REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(ICU REQUIRED IMPORTED_TARGET icu-uc icu-i18n)
@@ -48,7 +48,7 @@ add_library(mountd-core STATIC
 target_include_directories(mountd-core PUBLIC mountd)
 target_include_directories(mountd-core PUBLIC ${LZFSE_INCLUDE_DIR})
 target_link_libraries(mountd-core PUBLIC
-    Lingmo::ToolkitBase
+    Lingmo::SDKBase
     PkgConfig::Fuse3
     PkgConfig::LibSsh
     PkgConfig::SmbClient
@@ -87,7 +87,7 @@ add_library(fileoperations-core STATIC
     daemon/fileoperationsservice.cpp
 )
 target_include_directories(fileoperations-core PUBLIC ${PROJECT_SOURCE_DIR} daemon ${LIBZIP_INCLUDE_DIR})
-target_link_libraries(fileoperations-core PUBLIC Lingmo::ToolkitBase Lingmo::Files ${LIBZIP_LIBRARY}
+target_link_libraries(fileoperations-core PUBLIC Lingmo::SDKBase Lingmo::Files ${LIBZIP_LIBRARY}
                       PkgConfig::LibArchive)
 
 add_executable(lingmo-filemanager-daemon daemon/main.cpp)
@@ -125,7 +125,7 @@ add_library(fm-core STATIC
     src/ops/operations.cpp
 )
 target_include_directories(fm-core PUBLIC src)
-target_link_libraries(fm-core PUBLIC Lingmo::Toolkit Lingmo::Files Lingmo::FilesThumbnails)
+target_link_libraries(fm-core PUBLIC Lingmo::SDK Lingmo::Files Lingmo::FilesThumbnails)
 
 # The browser window, its views and dialogs.
 add_library(fm-ui STATIC

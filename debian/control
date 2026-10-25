@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Lingmo OS Team <team@lingmo.org>
 Build-Depends: cmake,
                debhelper-compat (= 14),
-               lingmo-toolkit,
+               lingmo-sdk,
                lingmo-framework,
                libarchive-dev,
                libbz2-dev,
@@ -26,7 +26,7 @@ Package: lingmo-filemanager
 Architecture: any
 Depends: udisks2,
          fuse3,
-         lingmo-toolkit,
+         lingmo-sdk,
          lingmo-framework,
          ${misc:Depends},
          ${shlibs:Depends}
