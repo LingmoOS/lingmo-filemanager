@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-FileCopyrightText: 2026 Reion Wong <reionwong@gmail.com>
-// SPDX-FileCopyrightText: 2026 LingmoOS Contributors
+# SPDX-FileCopyrightText: 2026 LingmoOS Contributors
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
 # Makes hfsplus.img.gz, the HFS+ volume the disk image tests read. Run as root on

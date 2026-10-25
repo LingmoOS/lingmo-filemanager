@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2026 Reion Wong <reionwong@gmail.com>
-// SPDX-FileCopyrightText: 2026 LingmoOS Contributors
+# SPDX-FileCopyrightText: 2026 LingmoOS Contributors
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 cmake_minimum_required(VERSION 3.16)
