@@ -12,7 +12,7 @@ include(GNUInstallDirs)
 include(CTest)
 
 find_package(LingmoSDK REQUIRED)
-find_package(CutefishFiles REQUIRED)
+find_package(LingmoFiles REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(ICU REQUIRED IMPORTED_TARGET icu-uc icu-i18n)
 

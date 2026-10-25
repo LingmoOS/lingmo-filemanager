@@ -10,7 +10,7 @@ target_compile_definitions(mountd-tests PRIVATE FIXTURE_DIR="${CMAKE_CURRENT_SOU
 gtest_discover_tests(mountd-tests)
 
 add_executable(fileoperationsdaemon-tests fileoperationsdaemon_test.cpp)
-target_link_libraries(fileoperationsdaemon-tests PRIVATE Lingmo::ToolkitBase PkgConfig::LibArchive GTest::gtest_main)
+target_link_libraries(fileoperationsdaemon-tests PRIVATE Lingmo::SDKBase PkgConfig::LibArchive GTest::gtest_main)
 target_compile_definitions(fileoperationsdaemon-tests PRIVATE
     FILEMANAGER_DAEMON="$<TARGET_FILE:lingmo-filemanager-daemon>")
 add_dependencies(fileoperationsdaemon-tests lingmo-filemanager-daemon)
