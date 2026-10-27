@@ -6,6 +6,9 @@ cmake_minimum_required(VERSION 3.16)
 
 project(filemanager LANGUAGES C CXX)
 
+# The sources use the files:: alias for Lingmo::Files.
+add_compile_options(-include${CMAKE_CURRENT_SOURCE_DIR}/src/namespace_compat.h)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
