@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-namespace Lingmo::files {
+namespace Lingmo::Files {
 class Task;
 }
 

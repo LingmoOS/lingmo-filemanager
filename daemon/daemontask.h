@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-namespace Lingmo::files {
+namespace Lingmo::Files {
 class Task;
 struct TaskRequest;
 }
@@ -24,7 +24,7 @@ class ArchiveJob;
 class DaemonTask
 {
 public:
-    DaemonTask(Lingmo::base::dbus::Connection *bus, std::string objectPath, Lingmo::files::Task *task);
+    DaemonTask(Lingmo::base::dbus::Connection *bus, std::string objectPath, Lingmo::Files::Task *task);
     // operation 0 compresses, 1 extracts.
     DaemonTask(Lingmo::base::dbus::Connection *bus, std::string objectPath, int operation,
                std::vector<std::string> sources, std::string outputPath);
@@ -62,7 +62,7 @@ private:
     Lingmo::base::dbus::VariantMap snapshot();
 
     std::string m_objectPath;
-    Lingmo::files::Task *m_task = nullptr;
+    Lingmo::Files::Task *m_task = nullptr;
     std::unique_ptr<ArchiveJob> m_archive;
     Lingmo::base::dbus::Object m_object;
     Lingmo::base::dbus::VariantMap m_snapshot;
