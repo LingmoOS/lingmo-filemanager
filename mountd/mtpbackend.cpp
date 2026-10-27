@@ -93,7 +93,7 @@ int MtpBackend::lastError(int fallback)
     if (m_device) {
         if (LIBMTP_error_t *stack = LIBMTP_Get_Errorstack(m_device)) {
             for (LIBMTP_error_t *error = stack; error; error = error->next)
-                CF_WARNING(lcMtp) << "libmtp: " << error->error_text;
+                LM_WARNING(lcMtp) << "libmtp: " << error->error_text;
         }
         LIBMTP_Clear_Errorstack(m_device);
     }
