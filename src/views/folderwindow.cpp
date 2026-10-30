@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
+#include <optional>
 
 namespace fm {
 
@@ -951,8 +952,24 @@ void FolderWindow::updateHeader()
 void FolderWindow::updateBackground()
 {
     const bool active = m_window->isActive();
-    m_window->setBackgroundColor(active ? ui::ColorId::TranslucentWindowBackground
-                                        : ui::ColorId::TranslucentWindowBackgroundInactive);
+    // The sidebar is a 70% tint of the window background; painting that
+    // background at 0.8 below it composites to nearly opaque. Over a
+    // compositor that draws glass the background stays transparent, so the
+    // sidebar tints the blurred desktop, as the settings window does.
+    if (m_window->backgroundGlassAvailable()) {
+        m_window->setBackgroundColor(ui::Color{0, 0, 0, 0});
+        // GlassMaterial's defaults are FishUI's glass, tinted 12%.
+        ui::GlassMaterial glass;
+        if (ui::Theme::current().darkMode) {
+            glass.tintRed = glass.tintGreen = 0.18;
+            glass.tintBlue = 0.20;
+        }
+        m_window->setBackgroundGlass(glass);
+    } else {
+        m_window->setBackgroundGlass(std::nullopt);
+        m_window->setBackgroundColor(active ? ui::ColorId::TranslucentWindowBackground
+                                            : ui::ColorId::TranslucentWindowBackgroundInactive);
+    }
     updateBlur();
     // Views colour their text by it as they lay out.
     m_window->requestLayout();
