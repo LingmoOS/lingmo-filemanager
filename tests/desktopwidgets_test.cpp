@@ -6,10 +6,14 @@
 
 #include "desktop/widgets/widget.h"
 #include "desktop/widgets/widgetconfig.h"
+#include "desktop/widgets/widgetgallery.h"
 #include "desktop/widgets/widgetlayer.h"
 #include "ui/application.h"
+#include "ui/test_input.h"
 #include "ui/view.h"
 #include "ui/window.h"
+
+#include <cmath>
 
 #include <gtest/gtest.h>
 
@@ -22,11 +26,12 @@ class WidgetLayerTest : public testing::Test
 protected:
     ui::Window window;
     fm::WidgetLayer* layer = nullptr;
+    ui::View* rootView = nullptr;
 
     void SetUp() override
     {
         auto root = std::make_unique<ui::View>();
-        ui::View* rootView = root.get();
+        rootView = root.get();
         window.setContentView(std::move(root));
         window.resize({800, 600});
         window.show();
@@ -121,4 +126,41 @@ TEST_F(WidgetLayerTest, EditingReachesEveryCard)
     layer->setEditing(false);
     for (fm::DesktopWidget* widget : layer->widgets())
         EXPECT_FALSE(widget->editing());
+}
+
+TEST_F(WidgetLayerTest, CardsDragAndSnapToTheGrid)
+{
+    layer->addWidget(fm::WidgetKind::Clock);
+    window.grab();
+    fm::DesktopWidget* card = layer->widgets().front();
+    const fm::WidgetPlacement before = card->placement();
+
+    const ui::PointF press = card->mapToWindow({40, 12});
+    ui::TestInput::press(window, press);
+    ui::TestInput::movePointer(window, {press.x + 64, press.y + 40});
+    ui::TestInput::release(window, {press.x + 64, press.y + 40});
+    window.grab();
+
+    const fm::WidgetPlacement after = card->placement();
+    EXPECT_NE(after.x, before.x);
+    EXPECT_NE(after.y, before.y);
+    // Released, a card sits on the 8 px grid.
+    EXPECT_DOUBLE_EQ(std::fmod(after.x, 8.0), 0.0);
+    EXPECT_DOUBLE_EQ(std::fmod(after.y, 8.0), 0.0);
+}
+
+TEST_F(WidgetLayerTest, TheGalleryDrawsOverTheDesktop)
+{
+    auto gallery = std::make_unique<fm::WidgetGallery>();
+    gallery->setGeometry({0, 0, 800, 600});
+    gallery->retranslate();
+    gallery->setVisible(true);
+    rootView->addChild(std::move(gallery));
+    window.grab();
+
+    // The desktop under the dim still works: a card can be added while the
+    // gallery is open.
+    layer->addWidget(fm::WidgetKind::System);
+    EXPECT_EQ(layer->widgets().size(), 1u);
+    window.grab();
 }
