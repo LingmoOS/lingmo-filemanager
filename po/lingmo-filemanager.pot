@@ -1196,3 +1196,67 @@ msgstr ""
 #: data/lingmo-filemanager.desktop
 msgid "Browse and manage your files"
 msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Edit Widgets…"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Remove Widget"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Widget Size"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Small"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Medium"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Large"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Widgets"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Add widgets to your desktop"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Done"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Clock"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Calendar"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "System"
+msgstr ""
+
+#: src/desktop/widgets/systemwidget.cpp
+msgid "CPU"
+msgstr ""
+
+#: src/desktop/widgets/systemwidget.cpp
+msgid "Memory"
+msgstr ""
+
+#: src/desktop/widgets/calendarwidget.cpp
+msgid "Previous Month"
+msgstr ""
+
+#: src/desktop/widgets/calendarwidget.cpp
+msgid "Next Month"
+msgstr ""

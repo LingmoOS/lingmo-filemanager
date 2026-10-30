@@ -9,6 +9,9 @@
 #include "desktop/desktopmenuexporter.h"
 #include "dialogs/archivepasswordprompt.h"
 #include "desktop/desktopview.h"
+#include "desktop/widgets/widgetconfig.h"
+#include "desktop/widgets/widgetgallery.h"
+#include "desktop/widgets/widgetlayer.h"
 #include "ops/operations.h"
 #include "views/foldermenu.h"
 #include "views/folderwindow.h"
@@ -64,6 +67,10 @@ protected:
     {
         if (m_desktop->m_view)
             m_desktop->m_view->setGeometry(localRect());
+        if (m_desktop->m_widgets)
+            m_desktop->m_widgets->setGeometry(localRect());
+        if (m_desktop->m_gallery)
+            m_desktop->m_gallery->setGeometry(localRect());
     }
 
 private:
@@ -90,6 +97,24 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
     m_view = view.get();
     m_root->addChild(std::move(view));
 
+    // Above the icons for the pointer, but the layer takes none itself: a press
+    // between the cards still reaches the desktop.
+    auto widgets = std::make_unique<WidgetLayer>();
+    m_widgets = widgets.get();
+    widgets->setDesktopWindow(m_window.get());
+    widgets->onChanged = [this] { m_saveWidgets.start(); };
+    widgets->onEditWidgets = [this] { openWidgetGallery(); };
+    m_root->addChild(std::move(widgets));
+
+    auto gallery = std::make_unique<WidgetGallery>();
+    m_gallery = gallery.get();
+    gallery->onAdd = [this](WidgetKind kind) {
+        m_widgets->addWidget(kind);
+        m_saveWidgets.start();
+    };
+    gallery->onDone = [this] { closeWidgetGallery(); };
+    m_root->addChild(std::move(gallery));
+
     base::Settings settings(settingsPath());
     m_view->setMaximumIconSize(double(settings.intValue("Desktop/maximumIconSize", 256)));
     m_view->setIconSize(double(settings.intValue("Desktop/iconSize", 64)));
@@ -108,6 +133,9 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
     m_saveLayout.setSingleShot(true);
     m_saveLayout.setInterval(std::chrono::milliseconds(500));
     m_saveLayout.onTimeout = [this] { saveLayout(); };
+    m_saveWidgets.setSingleShot(true);
+    m_saveWidgets.setInterval(std::chrono::milliseconds(500));
+    m_saveWidgets.onTimeout = [this] { saveWidgetLayout(); };
     m_restoreLayout.setSingleShot(true);
     m_restoreLayout.setInterval(std::chrono::milliseconds(150));
     m_restoreLayout.onTimeout = [this] { loadLayout(); };
@@ -123,8 +151,12 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
     m_window->onWorkAreaChanged = [this] {
         const ui::RectF area = m_window->workArea();
         m_view->setWorkArea(area);
+        if (m_widgets)
+            m_widgets->setWorkArea(area);
         if (!m_layoutLoaded)
             m_restoreLayout.start();
+        if (!m_widgetsLoaded)
+            loadWidgetLayout();
     };
     m_window->onActiveChanged = [this] {
         // Not while a name is being edited: taking the keys back closes it.
@@ -279,9 +311,15 @@ void DesktopWindow::placeOn(const std::string& outputName)
     if (moved) {
         // Each output keeps its own layout.
         m_layoutLoaded = false;
+        m_widgetsLoaded = false;
         m_saveLayout.stop();
+        m_saveWidgets.stop();
         m_restoreLayout.start();
     }
+    if (!m_widgetsLoaded)
+        loadWidgetLayout();
+    if (m_widgets)
+        m_widgets->updateBlur();
 }
 
 std::string DesktopWindow::layoutKey() const
@@ -315,6 +353,54 @@ void DesktopWindow::loadLayout()
     m_saveLayout.start();
 }
 
+std::string DesktopWindow::widgetLayoutKey() const
+{
+    std::string name = m_output.empty() ? std::string("primary") : m_output;
+    for (char& c : name) {
+        if (c == '/' || c == '\\')
+            c = '_';
+    }
+    return "DesktopWidgets/layout.v1." + name;
+}
+
+void DesktopWindow::loadWidgetLayout()
+{
+    if (m_widgetsLoaded || !m_widgets)
+        return;
+    base::Settings settings(settingsPath());
+    m_widgets->setPlacements(parseWidgets(settings.stringValue(widgetLayoutKey())));
+    m_widgetsLoaded = true;
+}
+
+void DesktopWindow::saveWidgetLayout()
+{
+    if (!m_widgetsLoaded || !m_widgets)
+        return;
+    base::Settings settings(settingsPath());
+    settings.setValue(widgetLayoutKey(), serializeWidgets(m_widgets->placements()));
+}
+
+void DesktopWindow::openWidgetGallery()
+{
+    if (!m_gallery || !m_widgets)
+        return;
+    m_gallery->setGeometry(m_root->localRect());
+    m_gallery->retranslate();
+    m_gallery->setVisible(true);
+    m_gallery->setFocus(ui::FocusReason::Other);
+    m_widgets->setEditing(true);
+}
+
+void DesktopWindow::closeWidgetGallery()
+{
+    if (!m_gallery)
+        return;
+    m_gallery->setVisible(false);
+    if (m_widgets)
+        m_widgets->setEditing(false);
+    m_view->contentView()->setFocus();
+}
+
 void DesktopWindow::saveLayout()
 {
     if (!m_layoutLoaded || m_restoring || m_restoreLayout.isActive())
@@ -340,11 +426,19 @@ void DesktopWindow::retranslate()
     m_archivePassword->retranslate();
     if (m_menuExporter)
         m_menuExporter->update();
+    if (m_widgets)
+        m_widgets->retranslate();
+    if (m_gallery)
+        m_gallery->retranslate();
 }
 
 void DesktopWindow::showContextMenu(ui::PointF position)
 {
     m_menu = createFolderMenu(*m_model);
+    if (!m_model->hasSelection()) {
+        m_menu->addSeparator();
+        m_menu->addItem(tr("Edit Widgets…"), [this] { openWidgetGallery(); });
+    }
     m_menu->popup(m_window.get(), position);
 }
 

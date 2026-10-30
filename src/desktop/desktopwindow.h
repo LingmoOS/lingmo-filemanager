@@ -29,6 +29,8 @@ class DesktopMenuExporter;
 class DesktopRoot;
 class FileManagerHost;
 class PreviewClient;
+class WidgetGallery;
+class WidgetLayer;
 
 // The desktop: the icons of ~/Desktop in a transparent window with the
 // desktop role on the primary output, over the compositor's wallpaper, on
@@ -43,6 +45,7 @@ public:
 
     ui::Window* window() const { return m_window.get(); }
     DesktopGridView* view() const { return m_view; }
+    WidgetLayer* widgets() const { return m_widgets; }
     FolderModel& model() { return *m_model; }
 
     // FolderModelHost.
@@ -65,6 +68,11 @@ private:
     void loadLayout();
     void saveLayout();
     std::string layoutKey() const;
+    void loadWidgetLayout();
+    void saveWidgetLayout();
+    std::string widgetLayoutKey() const;
+    void openWidgetGallery();
+    void closeWidgetGallery();
 
     ui::TrustedConnection* m_connection;
     FileManagerHost& m_host;
@@ -72,6 +80,8 @@ private:
     std::unique_ptr<ui::Window> m_window;
     DesktopRoot* m_root = nullptr;
     DesktopGridView* m_view = nullptr;
+    WidgetLayer* m_widgets = nullptr;
+    WidgetGallery* m_gallery = nullptr;
     std::unique_ptr<PreviewClient> m_preview;
     std::unique_ptr<ui::Menu> m_menu;
     std::unique_ptr<DesktopMenuExporter> m_menuExporter;
@@ -80,7 +90,9 @@ private:
     bool m_layoutLoaded = false;
     bool m_restoring = false;
     bool m_activated = false;
+    bool m_widgetsLoaded = false;
     base::Timer m_saveLayout;
+    base::Timer m_saveWidgets;
     base::Timer m_restoreLayout;
     base::Timer m_menuUpdate;
     base::dbus::Proxy m_display;

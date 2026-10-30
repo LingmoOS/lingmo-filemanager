@@ -159,6 +159,13 @@ add_library(fm-ui STATIC
     src/desktop/desktopmenuexporter.cpp
     src/desktop/desktopview.cpp
     src/desktop/desktopwindow.cpp
+    src/desktop/widgets/calendarwidget.cpp
+    src/desktop/widgets/clockwidget.cpp
+    src/desktop/widgets/systemwidget.cpp
+    src/desktop/widgets/widget.cpp
+    src/desktop/widgets/widgetconfig.cpp
+    src/desktop/widgets/widgetgallery.cpp
+    src/desktop/widgets/widgetlayer.cpp
     src/chooser/filechooser.cpp
     src/preview/imageinfo.cpp
     src/preview/imagepreview.cpp

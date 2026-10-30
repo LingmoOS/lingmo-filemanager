@@ -1181,3 +1181,67 @@ msgstr "文件管理器"
 #: data/lingmo-filemanager.desktop
 msgid "Browse and manage your files"
 msgstr "浏览并管理您的文件"
+
+#: src/desktop/desktopwindow.cpp
+msgid "Edit Widgets…"
+msgstr "编辑小组件…"
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Remove Widget"
+msgstr "移除小组件"
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Widget Size"
+msgstr "小组件尺寸"
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Small"
+msgstr "小"
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Medium"
+msgstr "中"
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Large"
+msgstr "大"
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Widgets"
+msgstr "小组件"
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Add widgets to your desktop"
+msgstr "把小组件添加到桌面"
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Done"
+msgstr "完成"
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Clock"
+msgstr "时钟"
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Calendar"
+msgstr "日历"
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "System"
+msgstr "系统"
+
+#: src/desktop/widgets/systemwidget.cpp
+msgid "CPU"
+msgstr "CPU"
+
+#: src/desktop/widgets/systemwidget.cpp
+msgid "Memory"
+msgstr "内存"
+
+#: src/desktop/widgets/calendarwidget.cpp
+msgid "Previous Month"
+msgstr "上个月"
+
+#: src/desktop/widgets/calendarwidget.cpp
+msgid "Next Month"
+msgstr "下个月"

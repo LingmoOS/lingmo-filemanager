@@ -26,6 +26,18 @@ cmake --build build
 sudo cmake --install build
 ```
 
+## Desktop widgets
+
+The desktop holds clock, calendar and system widgets beside its icons.
+Right-click an empty spot and choose **Edit Widgets…** to open the gallery,
+then pick a card. Drag a card to move it (it snaps to the grid and stays in
+the work area), or right-click it to remove it or change its size. The layout
+is saved per output in `filemanager.conf`.
+
+The cards ask the compositor for a backdrop blur behind their silhouettes
+(`lingmo_surface_blur_v1`) and fall back to an opaque body when the compositor
+does not have it.
+
 ## Tests
 
 ```shell
