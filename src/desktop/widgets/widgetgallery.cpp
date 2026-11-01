@@ -53,6 +53,15 @@ void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
         }
         return;
     }
+    case WidgetKind::Battery: {
+        const double y = rect.y + rect.height * 0.36;
+        painter.fillRoundedRect({rect.x, y, rect.width * 0.74, rect.height * 0.26}, 3, quiet);
+        painter.fillRoundedRect({rect.x, y, rect.width * 0.46, rect.height * 0.26}, 3, accent);
+        painter.fillRoundedRect({rect.x + rect.width * 0.78, y + rect.height * 0.07,
+                                 rect.width * 0.04, rect.height * 0.12},
+                                1, quiet);
+        return;
+    }
     }
 }
 
@@ -86,7 +95,11 @@ public:
         case WidgetKind::System:
             m_title->setText(tr("System"));
             break;
+        case WidgetKind::Battery:
+            m_title->setText(tr("Battery"));
+            break;
         }
+        m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.82)));
     }
 
     std::function<void()> onClicked;
@@ -97,7 +110,14 @@ public:
         const ui::RectF preview = previewRect();
         const ui::Color fill = m_hovered ? theme.highlight.withAlpha(theme.darkMode ? 0.28 : 0.16)
                                          : theme.text.withAlpha(theme.darkMode ? 0.08 : 0.05);
+        painter.drawShadow(preview, theme.mediumRadius, m_hovered ? 14 : 8,
+                           ui::Color {0, 0, 0, uint8_t(theme.darkMode ? (m_hovered ? 80 : 45)
+                                                                      : (m_hovered ? 45 : 25))},
+                           {0, 2});
         painter.fillRoundedRect(preview, theme.mediumRadius, fill);
+        if (m_hovered)
+            painter.drawRoundedRect(preview, {theme.mediumRadius, 0, ui::Corners::Continuous},
+                                    ui::Color {0, 0, 0, 0}, 1, theme.highlight.withAlpha(0.45));
         paintPreview(painter, m_kind, preview.shrunk({preview.width * 0.2, preview.height * 0.24,
                                                      preview.width * 0.2, preview.height * 0.24}));
     }
@@ -111,11 +131,13 @@ protected:
     void pointerEnter() override
     {
         m_hovered = true;
+        m_title->setColor(ui::ColorRecipe(ui::Theme::current().highlight));
         requestPaint();
     }
     void pointerLeave() override
     {
         m_hovered = false;
+        m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.82)));
         requestPaint();
     }
     void pointerRelease(const ui::PointerEvent& event) override
@@ -148,10 +170,18 @@ public:
     void paint(ui::Painter& painter) override
     {
         const ui::Theme& theme = ui::Theme::current();
-        painter.drawShadow(localRect(), theme.hugeRadius, 24, ui::Color {0, 0, 0, 90}, {0, 8});
-        const ui::Color fill = theme.darkMode ? ui::Color {38, 38, 43, 248} : ui::Color {250, 250, 252, 248};
-        painter.drawRoundedRect(localRect(), {theme.hugeRadius, 0, ui::Corners::Continuous}, fill, 1,
-                                theme.text.withAlpha(0.09));
+        const ui::RectF panel = localRect();
+        painter.drawShadow(panel, theme.hugeRadius, 30,
+                           ui::Color {0, 0, 0, uint8_t(theme.darkMode ? 120 : 70)}, {0, 10});
+        const ui::Color fill = theme.darkMode ? ui::Color {32, 32, 37, 242}
+                                              : ui::Color {249, 249, 251, 242};
+        painter.drawRoundedRect(panel, {theme.hugeRadius, 0, ui::Corners::Continuous}, fill, 1,
+                                theme.text.withAlpha(0.12));
+        painter.drawHorizontalLine(panel.x + theme.hugeRadius, panel.y + 0.5,
+                                   std::max(0.0, panel.width - theme.hugeRadius * 2),
+                                   ui::Color {255, 255, 255,
+                                              uint8_t(theme.darkMode ? 16 : 90)},
+                                   1);
     }
 };
 
@@ -169,7 +199,8 @@ WidgetGallery::WidgetGallery()
     m_subtitle->setFontSize(12);
     m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
 
-    for (WidgetKind kind : {WidgetKind::Clock, WidgetKind::Calendar, WidgetKind::System}) {
+    for (WidgetKind kind : {WidgetKind::Clock, WidgetKind::Calendar, WidgetKind::System,
+                            WidgetKind::Battery}) {
         PreviewCard* card = m_panelView->addChild<PreviewCard>(kind);
         card->onClicked = [this, kind] {
             if (onAdd)
@@ -207,8 +238,8 @@ void WidgetGallery::layout()
 {
     m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
     const ui::RectF area = localRect();
-    const double width = std::min(560.0, std::max(320.0, area.width - 48));
-    const double height = std::min(320.0, std::max(240.0, area.height - 48));
+    const double width = std::min(720.0, std::max(320.0, area.width - 48));
+    const double height = std::min(360.0, std::max(240.0, area.height - 48));
     m_panelView->setGeometry({(area.width - width) / 2, (area.height - height) / 2, width, height});
 
     m_title->setGeometry({24, 18, width - 48, 28});
@@ -216,10 +247,15 @@ void WidgetGallery::layout()
 
     const double margin = 24;
     const double gap = 16;
-    const double cardWidth = (width - margin * 2 - gap * 2) / 3;
-    const double cardHeight = height - 118;
+    const int columns = std::max(1, std::min(4, int(m_cards.size())));
+    const double cardWidth = (width - margin * 2 - gap * (columns - 1)) / columns;
+    // Below the cards is the Done row; leave it its own gap.
+    const double cardHeight = std::max(0.0, height - 150);
     for (size_t i = 0; i < m_cards.size(); ++i) {
-        m_cards[i]->setGeometry({margin + i * (cardWidth + gap), 76, cardWidth, cardHeight});
+        const int column = int(i) % columns;
+        const int row = int(i) / columns;
+        m_cards[i]->setGeometry({margin + column * (cardWidth + gap),
+                                 76 + row * (cardHeight + gap), cardWidth, cardHeight});
     }
     const ui::SizeF doneSize = m_done->sizeHint();
     m_done->setGeometry({width - margin - std::max(76.0, doneSize.width + 24), height - 44,

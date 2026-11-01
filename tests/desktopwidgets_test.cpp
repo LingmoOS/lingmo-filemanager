@@ -52,6 +52,7 @@ TEST(WidgetConfigTest, PlacementsRoundTrip)
             {fm::WidgetKind::Clock, fm::WidgetSize::Medium, 24, 40},
             {fm::WidgetKind::Calendar, fm::WidgetSize::Large, 200, 80},
             {fm::WidgetKind::System, fm::WidgetSize::Small, -8, 0},
+            {fm::WidgetKind::Battery, fm::WidgetSize::Medium, 0, 0},
     };
     const std::vector<fm::WidgetPlacement> parsed = fm::parseWidgets(fm::serializeWidgets(placements));
     ASSERT_EQ(parsed.size(), placements.size());
@@ -100,6 +101,29 @@ TEST_F(WidgetLayerTest, AddsAndRemovesCards)
     layer->removeWidget(layer->widgets().front());
     EXPECT_TRUE(layer->widgets().empty());
     EXPECT_TRUE(layer->placements().empty());
+}
+
+TEST_F(WidgetLayerTest, TheBatteryCardReadsTheMachine)
+{
+    layer->addWidget(fm::WidgetKind::Battery);
+    ASSERT_EQ(layer->widgets().size(), 1u);
+    EXPECT_EQ(layer->widgets().front()->kind(), fm::WidgetKind::Battery);
+    window.grab();
+}
+
+TEST_F(WidgetLayerTest, PressingACardBringsItToTheFront)
+{
+    layer->addWidget(fm::WidgetKind::Clock);
+    layer->addWidget(fm::WidgetKind::System);
+    window.grab();
+    ASSERT_EQ(layer->widgets().size(), 2u);
+    fm::DesktopWidget* first = layer->widgets().front();
+    EXPECT_NE(layer->children().back().get(), first);
+
+    ui::TestInput::press(window, first->mapToWindow({30, 20}));
+    ui::TestInput::release(window, first->mapToWindow({30, 20}));
+    EXPECT_EQ(layer->children().back().get(), first);
+    EXPECT_EQ(layer->placements().back().kind, fm::WidgetKind::Clock);
 }
 
 TEST_F(WidgetLayerTest, PlacedCardsStayInsideTheWorkArea)

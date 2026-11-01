@@ -1230,6 +1230,30 @@ msgstr "日历"
 msgid "System"
 msgstr "系统"
 
+#: src/desktop/widgets/batterywidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Battery"
+msgstr "电池"
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Charging"
+msgstr "充电中"
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "On battery"
+msgstr "使用电池"
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Full"
+msgstr "已充满"
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Not charging"
+msgstr "未充电"
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Unknown"
+msgstr "未知"
+
 #: src/desktop/widgets/systemwidget.cpp
 msgid "CPU"
 msgstr "CPU"

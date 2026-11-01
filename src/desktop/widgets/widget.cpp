@@ -4,10 +4,12 @@
 
 #include "desktop/widgets/widget.h"
 
+#include <algorithm>
 #include <cmath>
 
 #include "base/event_loop.h"
 #include "desktop/widgets/calendarwidget.h"
+#include "desktop/widgets/batterywidget.h"
 #include "desktop/widgets/clockwidget.h"
 #include "desktop/widgets/systemwidget.h"
 #include "desktop/widgets/widgetlayer.h"
@@ -22,6 +24,8 @@ namespace {
 constexpr double kRemoveInset = 8;
 constexpr double kRemoveSize = 18;
 constexpr double kDragDistance = 4;
+constexpr double kContentPaddingX = 18;
+constexpr double kContentPaddingY = 16;
 
 ui::PointF removeCentre(const ui::RectF& card)
 {
@@ -77,8 +81,8 @@ void DesktopWidget::retranslate()
 ui::RectF DesktopWidget::contentRect() const
 {
     const ui::RectF card = localRect();
-    const double padding = 18;
-    return {padding, 16, card.width - padding * 2, card.height - 32};
+    return {kContentPaddingX, kContentPaddingY, card.width - kContentPaddingX * 2,
+            card.height - kContentPaddingY * 2};
 }
 
 bool DesktopWidget::frosted() const
@@ -108,18 +112,34 @@ void DesktopWidget::paint(ui::Painter& painter)
     // a light tint over it. Without the blur the card is its own background.
     ui::Color fill;
     if (frosted()) {
-        fill = theme.darkMode ? ui::Color {255, 255, 255, 26} : ui::Color {255, 255, 255, 150};
+        const int alpha = theme.darkMode ? (m_hovered || m_dragging ? 40 : 28)
+                                         : (m_hovered || m_dragging ? 170 : 142);
+        fill = ui::Color {255, 255, 255, uint8_t(alpha)};
     } else {
-        fill = theme.darkMode ? ui::Color {34, 34, 39, 238} : ui::Color {248, 248, 250, 238};
+        fill = theme.darkMode ? ui::Color {34, 34, 39, 242} : ui::Color {248, 248, 250, 244};
     }
     if (m_hovered && !m_dragging)
         fill = fill.lighter(theme.darkMode ? 1.15 : 1.02);
 
-    painter.drawShadow(card, kWidgetRadius, 14,
-                       ui::Color {0, 0, 0, uint8_t(theme.darkMode ? 90 : 45)}, {0, 3});
-    const ui::Color border = m_editing ? theme.highlight : theme.text.withAlpha(m_hovered ? 0.18 : 0.09);
+    // A card under the pointer, and more so while dragged, sits a little
+    // further above the desktop than the resting ones.
+    const double shadowBlur = m_dragging ? 28 : m_hovered ? 20 : 14;
+    const int shadowAlpha = theme.darkMode ? (m_dragging ? 135 : m_hovered ? 110 : 90)
+                                           : (m_dragging ? 85 : m_hovered ? 65 : 45);
+    painter.drawShadow(card, kWidgetRadius, shadowBlur, ui::Color {0, 0, 0, uint8_t(shadowAlpha)},
+                       {0, m_dragging ? 8.0 : 3.0});
+    const ui::Color border = m_editing ? theme.highlight
+            : (m_hovered || m_dragging) ? theme.text.withAlpha(0.22)
+                                        : theme.text.withAlpha(0.10);
     painter.drawRoundedRect(card, {kWidgetRadius, 0, ui::Corners::Continuous}, fill,
                             m_editing ? 1.5 : 1.0, border);
+
+    if (frosted() && !m_editing) {
+        // A hairline where the light catches the top of the glass.
+        painter.drawHorizontalLine(card.x + kWidgetRadius, card.y + 0.5,
+                                   std::max(0.0, card.width - kWidgetRadius * 2),
+                                   ui::Color {255, 255, 255, uint8_t(theme.darkMode ? 18 : 72)}, 1);
+    }
 
     paintContent(painter);
 
@@ -155,6 +175,7 @@ void DesktopWidget::hoverChanged()
 
 void DesktopWidget::pointerPress(const ui::PointerEvent& event)
 {
+    m_layer.raiseWidget(this);
     if (event.button == ui::MouseButton::Right) {
         m_layer.showWidgetMenu(this, mapToWindow(event.position));
         return;
@@ -216,6 +237,8 @@ std::unique_ptr<DesktopWidget> createDesktopWidget(WidgetLayer& layer, WidgetKin
         return std::make_unique<CalendarWidget>(layer, size);
     case WidgetKind::System:
         return std::make_unique<SystemWidget>(layer, size);
+    case WidgetKind::Battery:
+        return std::make_unique<BatteryWidget>(layer, size);
     }
     return nullptr;
 }

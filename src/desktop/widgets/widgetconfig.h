@@ -18,6 +18,7 @@ enum class WidgetKind {
     Clock = 0,
     Calendar,
     System,
+    Battery,
 };
 
 enum class WidgetSize {

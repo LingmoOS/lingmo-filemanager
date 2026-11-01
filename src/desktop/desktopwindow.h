@@ -46,6 +46,8 @@ public:
     ui::Window* window() const { return m_window.get(); }
     DesktopGridView* view() const { return m_view; }
     WidgetLayer* widgets() const { return m_widgets; }
+    // Opens the widget gallery on the desktop, as the desktop's own menu does.
+    void editWidgets();
     FolderModel& model() { return *m_model; }
 
     // FolderModelHost.

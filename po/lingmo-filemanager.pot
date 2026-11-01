@@ -1245,6 +1245,30 @@ msgstr ""
 msgid "System"
 msgstr ""
 
+#: src/desktop/widgets/batterywidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Battery"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Charging"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "On battery"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Full"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Not charging"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Unknown"
+msgstr ""
+
 #: src/desktop/widgets/systemwidget.cpp
 msgid "CPU"
 msgstr ""

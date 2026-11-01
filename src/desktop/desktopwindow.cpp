@@ -380,6 +380,11 @@ void DesktopWindow::saveWidgetLayout()
     settings.setValue(widgetLayoutKey(), serializeWidgets(m_widgets->placements()));
 }
 
+void DesktopWindow::editWidgets()
+{
+    openWidgetGallery();
+}
+
 void DesktopWindow::openWidgetGallery()
 {
     if (!m_gallery || !m_widgets)

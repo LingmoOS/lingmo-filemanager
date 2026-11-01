@@ -21,6 +21,8 @@ const char* widgetKindKey(WidgetKind kind)
         return "calendar";
     case WidgetKind::System:
         return "system";
+    case WidgetKind::Battery:
+        return "battery";
     }
     return "clock";
 }
@@ -46,6 +48,8 @@ bool widgetKindFromKey(std::string_view key, WidgetKind& kind)
         kind = WidgetKind::Calendar;
     else if (key == "system")
         kind = WidgetKind::System;
+    else if (key == "battery")
+        kind = WidgetKind::Battery;
     else
         return false;
     return true;

@@ -85,6 +85,10 @@ void Application::exportObjects()
     m_fileManager->addMethod("openFiles", [this](const std::vector<std::string>& paths) { openFiles(paths); });
     m_fileManager->addMethod("moveToTrash", [this](const std::vector<std::string>& paths) { moveToTrash(paths); });
     m_fileManager->addMethod("emptyTrash", [this] { emptyTrash(); });
+    m_fileManager->addMethod("EditWidgets", [this] {
+        if (m_desktop)
+            m_desktop->editWidgets();
+    });
     m_fileManager->publish();
 
     m_freedesktop = std::make_unique<base::dbus::Object>(m_bus, "/org/freedesktop/FileManager1",

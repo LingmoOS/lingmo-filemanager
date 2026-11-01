@@ -43,6 +43,8 @@ public:
 
     void addWidget(WidgetKind kind, WidgetSize size = WidgetSize::Medium);
     void removeWidget(DesktopWidget* widget);
+    // Above the other cards, and last in the saved order.
+    void raiseWidget(DesktopWidget* widget);
     // As removeWidget, after the event that asked for it is over.
     void removeWidgetDeferred(DesktopWidget* widget);
     // Replaces every card: what the desktop's settings held for this output.

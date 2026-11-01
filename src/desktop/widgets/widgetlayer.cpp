@@ -147,6 +147,19 @@ void WidgetLayer::addWidget(WidgetKind kind, WidgetSize size)
         onChanged();
 }
 
+void WidgetLayer::raiseWidget(DesktopWidget* widget)
+{
+    const auto found = std::find(m_widgets.begin(), m_widgets.end(), widget);
+    if (found == m_widgets.end() || found + 1 == m_widgets.end())
+        return;
+    m_widgets.erase(found);
+    m_widgets.push_back(widget);
+    raiseChild(widget);
+    // The order is what the layout stores, so a card raised by hand is saved.
+    if (onChanged)
+        onChanged();
+}
+
 void WidgetLayer::removeWidget(DesktopWidget* widget)
 {
     const auto found = std::find(m_widgets.begin(), m_widgets.end(), widget);
