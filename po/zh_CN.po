@@ -1368,6 +1368,6 @@ msgid "Thunderstorm"
 msgstr "雷暴"
 
 
-#: src/desktop/desktopwindow.cpp
+#: src/views/foldermenu.cpp
 msgid "Refresh"
 msgstr "刷新"

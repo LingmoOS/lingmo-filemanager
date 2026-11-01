@@ -49,7 +49,7 @@ void triggerAction(FolderModel& model, const std::string& name)
         found->second(model);
 }
 
-std::unique_ptr<ui::Menu> createFolderMenu(FolderModel& model)
+std::unique_ptr<ui::Menu> createFolderMenu(FolderModel& model, std::function<void()> refresh)
 {
     model.prepareContextMenu();
     auto menu = std::make_unique<ui::Menu>();
@@ -92,6 +92,14 @@ std::unique_ptr<ui::Menu> createFolderMenu(FolderModel& model)
         const size_t index = documents->addItem(action.text, [target] { triggerAction(*target, "newTextFile"); });
         documents->setItemEnabled(index, action.enabled);
         newDocuments = true;
+        rows = true;
+    }
+    if (!selection && refresh) {
+        if (pendingSeparator) {
+            menu->addSeparator();
+            pendingSeparator = false;
+        }
+        menu->addItem(tr("Refresh"), std::move(refresh));
         rows = true;
     }
     separator(!selection && (newFolder || newDocuments));

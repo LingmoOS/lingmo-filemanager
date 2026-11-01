@@ -1383,6 +1383,6 @@ msgid "Thunderstorm"
 msgstr ""
 
 
-#: src/desktop/desktopwindow.cpp
+#: src/views/foldermenu.cpp
 msgid "Refresh"
 msgstr ""

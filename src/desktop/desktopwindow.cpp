@@ -451,10 +451,9 @@ void DesktopWindow::refreshDesktop()
 
 void DesktopWindow::showContextMenu(ui::PointF position)
 {
-    m_menu = createFolderMenu(*m_model);
+    m_menu = createFolderMenu(*m_model, [this] { refreshDesktop(); });
     if (!m_model->hasSelection()) {
         m_menu->addSeparator();
-        m_menu->addItem(tr("Refresh"), [this] { refreshDesktop(); });
         m_menu->addItem(tr("Edit Widgets…"), [this] { openWidgetGallery(); });
     }
     m_menu->popup(m_window.get(), position);

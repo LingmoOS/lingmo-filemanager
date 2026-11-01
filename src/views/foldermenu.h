@@ -6,6 +6,7 @@
 
 #include "core/common.h"
 
+#include <functional>
 #include <memory>
 #include <string>
 
@@ -21,7 +22,8 @@ class FolderModel;
 void triggerAction(FolderModel& model, const std::string& name);
 
 // The folder's menu without a selection, the
-// selection's with one. The model's actions are prepared first.
-std::unique_ptr<ui::Menu> createFolderMenu(FolderModel& model);
+// selection's with one. The model's actions are prepared first. A desktop
+// passes `refresh` to put its Refresh row below the New rows.
+std::unique_ptr<ui::Menu> createFolderMenu(FolderModel& model, std::function<void()> refresh = {});
 
 } // namespace fm
