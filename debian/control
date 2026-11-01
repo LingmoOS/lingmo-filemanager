@@ -27,6 +27,7 @@ Package: lingmo-filemanager
 Architecture: any
 Depends: udisks2,
          fuse3,
+         ca-certificates,
          lingmo-sdk-dev,
          lingmo-framework,
          ${misc:Depends},
