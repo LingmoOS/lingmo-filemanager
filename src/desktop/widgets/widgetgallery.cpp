@@ -62,6 +62,20 @@ void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
                                 1, quiet);
         return;
     }
+    case WidgetKind::NowPlaying: {
+        const double art = std::min(rect.width * 0.34, rect.height * 0.7);
+        painter.fillRoundedRect({rect.x, rect.y + rect.height * 0.15, art, art}, 4, quiet);
+        painter.fillRoundedRect({rect.x + art + 4, rect.y + rect.height * 0.25,
+                                 rect.width - art - 4, 5},
+                                2.5, quiet);
+        painter.fillRoundedRect({rect.x + art + 4, rect.y + rect.height * 0.42,
+                                 (rect.width - art - 4) * 0.62, 4},
+                                2, quiet);
+        painter.fillRoundedRect({rect.x + art + 4, rect.y + rect.height * 0.66, 8, 8}, 2, accent);
+        painter.fillRoundedRect({rect.x + art + 18, rect.y + rect.height * 0.66, 8, 8}, 2, quiet);
+        painter.fillRoundedRect({rect.x + art + 32, rect.y + rect.height * 0.66, 8, 8}, 2, quiet);
+        return;
+    }
     }
 }
 
@@ -97,6 +111,9 @@ public:
             break;
         case WidgetKind::Battery:
             m_title->setText(tr("Battery"));
+            break;
+        case WidgetKind::NowPlaying:
+            m_title->setText(tr("Now Playing"));
             break;
         }
         m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.82)));
@@ -200,7 +217,7 @@ WidgetGallery::WidgetGallery()
     m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
 
     for (WidgetKind kind : {WidgetKind::Clock, WidgetKind::Calendar, WidgetKind::System,
-                            WidgetKind::Battery}) {
+                            WidgetKind::Battery, WidgetKind::NowPlaying}) {
         PreviewCard* card = m_panelView->addChild<PreviewCard>(kind);
         card->onClicked = [this, kind] {
             if (onAdd)
@@ -238,7 +255,7 @@ void WidgetGallery::layout()
 {
     m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
     const ui::RectF area = localRect();
-    const double width = std::min(720.0, std::max(320.0, area.width - 48));
+    const double width = std::min(920.0, std::max(320.0, area.width - 48));
     const double height = std::min(360.0, std::max(240.0, area.height - 48));
     m_panelView->setGeometry({(area.width - width) / 2, (area.height - height) / 2, width, height});
 
@@ -247,7 +264,7 @@ void WidgetGallery::layout()
 
     const double margin = 24;
     const double gap = 16;
-    const int columns = std::max(1, std::min(4, int(m_cards.size())));
+    const int columns = std::max(1, std::min(5, int(m_cards.size())));
     const double cardWidth = (width - margin * 2 - gap * (columns - 1)) / columns;
     // Below the cards is the Done row; leave it its own gap.
     const double cardHeight = std::max(0.0, height - 150);

@@ -1284,3 +1284,36 @@ msgstr ""
 #: src/desktop/widgets/calendarwidget.cpp
 msgid "Next Month"
 msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Now Playing"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Nothing playing"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "No media"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Unknown track"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Previous"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Play"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Pause"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Next"
+msgstr ""
+

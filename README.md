@@ -28,13 +28,13 @@ sudo cmake --install build
 
 ## Desktop widgets
 
-The desktop holds clock, calendar, system and battery widgets beside its icons.
-Right-click an empty spot and choose **Edit Widgets…** to open the gallery,
-then pick a card. Drag a card to move it (it snaps to the grid and stays in
-the work area), or right-click it to remove it or change its size. Dragging a
-card brings it above the others, and that order is saved. The layout is saved
-per output in `filemanager.conf`; Settings → Desktop Widgets opens the same
-gallery through `org.lingmo.FileManager.EditWidgets`.
+The desktop holds clock, calendar, system, battery and now-playing widgets
+beside its icons. Right-click an empty spot and choose **Edit Widgets…** to open
+the gallery, then pick a card. Drag a card to move it (it snaps to the grid and
+stays in the work area), or right-click it to remove it or change its size.
+Dragging a card brings it above the others, and that order is saved. The layout
+is saved per output in `filemanager.conf`; Settings → Desktop Widgets opens the
+same gallery through `org.lingmo.FileManager.EditWidgets`.
 
 The cards ask the compositor for a backdrop blur behind their silhouettes
 (`lingmo_surface_blur_v1`) and fall back to an opaque body when the compositor

@@ -11,6 +11,7 @@
 #include "desktop/widgets/calendarwidget.h"
 #include "desktop/widgets/batterywidget.h"
 #include "desktop/widgets/clockwidget.h"
+#include "desktop/widgets/nowplayingwidget.h"
 #include "desktop/widgets/systemwidget.h"
 #include "desktop/widgets/widgetlayer.h"
 #include "ui/painter.h"
@@ -239,6 +240,8 @@ std::unique_ptr<DesktopWidget> createDesktopWidget(WidgetLayer& layer, WidgetKin
         return std::make_unique<SystemWidget>(layer, size);
     case WidgetKind::Battery:
         return std::make_unique<BatteryWidget>(layer, size);
+    case WidgetKind::NowPlaying:
+        return std::make_unique<NowPlayingWidget>(layer, size);
     }
     return nullptr;
 }

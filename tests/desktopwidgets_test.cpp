@@ -53,6 +53,7 @@ TEST(WidgetConfigTest, PlacementsRoundTrip)
             {fm::WidgetKind::Calendar, fm::WidgetSize::Large, 200, 80},
             {fm::WidgetKind::System, fm::WidgetSize::Small, -8, 0},
             {fm::WidgetKind::Battery, fm::WidgetSize::Medium, 0, 0},
+            {fm::WidgetKind::NowPlaying, fm::WidgetSize::Large, 400, 40},
     };
     const std::vector<fm::WidgetPlacement> parsed = fm::parseWidgets(fm::serializeWidgets(placements));
     ASSERT_EQ(parsed.size(), placements.size());
@@ -108,6 +109,14 @@ TEST_F(WidgetLayerTest, TheBatteryCardReadsTheMachine)
     layer->addWidget(fm::WidgetKind::Battery);
     ASSERT_EQ(layer->widgets().size(), 1u);
     EXPECT_EQ(layer->widgets().front()->kind(), fm::WidgetKind::Battery);
+    window.grab();
+}
+
+TEST_F(WidgetLayerTest, TheNowPlayingCardWaitsForAPlayer)
+{
+    layer->addWidget(fm::WidgetKind::NowPlaying);
+    ASSERT_EQ(layer->widgets().size(), 1u);
+    EXPECT_EQ(layer->widgets().front()->kind(), fm::WidgetKind::NowPlaying);
     window.grab();
 }
 

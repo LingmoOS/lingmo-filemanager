@@ -23,6 +23,8 @@ const char* widgetKindKey(WidgetKind kind)
         return "system";
     case WidgetKind::Battery:
         return "battery";
+    case WidgetKind::NowPlaying:
+        return "nowplaying";
     }
     return "clock";
 }
@@ -50,6 +52,8 @@ bool widgetKindFromKey(std::string_view key, WidgetKind& kind)
         kind = WidgetKind::System;
     else if (key == "battery")
         kind = WidgetKind::Battery;
+    else if (key == "nowplaying")
+        kind = WidgetKind::NowPlaying;
     else
         return false;
     return true;

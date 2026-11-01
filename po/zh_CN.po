@@ -1269,3 +1269,36 @@ msgstr "上个月"
 #: src/desktop/widgets/calendarwidget.cpp
 msgid "Next Month"
 msgstr "下个月"
+
+#: src/desktop/widgets/nowplayingwidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Now Playing"
+msgstr "正在播放"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Nothing playing"
+msgstr "没有正在播放"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "No media"
+msgstr "无媒体"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Unknown track"
+msgstr "未知曲目"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Previous"
+msgstr "上一首"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Play"
+msgstr "播放"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Pause"
+msgstr "暂停"
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Next"
+msgstr "下一首"
+

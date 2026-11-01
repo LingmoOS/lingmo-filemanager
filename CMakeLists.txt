@@ -162,6 +162,7 @@ add_library(fm-ui STATIC
     src/desktop/widgets/calendarwidget.cpp
     src/desktop/widgets/batterywidget.cpp
     src/desktop/widgets/clockwidget.cpp
+    src/desktop/widgets/nowplayingwidget.cpp
     src/desktop/widgets/systemwidget.cpp
     src/desktop/widgets/widget.cpp
     src/desktop/widgets/widgetconfig.cpp
