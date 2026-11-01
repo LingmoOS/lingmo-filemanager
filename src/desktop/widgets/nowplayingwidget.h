@@ -10,6 +10,7 @@
 #include "desktop/widgets/widget.h"
 
 namespace Lingmo::ui {
+class ImageView;
 class Label;
 }
 
@@ -35,7 +36,8 @@ private:
     friend class NowPlayingSource;
 
     void setTrack(bool present, const std::string& title, const std::string& artist, bool playing,
-                  bool canControl, bool canPrevious, bool canNext);
+                  bool canControl, bool canPrevious, bool canNext, const std::string& artUrl);
+    void loadArt(const std::string& url);
     void updateControls();
 
     ui::Label* m_title = nullptr;
@@ -43,9 +45,11 @@ private:
     PlaybackButton* m_previous = nullptr;
     PlaybackButton* m_play = nullptr;
     PlaybackButton* m_next = nullptr;
+    ui::ImageView* m_artView = nullptr;
     std::unique_ptr<NowPlayingSource> m_source;
     base::Timer m_poll;
     ui::RectF m_artRect;
+    std::string m_artUrl;
     std::string m_trackTitle;
     std::string m_trackArtist;
     bool m_present = false;

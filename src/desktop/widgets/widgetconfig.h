@@ -20,6 +20,8 @@ enum class WidgetKind {
     System,
     Battery,
     NowPlaying,
+    Notes,
+    Weather,
 };
 
 enum class WidgetSize {
@@ -34,6 +36,8 @@ struct WidgetPlacement
     WidgetSize size = WidgetSize::Medium;
     double x = 0;
     double y = 0;
+    // Stable per-card identity; empty in layouts saved before widgets had one.
+    std::string id;
 };
 
 // Between two cards, and the corner of a card.

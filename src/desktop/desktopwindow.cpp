@@ -385,6 +385,12 @@ void DesktopWindow::editWidgets()
     openWidgetGallery();
 }
 
+void DesktopWindow::refreshWidgets()
+{
+    if (m_widgets)
+        m_widgets->retranslate();
+}
+
 void DesktopWindow::openWidgetGallery()
 {
     if (!m_gallery || !m_widgets)

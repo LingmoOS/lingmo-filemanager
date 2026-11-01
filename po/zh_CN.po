@@ -1302,3 +1302,68 @@ msgstr "暂停"
 msgid "Next"
 msgstr "下一首"
 
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Notes"
+msgstr "便签"
+
+#: src/desktop/widgets/noteswidget.cpp
+msgid "Write a note…"
+msgstr "写点东西…"
+
+#: src/desktop/widgets/weatherwidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Weather"
+msgstr "天气"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Set a city in Settings"
+msgstr "在设置中选择城市"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Updating…"
+msgstr "更新中…"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Weather unavailable"
+msgstr "天气不可用"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Humidity"
+msgstr "湿度"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Clear"
+msgstr "晴"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Mostly clear"
+msgstr "晴间多云"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Partly cloudy"
+msgstr "局部多云"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Cloudy"
+msgstr "多云"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Fog"
+msgstr "雾"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Drizzle"
+msgstr "毛毛雨"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Rain"
+msgstr "雨"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Snow"
+msgstr "雪"
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Thunderstorm"
+msgstr "雷暴"
+

@@ -30,6 +30,9 @@ public:
 
     WidgetKind kind() const { return m_kind; }
     WidgetSize size() const { return m_size; }
+    // Stable identity in the saved layout, for content that belongs to one card.
+    const std::string& instanceId() const { return m_id; }
+    void setInstanceId(std::string id);
     void setSize(WidgetSize size);
     WidgetPlacement placement() const;
 
@@ -58,6 +61,8 @@ protected:
 
     // The card minus its padding, in the card's coordinates.
     ui::RectF contentRect() const;
+    // Called when the card's saved identity arrives.
+    virtual void instanceIdChanged() {}
     // False when the compositor has no backdrop blur: the card is then opaque.
     bool frosted() const;
 
@@ -72,6 +77,7 @@ private:
     WidgetLayer& m_layer;
     WidgetKind m_kind;
     WidgetSize m_size;
+    std::string m_id;
     bool m_editing = false;
     bool m_hovered = false;
     bool m_pressed = false;

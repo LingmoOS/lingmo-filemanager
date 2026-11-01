@@ -76,6 +76,29 @@ void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
         painter.fillRoundedRect({rect.x + art + 32, rect.y + rect.height * 0.66, 8, 8}, 2, quiet);
         return;
     }
+    case WidgetKind::Notes: {
+        for (int i = 0; i < 4; ++i) {
+            const double width = i == 3 ? rect.width * 0.52 : rect.width * (0.84 - i * 0.06);
+            painter.fillRoundedRect({rect.x, rect.y + rect.height * (0.20 + i * 0.17), width, 5},
+                                    2.5, i == 0 ? accent : quiet);
+        }
+        return;
+    }
+    case WidgetKind::Weather: {
+        const double radius = std::min(rect.width, rect.height) * 0.16;
+        const double cx = rect.x + rect.width * 0.32;
+        const double cy = rect.y + rect.height * 0.34;
+        painter.fillEllipse({cx - radius, cy - radius, radius * 2, radius * 2}, accent);
+        painter.fillRoundedRect({rect.x + rect.width * 0.22, rect.y + rect.height * 0.48,
+                                 rect.width * 0.48, rect.height * 0.20},
+                                radius, quiet);
+        painter.fillRoundedRect({rect.x + rect.width * 0.44, rect.y + rect.height * 0.36,
+                                 rect.width * 0.34, rect.height * 0.20},
+                                radius * 0.8, quiet);
+        painter.fillRoundedRect({rect.x, rect.y + rect.height * 0.74, rect.width * 0.44, 5}, 2.5,
+                                quiet);
+        return;
+    }
     }
 }
 
@@ -114,6 +137,12 @@ public:
             break;
         case WidgetKind::NowPlaying:
             m_title->setText(tr("Now Playing"));
+            break;
+        case WidgetKind::Notes:
+            m_title->setText(tr("Notes"));
+            break;
+        case WidgetKind::Weather:
+            m_title->setText(tr("Weather"));
             break;
         }
         m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.82)));
@@ -217,7 +246,8 @@ WidgetGallery::WidgetGallery()
     m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
 
     for (WidgetKind kind : {WidgetKind::Clock, WidgetKind::Calendar, WidgetKind::System,
-                            WidgetKind::Battery, WidgetKind::NowPlaying}) {
+                            WidgetKind::Battery, WidgetKind::NowPlaying, WidgetKind::Notes,
+                            WidgetKind::Weather}) {
         PreviewCard* card = m_panelView->addChild<PreviewCard>(kind);
         card->onClicked = [this, kind] {
             if (onAdd)
@@ -255,8 +285,12 @@ void WidgetGallery::layout()
 {
     m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
     const ui::RectF area = localRect();
-    const double width = std::min(920.0, std::max(320.0, area.width - 48));
-    const double height = std::min(360.0, std::max(240.0, area.height - 48));
+    const int count = int(m_cards.size());
+    const int columns = std::max(1, count <= 5 ? count : 3);
+    const int rows = std::max(1, (count + columns - 1) / columns);
+    const double width = std::min(count <= 5 ? 920.0 : 680.0, std::max(320.0, area.width - 48));
+    const double height = std::min(count <= 5 ? 360.0 : 500.0,
+                                   std::max(240.0, area.height - 48));
     m_panelView->setGeometry({(area.width - width) / 2, (area.height - height) / 2, width, height});
 
     m_title->setGeometry({24, 18, width - 48, 28});
@@ -264,10 +298,9 @@ void WidgetGallery::layout()
 
     const double margin = 24;
     const double gap = 16;
-    const int columns = std::max(1, std::min(5, int(m_cards.size())));
+    // Between the cards and the Done row, so neither touches the other.
+    const double cardHeight = std::max(0.0, (height - 76 - 58 - gap * (rows - 1)) / rows);
     const double cardWidth = (width - margin * 2 - gap * (columns - 1)) / columns;
-    // Below the cards is the Done row; leave it its own gap.
-    const double cardHeight = std::max(0.0, height - 150);
     for (size_t i = 0; i < m_cards.size(); ++i) {
         const int column = int(i) % columns;
         const int row = int(i) / columns;

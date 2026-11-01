@@ -12,6 +12,8 @@
 #include "desktop/widgets/batterywidget.h"
 #include "desktop/widgets/clockwidget.h"
 #include "desktop/widgets/nowplayingwidget.h"
+#include "desktop/widgets/noteswidget.h"
+#include "desktop/widgets/weatherwidget.h"
 #include "desktop/widgets/systemwidget.h"
 #include "desktop/widgets/widgetlayer.h"
 #include "ui/painter.h"
@@ -51,10 +53,18 @@ void DesktopWidget::setSize(WidgetSize size)
     requestPaint();
 }
 
+void DesktopWidget::setInstanceId(std::string id)
+{
+    if (m_id == id)
+        return;
+    m_id = std::move(id);
+    instanceIdChanged();
+}
+
 WidgetPlacement DesktopWidget::placement() const
 {
     const ui::RectF card = geometry();
-    return {m_kind, m_size, card.x, card.y};
+    return {m_kind, m_size, card.x, card.y, m_id};
 }
 
 void DesktopWidget::setEditing(bool editing)
@@ -242,6 +252,10 @@ std::unique_ptr<DesktopWidget> createDesktopWidget(WidgetLayer& layer, WidgetKin
         return std::make_unique<BatteryWidget>(layer, size);
     case WidgetKind::NowPlaying:
         return std::make_unique<NowPlayingWidget>(layer, size);
+    case WidgetKind::Notes:
+        return std::make_unique<NotesWidget>(layer, size);
+    case WidgetKind::Weather:
+        return std::make_unique<WeatherWidget>(layer, size);
     }
     return nullptr;
 }

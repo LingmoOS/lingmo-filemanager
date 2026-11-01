@@ -25,6 +25,10 @@ const char* widgetKindKey(WidgetKind kind)
         return "battery";
     case WidgetKind::NowPlaying:
         return "nowplaying";
+    case WidgetKind::Notes:
+        return "notes";
+    case WidgetKind::Weather:
+        return "weather";
     }
     return "clock";
 }
@@ -54,6 +58,10 @@ bool widgetKindFromKey(std::string_view key, WidgetKind& kind)
         kind = WidgetKind::Battery;
     else if (key == "nowplaying")
         kind = WidgetKind::NowPlaying;
+    else if (key == "notes")
+        kind = WidgetKind::Notes;
+    else if (key == "weather")
+        kind = WidgetKind::Weather;
     else
         return false;
     return true;
@@ -95,6 +103,8 @@ std::string serializeWidgets(const std::vector<WidgetPlacement>& placements)
         object.insert("size", Value(widgetSizeKey(placement.size)));
         object.insert("x", Value(placement.x));
         object.insert("y", Value(placement.y));
+        if (!placement.id.empty())
+            object.insert("id", Value(placement.id));
         array.push_back(std::move(object));
     }
     return Value(std::move(array)).serialize();
@@ -118,6 +128,7 @@ std::vector<WidgetPlacement> parseWidgets(std::string_view json)
         const double y = value["y"].toDouble(0);
         placement.x = std::isfinite(x) ? x : 0;
         placement.y = std::isfinite(y) ? y : 0;
+        placement.id = value["id"].toString();
         placements.push_back(placement);
     }
     return placements;

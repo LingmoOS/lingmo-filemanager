@@ -5,7 +5,11 @@
 #include "desktop/widgets/widgetlayer.h"
 
 #include <algorithm>
+#include <atomic>
+#include <chrono>
 #include <cmath>
+#include <random>
+#include <string>
 
 #include "base/event_loop.h"
 #include "base/i18n.h"
@@ -31,6 +35,16 @@ bool intersects(const ui::RectF& a, const ui::RectF& b)
 ui::RectF expanded(const ui::RectF& rect, double amount)
 {
     return {rect.x - amount, rect.y - amount, rect.width + amount * 2, rect.height + amount * 2};
+}
+
+std::string newWidgetId(WidgetKind kind)
+{
+    static const uint64_t seed = std::random_device {}();
+    static std::atomic<uint64_t> counter {0};
+    const auto now = std::chrono::steady_clock::now().time_since_epoch();
+    return std::string(widgetKindKey(kind)) + "-" + std::to_string(seed) + "-"
+            + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(now).count()) + "-"
+            + std::to_string(++counter);
 }
 
 } // namespace
@@ -127,6 +141,7 @@ DesktopWidget* WidgetLayer::create(const WidgetPlacement& placement)
         return nullptr;
     const ui::SizeF size = widgetSizeSpec(placement.size);
     const ui::PointF position = clamped({placement.x, placement.y}, size);
+    widget->setInstanceId(placement.id.empty() ? newWidgetId(placement.kind) : placement.id);
     widget->setGeometry({position.x, position.y, size.width, size.height});
     DesktopWidget* raw = widget.get();
     addChild(std::move(widget));
@@ -192,11 +207,18 @@ void WidgetLayer::setPlacements(const std::vector<WidgetPlacement>& placements)
     for (DesktopWidget* widget : m_widgets)
         takeChild(widget);
     m_widgets.clear();
-    for (const WidgetPlacement& placement : placements)
+    bool assignedIds = false;
+    for (const WidgetPlacement& placement : placements) {
         create(placement);
+        assignedIds = assignedIds || placement.id.empty();
+    }
     for (DesktopWidget* widget : m_widgets)
         widget->setEditing(m_editing);
     updateBlur();
+    // A layout written before widgets had ids needs them written back, or a
+    // note's text would be looked up under a new identity next time.
+    if (assignedIds && onChanged)
+        onChanged();
 }
 
 std::vector<WidgetPlacement> WidgetLayer::placements() const

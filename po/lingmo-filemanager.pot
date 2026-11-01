@@ -1317,3 +1317,68 @@ msgstr ""
 msgid "Next"
 msgstr ""
 
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Notes"
+msgstr ""
+
+#: src/desktop/widgets/noteswidget.cpp
+msgid "Write a note…"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Weather"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Set a city in Settings"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Updating…"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Weather unavailable"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Humidity"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Clear"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Mostly clear"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Partly cloudy"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Cloudy"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Fog"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Drizzle"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Rain"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Snow"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Thunderstorm"
+msgstr ""
+

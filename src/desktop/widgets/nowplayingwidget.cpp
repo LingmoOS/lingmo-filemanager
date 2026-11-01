@@ -7,12 +7,15 @@
 #include <chrono>
 #include <cmath>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
 #include "base/dbus.h"
 #include "base/i18n.h"
 #include "base/strings.h"
+#include "base/url.h"
+#include "ui/image_view.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/path.h"
@@ -149,7 +152,7 @@ public:
         , m_alive(std::make_shared<bool>(true))
     {
         if (!m_bus) {
-            m_widget.setTrack(false, {}, {}, false, false, false, false);
+            m_widget.setTrack(false, {}, {}, false, false, false, false, {});
             return;
         }
 
@@ -220,7 +223,7 @@ private:
             m_player = {};
             m_properties = {};
             m_metadata.clear();
-            m_widget.setTrack(false, {}, {}, false, false, false, false);
+            m_widget.setTrack(false, {}, {}, false, false, false, false, {});
             return;
         }
         if (chosen != m_service) {
@@ -250,7 +253,7 @@ private:
                 return;
             const auto properties = reply.value<base::dbus::VariantMap>();
             if (!properties) {
-                m_widget.setTrack(false, {}, {}, false, false, false, false);
+                m_widget.setTrack(false, {}, {}, false, false, false, false, {});
                 return;
             }
             m_map = *properties;
@@ -271,7 +274,7 @@ private:
         m_canNext = flagOf(m_map, "CanGoNext", false);
         m_widget.setTrack(!title.empty() || status == "Playing" || status == "Paused", title,
                           artistOf(m_metadata), status == "Playing", m_canControl, m_canPrevious,
-                          m_canNext);
+                          m_canNext, stringOf(m_metadata, "mpris:artUrl"));
     }
 
     NowPlayingWidget& m_widget;
@@ -320,8 +323,12 @@ NowPlayingWidget::NowPlayingWidget(WidgetLayer& layer, WidgetSize size)
         if (m_source)
             m_source->next();
     };
+    m_artView = addChild<ui::ImageView>();
+    m_artView->setFillMode(ui::ImageView::FillMode::PreserveAspectCrop);
+    m_artView->setAutoTransform(true);
+    m_artView->setVisible(false);
 
-    setTrack(false, {}, {}, false, false, false, false);
+    setTrack(false, {}, {}, false, false, false, false, {});
     m_source = std::make_unique<NowPlayingSource>(*this);
     m_poll.setInterval(std::chrono::seconds(10));
     m_poll.setSingleShot(false);
@@ -339,7 +346,8 @@ NowPlayingWidget::~NowPlayingWidget()
 }
 
 void NowPlayingWidget::setTrack(bool present, const std::string& title, const std::string& artist,
-                                bool playing, bool canControl, bool canPrevious, bool canNext)
+                                bool playing, bool canControl, bool canPrevious, bool canNext,
+                                const std::string& artUrl)
 {
     m_present = present;
     m_playing = playing;
@@ -350,9 +358,25 @@ void NowPlayingWidget::setTrack(bool present, const std::string& title, const st
     m_trackArtist = artist;
     m_title->setText(present ? (title.empty() ? tr("Unknown track") : title) : tr("Nothing playing"));
     m_artist->setText(present ? artist : tr("No media"));
+    loadArt(present ? artUrl : std::string());
     updateControls();
     requestLayout();
     requestPaint();
+}
+
+void NowPlayingWidget::loadArt(const std::string& url)
+{
+    if (url == m_artUrl)
+        return;
+    m_artUrl = url;
+    std::string path;
+    if (!url.empty()) {
+        if (const std::optional<std::string> local = base::url::toLocalFile(url))
+            path = *local;
+    }
+    m_artView->setSource(path);
+    m_artView->setVisible(!path.empty());
+    m_artView->setSourceSize({m_artRect.width, m_artRect.height});
 }
 
 void NowPlayingWidget::updateControls()
@@ -393,6 +417,10 @@ void NowPlayingWidget::layoutContent()
     m_previous->setGeometry({controlsX, controlsY, button, button});
     m_play->setGeometry({controlsX + button + gap, controlsY, button, button});
     m_next->setGeometry({controlsX + (button + gap) * 2, controlsY, button, button});
+
+    m_artView->setGeometry(m_artRect);
+    m_artView->setCornerRadius(size() == WidgetSize::Small ? 8 : 12);
+    m_artView->setSourceSize({m_artRect.width, m_artRect.height});
 }
 
 void NowPlayingWidget::paintContent(ui::Painter& painter)
@@ -403,28 +431,27 @@ void NowPlayingWidget::paintContent(ui::Painter& painter)
     const double radius = size() == WidgetSize::Small ? 8 : 12;
     painter.fillRoundedRect(m_artRect, radius,
                             theme.highlight.withAlpha(theme.darkMode ? 0.18 : 0.11));
-    painter.drawRoundedRect(m_artRect, {radius, 0, ui::Corners::Continuous}, ui::Color {0, 0, 0, 0},
-                            1, theme.text.withAlpha(0.08));
-
     const double note = std::min(m_artRect.width, m_artRect.height) * 0.44;
     const double cx = m_artRect.x + m_artRect.width / 2;
     const double cy = m_artRect.y + m_artRect.height / 2;
     const ui::Color ink = theme.text.withAlpha(m_present ? 0.72 : 0.32);
     painter.fillEllipse({cx - note * 0.56, cy + note * 0.18, note * 0.52, note * 0.38}, ink);
     painter.fillEllipse({cx + note * 0.18, cy + note * 0.30, note * 0.52, note * 0.38}, ink);
-    painter.drawLine({cx - note * 0.32, cy + note * 0.30}, {cx - note * 0.32, cy - note * 0.62}, ink,
-                     std::max(1.0, note * 0.08));
-    painter.drawLine({cx + note * 0.42, cy + note * 0.42}, {cx + note * 0.42, cy - note * 0.50}, ink,
-                     std::max(1.0, note * 0.08));
-    painter.drawLine({cx - note * 0.32, cy - note * 0.62}, {cx + note * 0.42, cy - note * 0.50}, ink,
-                     std::max(1.0, note * 0.08));
+    painter.drawLine({cx - note * 0.32, cy + note * 0.30}, {cx - note * 0.32, cy - note * 0.62},
+                     ink, std::max(1.0, note * 0.08));
+    painter.drawLine({cx + note * 0.42, cy + note * 0.42}, {cx + note * 0.42, cy - note * 0.50},
+                     ink, std::max(1.0, note * 0.08));
+    painter.drawLine({cx - note * 0.32, cy - note * 0.62}, {cx + note * 0.42, cy - note * 0.50},
+                     ink, std::max(1.0, note * 0.08));
+    painter.drawRoundedRect(m_artRect, {radius, 0, ui::Corners::Continuous}, ui::Color {0, 0, 0, 0},
+                            1, theme.text.withAlpha(0.08));
 }
 
 void NowPlayingWidget::retranslateContent()
 {
     m_artist->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
     setTrack(m_present, m_trackTitle, m_trackArtist, m_playing, m_canControl, m_canPrevious,
-             m_canNext);
+             m_canNext, m_artUrl);
 }
 
 } // namespace fm

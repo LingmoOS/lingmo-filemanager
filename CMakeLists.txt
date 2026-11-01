@@ -19,6 +19,7 @@ find_package(LingmoSDK REQUIRED)
 find_package(LingmoFiles REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(ICU REQUIRED IMPORTED_TARGET icu-uc icu-i18n)
+pkg_check_modules(LibCurl REQUIRED IMPORTED_TARGET libcurl)
 
 # ---------------------------------------------------------------------------
 # lingmo-mountd: phones, servers and disk images mounted with FUSE, so their
@@ -163,6 +164,8 @@ add_library(fm-ui STATIC
     src/desktop/widgets/batterywidget.cpp
     src/desktop/widgets/clockwidget.cpp
     src/desktop/widgets/nowplayingwidget.cpp
+    src/desktop/widgets/noteswidget.cpp
+    src/desktop/widgets/weatherwidget.cpp
     src/desktop/widgets/systemwidget.cpp
     src/desktop/widgets/widget.cpp
     src/desktop/widgets/widgetconfig.cpp
@@ -174,7 +177,7 @@ add_library(fm-ui STATIC
     src/preview/previewcontroller.cpp
     src/preview/previewwindow.cpp
 )
-target_link_libraries(fm-ui PUBLIC fm-core PkgConfig::ICU)
+target_link_libraries(fm-ui PUBLIC fm-core PkgConfig::ICU PkgConfig::LibCurl)
 
 add_executable(lingmo-filemanager
     src/app/application.cpp

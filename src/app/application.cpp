@@ -89,6 +89,10 @@ void Application::exportObjects()
         if (m_desktop)
             m_desktop->editWidgets();
     });
+    m_fileManager->addMethod("RefreshWidgets", [this] {
+        if (m_desktop)
+            m_desktop->refreshWidgets();
+    });
     m_fileManager->publish();
 
     m_freedesktop = std::make_unique<base::dbus::Object>(m_bus, "/org/freedesktop/FileManager1",

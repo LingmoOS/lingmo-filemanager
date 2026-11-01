@@ -54,6 +54,8 @@ TEST(WidgetConfigTest, PlacementsRoundTrip)
             {fm::WidgetKind::System, fm::WidgetSize::Small, -8, 0},
             {fm::WidgetKind::Battery, fm::WidgetSize::Medium, 0, 0},
             {fm::WidgetKind::NowPlaying, fm::WidgetSize::Large, 400, 40},
+            {fm::WidgetKind::Notes, fm::WidgetSize::Medium, 0, 200, "note-1"},
+            {fm::WidgetKind::Weather, fm::WidgetSize::Small, 200, 200, "weather-1"},
     };
     const std::vector<fm::WidgetPlacement> parsed = fm::parseWidgets(fm::serializeWidgets(placements));
     ASSERT_EQ(parsed.size(), placements.size());
@@ -62,6 +64,7 @@ TEST(WidgetConfigTest, PlacementsRoundTrip)
         EXPECT_EQ(parsed[i].size, placements[i].size);
         EXPECT_DOUBLE_EQ(parsed[i].x, placements[i].x);
         EXPECT_DOUBLE_EQ(parsed[i].y, placements[i].y);
+        EXPECT_EQ(parsed[i].id, placements[i].id);
     }
     EXPECT_TRUE(fm::parseWidgets("not json").empty());
 }
@@ -69,7 +72,7 @@ TEST(WidgetConfigTest, PlacementsRoundTrip)
 TEST(WidgetConfigTest, UnknownKindsAndSizesAreDropped)
 {
     const std::string json = R"([
-        {"kind":"weather","size":"medium","x":1,"y":2},
+        {"kind":"stocks","size":"medium","x":1,"y":2},
         {"kind":"clock","size":"huge","x":3,"y":4},
         {"kind":"clock","size":"small","x":5,"y":6}
     ])";
@@ -118,6 +121,28 @@ TEST_F(WidgetLayerTest, TheNowPlayingCardWaitsForAPlayer)
     ASSERT_EQ(layer->widgets().size(), 1u);
     EXPECT_EQ(layer->widgets().front()->kind(), fm::WidgetKind::NowPlaying);
     window.grab();
+}
+
+TEST_F(WidgetLayerTest, TheNotesAndWeatherCardsWaitForTheirSettings)
+{
+    layer->addWidget(fm::WidgetKind::Notes);
+    layer->addWidget(fm::WidgetKind::Weather);
+    ASSERT_EQ(layer->widgets().size(), 2u);
+    EXPECT_EQ(layer->widgets()[0]->kind(), fm::WidgetKind::Notes);
+    EXPECT_EQ(layer->widgets()[1]->kind(), fm::WidgetKind::Weather);
+    window.grab();
+}
+
+TEST_F(WidgetLayerTest, CardsKeepAnIdentityAcrossSaveAndLoad)
+{
+    layer->addWidget(fm::WidgetKind::Notes);
+    const std::vector<fm::WidgetPlacement> saved = layer->placements();
+    ASSERT_EQ(saved.size(), 1u);
+    EXPECT_FALSE(saved.front().id.empty());
+
+    layer->setPlacements(saved);
+    ASSERT_EQ(layer->placements().size(), 1u);
+    EXPECT_EQ(layer->placements().front().id, saved.front().id);
 }
 
 TEST_F(WidgetLayerTest, PressingACardBringsItToTheFront)

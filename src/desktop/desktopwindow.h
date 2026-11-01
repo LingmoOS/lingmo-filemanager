@@ -48,6 +48,8 @@ public:
     WidgetLayer* widgets() const { return m_widgets; }
     // Opens the widget gallery on the desktop, as the desktop's own menu does.
     void editWidgets();
+    // Reads the widget settings again, such as the weather city.
+    void refreshWidgets();
     FolderModel& model() { return *m_model; }
 
     // FolderModelHost.
