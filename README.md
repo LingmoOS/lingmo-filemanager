@@ -14,8 +14,8 @@ Debian/Ubuntu:
 
 ```shell
 sudo apt install build-essential cmake pkg-config libicu-dev libarchive-dev libzip-dev \
-    libfuse3-dev libssh-dev libsmbclient-dev libmtp-dev libudev-dev zlib1g-dev libbz2-dev \
-    liblzma-dev liblzfse-dev libgtest-dev
+    libcurl4-openssl-dev libfuse3-dev libssh-dev libsmbclient-dev libmtp-dev libudev-dev \
+    zlib1g-dev libbz2-dev liblzma-dev liblzfse-dev libgtest-dev
 ```
 
 ## Build
