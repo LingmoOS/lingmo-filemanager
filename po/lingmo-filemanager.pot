@@ -1382,3 +1382,7 @@ msgstr ""
 msgid "Thunderstorm"
 msgstr ""
 
+
+#: src/desktop/desktopwindow.cpp
+msgid "Refresh"
+msgstr ""

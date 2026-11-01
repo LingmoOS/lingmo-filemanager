@@ -443,11 +443,18 @@ void DesktopWindow::retranslate()
         m_gallery->retranslate();
 }
 
+void DesktopWindow::refreshDesktop()
+{
+    m_model->refresh();
+    refreshWidgets();
+}
+
 void DesktopWindow::showContextMenu(ui::PointF position)
 {
     m_menu = createFolderMenu(*m_model);
     if (!m_model->hasSelection()) {
         m_menu->addSeparator();
+        m_menu->addItem(tr("Refresh"), [this] { refreshDesktop(); });
         m_menu->addItem(tr("Edit Widgets…"), [this] { openWidgetGallery(); });
     }
     m_menu->popup(m_window.get(), position);

@@ -1367,3 +1367,7 @@ msgstr "雪"
 msgid "Thunderstorm"
 msgstr "雷暴"
 
+
+#: src/desktop/desktopwindow.cpp
+msgid "Refresh"
+msgstr "刷新"
