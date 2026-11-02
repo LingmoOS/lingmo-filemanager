@@ -37,7 +37,7 @@ public:
         m_icon = addChild<ui::ThemeIcon>(m_app.icon, double(iconSize));
         m_label = addChild<ui::Label>();
         m_label->setText(m_app.name);
-        m_label->setAlignment(ui::Label::Alignment::Center);
+        m_label->setTextAlignment(ui::Label::TextAlignment::Center);
         m_label->setElide(ui::Label::Elide::Right);
         m_label->setFontSize(10);
         m_label->setWrap(true);

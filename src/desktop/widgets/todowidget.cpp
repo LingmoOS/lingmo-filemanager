@@ -16,6 +16,7 @@
 #include "ui/button.h"
 #include "ui/color_id.h"
 #include "ui/label.h"
+#include "ui/column.h"
 #include "ui/painter.h"
 #include "ui/scroll_view.h"
 #include "ui/text_field.h"
@@ -26,7 +27,6 @@ using Lingmo::base::json::Value;
 
 namespace fm {
 
-namespace {
 
 // ── ItemRow ───────────────────────────────────────────────────────────────────
 
@@ -127,7 +127,6 @@ private:
     ui::Label*  m_label   = nullptr;
 };
 
-} // namespace
 
 // ── TodoWidget ────────────────────────────────────────────────────────────────
 
@@ -138,7 +137,7 @@ TodoWidget::TodoWidget(WidgetLayer& layer, WidgetSize size)
 
     // Count label (used in Small mode; also visible in Medium/Large when empty)
     m_countLabel = addChild<ui::Label>();
-    m_countLabel->setAlignment(ui::Label::Alignment::Center);
+    m_countLabel->setTextAlignment(ui::Label::TextAlignment::Center);
     m_countLabel->setFontSize(28);
     m_countLabel->setWeight(300);
 
