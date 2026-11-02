@@ -50,19 +50,19 @@ std::string zoneTime(const std::string& zone)
     if (prevTz)
         tzCopy = prevTz;
 
-    std::setenv("TZ", zone.c_str(), 1);
-    std::tzset();
+    setenv("TZ", zone.c_str(), 1);
+    tzset();
 
     std::tm local;
     std::memset(&local, 0, sizeof(local));
-    std::localtime_r(&now, &local);
+    localtime_r(&now, &local);
 
     // Restore the previous TZ so we don't leak the zone into other code.
     if (prevTz)
-        std::setenv("TZ", tzCopy.c_str(), 1);
+        setenv("TZ", tzCopy.c_str(), 1);
     else
-        std::unsetenv("TZ");
-    std::tzset();
+        unsetenv("TZ");
+    tzset();
 
     std::ostringstream out;
     out << std::put_time(&local, "%H:%M");
