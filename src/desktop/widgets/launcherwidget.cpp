@@ -5,9 +5,9 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
 #include <sstream>
 
-#include "base/application_registry.h"
 #include "base/desktop_entry.h"
 #include "base/i18n.h"
 #include "base/paths.h"
@@ -166,13 +166,25 @@ void LauncherWidget::loadPins()
             const std::string path = dir + id + ".desktop";
             if (!std::filesystem::exists(path))
                 continue;
-            if (auto entry = base::DesktopEntry::fromFile(path)) {
-                const std::vector<std::string> cmd = entry->command();
-                if (cmd.empty())
-                    continue;
-                m_apps.push_back({id, entry->name, entry->icon, cmd});
-                break;
-            }
+            // Read file contents for DesktopEntry::parse
+            std::ifstream file(path);
+            if (!file)
+                continue;
+            const std::string contents((std::istreambuf_iterator<char>(file)),
+                                        std::istreambuf_iterator<char>());
+            const auto entry = base::DesktopEntry::parse(id, path, contents);
+            if (!entry)
+                continue;
+            const std::vector<std::string> cmd = entry->command();
+            if (cmd.empty())
+                continue;
+            App app;
+            app.desktopId = id;
+            app.name      = entry->name;
+            app.icon      = entry->icon;
+            app.command   = cmd;
+            m_apps.push_back(std::move(app));
+            break;
         }
         if (static_cast<int>(m_apps.size()) >= maxSlots())
             break;
@@ -180,13 +192,28 @@ void LauncherWidget::loadPins()
 
     // Fallback: scan /usr/share/applications/ if still empty
     if (m_apps.empty()) {
-        base::ApplicationRegistry registry;
-        registry.scan();
-        for (const base::DesktopEntry& entry : registry.entries()) {
-            const std::vector<std::string> cmd = entry.command();
+        for (const auto& dirEntry : std::filesystem::directory_iterator(systemApps)) {
+            if (dirEntry.path().extension() != ".desktop")
+                continue;
+            const std::string path = dirEntry.path().string();
+            const std::string id   = dirEntry.path().stem().string();
+            std::ifstream file(path);
+            if (!file)
+                continue;
+            const std::string contents((std::istreambuf_iterator<char>(file)),
+                                        std::istreambuf_iterator<char>());
+            const auto entry = base::DesktopEntry::parse(id, path, contents);
+            if (!entry || !entry->shouldShow())
+                continue;
+            const std::vector<std::string> cmd = entry->command();
             if (cmd.empty())
                 continue;
-            m_apps.push_back({entry.desktopId, entry.name, entry.icon, cmd});
+            App app;
+            app.desktopId = id;
+            app.name      = entry->name;
+            app.icon      = entry->icon;
+            app.command   = cmd;
+            m_apps.push_back(std::move(app));
             if (static_cast<int>(m_apps.size()) >= maxSlots())
                 break;
         }
@@ -198,7 +225,7 @@ void LauncherWidget::loadPins()
 void LauncherWidget::rebuildIcons()
 {
     for (AppIcon* icon : m_icons)
-        removeChild(icon);
+        takeChild(icon);
     m_icons.clear();
 
     const int slots = maxSlots();

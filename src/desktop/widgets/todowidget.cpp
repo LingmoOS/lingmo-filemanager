@@ -16,7 +16,7 @@
 #include "ui/button.h"
 #include "ui/color_id.h"
 #include "ui/label.h"
-#include "ui/column.h"
+#include "ui/layout.h"
 #include "ui/painter.h"
 #include "ui/scroll_view.h"
 #include "ui/text_field.h"
@@ -258,7 +258,7 @@ void TodoWidget::rebuildRows()
 {
     // Remove old rows from the list column
     for (ItemRow* row : m_rows)
-        m_list->removeChild(row);
+        m_list->takeChild(row);
     m_rows.clear();
 
     for (size_t i = 0; i < m_items.size(); ++i) {
