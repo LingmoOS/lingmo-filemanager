@@ -1,0 +1,266 @@
+// SPDX-FileCopyrightText: 2026 LingmoOS Contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+#include "desktop/widgets/launcherwidget.h"
+
+#include <algorithm>
+#include <filesystem>
+#include <sstream>
+
+#include "base/application_registry.h"
+#include "base/desktop_entry.h"
+#include "base/i18n.h"
+#include "base/paths.h"
+#include "base/process.h"
+#include "base/settings.h"
+#include "core/config.h"
+#include "ui/color_id.h"
+#include "ui/icon_loader.h"
+#include "ui/label.h"
+#include "ui/painter.h"
+#include "ui/theme.h"
+
+using Lingmo::i18n::tr;
+
+namespace fm {
+
+// ── AppIcon ──────────────────────────────────────────────────────────────────
+
+class LauncherWidget::AppIcon : public ui::View
+{
+public:
+    AppIcon(LauncherWidget::App app, int iconSize)
+        : m_app(std::move(app))
+        , m_iconSize(iconSize)
+    {
+        setCursorShape(ui::CursorShape::Pointer);
+        m_label = addChild<ui::Label>();
+        m_label->setText(m_app.name);
+        m_label->setAlignment(ui::Label::Alignment::Center);
+        m_label->setElide(ui::Label::Elide::Right);
+        m_label->setFontSize(10);
+        m_label->setWrap(true);
+    }
+
+    bool acceptsPointer() const override { return true; }
+
+    void paint(ui::Painter& painter) override
+    {
+        const ui::RectF cell = localRect();
+        if (cell.width <= 0 || cell.height <= 0)
+            return;
+
+        // Hover highlight
+        if (m_hovered) {
+            const ui::Theme& theme = ui::Theme::current();
+            painter.fillRoundedRect(cell, 8, theme.text.withAlpha(0.09));
+        }
+
+        // Icon image centred in the top 70 % of the cell
+        const double iconAreaH = cell.height * 0.70;
+        const double iconX = cell.x + (cell.width - m_iconSize) / 2.0;
+        const double iconY = cell.y + (iconAreaH - m_iconSize) / 2.0;
+        const ui::RectF iconRect{iconX, iconY, double(m_iconSize), double(m_iconSize)};
+
+        sk_sp<SkImage> img = ui::IconLoader::instance().themeIcon(
+                m_app.icon, m_iconSize, 1.0);
+        if (img)
+            painter.drawImage(iconRect, img);
+        else {
+            // Fallback: a tinted placeholder square
+            const ui::Theme& theme = ui::Theme::current();
+            painter.fillRoundedRect(iconRect, 8, theme.highlight.withAlpha(0.22));
+        }
+    }
+
+    void layout() override
+    {
+        const ui::RectF cell = localRect();
+        const double iconAreaH = cell.height * 0.70;
+        const double labelY = cell.y + iconAreaH;
+        const double labelH = std::max(0.0, cell.height - iconAreaH);
+        m_label->setGeometry({cell.x + 2, labelY, std::max(0.0, cell.width - 4), labelH});
+    }
+
+protected:
+    void pointerEnter() override
+    {
+        m_hovered = true;
+        requestPaint();
+    }
+
+    void pointerLeave() override
+    {
+        m_hovered = false;
+        requestPaint();
+    }
+
+    void pointerRelease(const ui::PointerEvent& event) override
+    {
+        if (!localRect().contains(event.position))
+            return;
+        if (m_app.command.empty())
+            return;
+        const std::string program = m_app.command[0];
+        const std::vector<std::string> args(m_app.command.begin() + 1,
+                                            m_app.command.end());
+        base::Process::startDetached(program, args);
+    }
+
+    void hoverChanged() override { requestPaint(); }
+
+private:
+    LauncherWidget::App m_app;
+    int m_iconSize;
+    bool m_hovered = false;
+    ui::Label* m_label = nullptr;
+};
+
+// ── LauncherWidget ────────────────────────────────────────────────────────────
+
+LauncherWidget::LauncherWidget(WidgetLayer& layer, WidgetSize size)
+    : DesktopWidget(layer, WidgetKind::Launcher, size)
+{
+    setName("launcher-widget");
+    loadPins();
+    rebuildIcons();
+}
+
+// ── helpers ───────────────────────────────────────────────────────────────────
+
+std::string LauncherWidget::settingsFile()
+{
+    return base::paths::lingmoConfig("filemanager") + "/launcher.conf";
+}
+
+int LauncherWidget::columns() const
+{
+    return (size() == WidgetSize::Small) ? 2 : 4;
+}
+
+int LauncherWidget::maxSlots() const
+{
+    switch (size()) {
+    case WidgetSize::Small:  return 4;
+    case WidgetSize::Medium: return 8;
+    case WidgetSize::Large:  return 16;
+    }
+    return 8;
+}
+
+// ── loadPins ──────────────────────────────────────────────────────────────────
+
+void LauncherWidget::loadPins()
+{
+    m_apps.clear();
+
+    base::Settings settings(settingsFile());
+    const std::string pins = settings.stringValue("Launcher/Pins");
+
+    // Split the comma-separated list of desktop IDs
+    std::vector<std::string> ids;
+    if (!pins.empty()) {
+        std::istringstream ss(pins);
+        std::string token;
+        while (std::getline(ss, token, ',')) {
+            // Trim whitespace
+            const auto first = token.find_first_not_of(" \t");
+            const auto last  = token.find_last_not_of(" \t");
+            if (first != std::string::npos)
+                ids.push_back(token.substr(first, last - first + 1));
+        }
+    }
+
+    // Resolve each ID to a DesktopEntry
+    const std::string localApps =
+            base::paths::dataHome() + "/applications/";
+    const std::string systemApps = "/usr/share/applications/";
+
+    for (const std::string& id : ids) {
+        // Try user-local first, then system
+        for (const std::string& dir : {localApps, systemApps}) {
+            const std::string path = dir + id + ".desktop";
+            if (!std::filesystem::exists(path))
+                continue;
+            if (auto entry = base::DesktopEntry::fromFile(path)) {
+                const std::vector<std::string> cmd = entry->command();
+                if (cmd.empty())
+                    continue;
+                m_apps.push_back({id, entry->name, entry->icon, cmd});
+                break;
+            }
+        }
+        if (static_cast<int>(m_apps.size()) >= maxSlots())
+            break;
+    }
+
+    // Fallback: scan /usr/share/applications/ if still empty
+    if (m_apps.empty()) {
+        base::ApplicationRegistry registry;
+        registry.scan();
+        for (const base::DesktopEntry& entry : registry.entries()) {
+            const std::vector<std::string> cmd = entry.command();
+            if (cmd.empty())
+                continue;
+            m_apps.push_back({entry.desktopId, entry.name, entry.icon, cmd});
+            if (static_cast<int>(m_apps.size()) >= maxSlots())
+                break;
+        }
+    }
+}
+
+// ── rebuildIcons ──────────────────────────────────────────────────────────────
+
+void LauncherWidget::rebuildIcons()
+{
+    for (AppIcon* icon : m_icons)
+        removeChild(icon);
+    m_icons.clear();
+
+    const int slots = maxSlots();
+    const int iconSize = (size() == WidgetSize::Small) ? 36 : 48;
+
+    const int count = std::min(static_cast<int>(m_apps.size()), slots);
+    for (int i = 0; i < count; ++i) {
+        AppIcon* icon = addChild<AppIcon>(m_apps[i], iconSize);
+        m_icons.push_back(icon);
+    }
+    requestLayout();
+}
+
+// ── layoutContent ─────────────────────────────────────────────────────────────
+
+void LauncherWidget::layoutContent()
+{
+    const ui::RectF content = contentRect();
+    if (content.width <= 0 || content.height <= 0)
+        return;
+    if (m_icons.empty())
+        return;
+
+    const int cols = columns();
+    const int rows = (static_cast<int>(m_icons.size()) + cols - 1) / cols;
+
+    const double cellW = content.width  / cols;
+    const double cellH = (rows > 0) ? content.height / rows : content.height;
+
+    for (int i = 0; i < static_cast<int>(m_icons.size()); ++i) {
+        const int col = i % cols;
+        const int row = i / cols;
+        m_icons[i]->setGeometry({
+            content.x + col * cellW,
+            content.y + row * cellH,
+            cellW,
+            cellH,
+        });
+    }
+}
+
+// ── retranslateContent ────────────────────────────────────────────────────────
+
+void LauncherWidget::retranslateContent()
+{
+    rebuildIcons();
+}
+
+} // namespace fm

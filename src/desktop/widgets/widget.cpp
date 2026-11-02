@@ -16,6 +16,11 @@
 #include "desktop/widgets/noteswidget.h"
 #include "desktop/widgets/weatherwidget.h"
 #include "desktop/widgets/systemwidget.h"
+#include "desktop/widgets/worldclockwidget.h"
+#include "desktop/widgets/countdownwidget.h"
+#include "desktop/widgets/networkspeedwidget.h"
+#include "desktop/widgets/todowidget.h"
+#include "desktop/widgets/launcherwidget.h"
 #include "desktop/widgets/widgetlayer.h"
 #include "ui/painter.h"
 #include "ui/theme.h"
@@ -102,6 +107,26 @@ void DesktopWidget::setEditing(bool editing)
     if (m_editing == editing)
         return;
     m_editing = editing;
+    if (editing && window()) {
+        setLayered(true);
+        m_wiggleAnimation = std::make_unique<ui::Animation>(window());
+        m_wiggleAnimation->setDuration(std::chrono::milliseconds(700));
+        m_wiggleAnimation->setEasing(ui::Animation::Easing::InOutQuad);
+        m_wiggleAnimation->setLoops(ui::Animation::Infinite);
+        m_wiggleAnimation->setAlternating(true);
+        m_wiggleAnimation->onUpdate = [this](double t) {
+            const double sway = (t * 2.0 - 1.0) * geometry().height / 48.0;
+            setTransform({.translation = {sway, 0}, .scale = 1.0});
+        };
+        m_wiggleAnimation->start();
+    } else {
+        if (m_wiggleAnimation) {
+            m_wiggleAnimation->stop();
+            m_wiggleAnimation.reset();
+        }
+        setTransform({});
+        setLayered(false);
+    }
     requestPaint();
 }
 
@@ -251,6 +276,17 @@ void DesktopWidget::pointerMove(const ui::PointerEvent& event)
     if (!m_dragging)
         return;
     m_layer.moveWidget(this, {m_dragOrigin.x + delta.x, m_dragOrigin.y + delta.y}, false);
+    if (window()) {
+        const bool nearBottom = window()->height() - geometry().bottom() < 64.0;
+        if (nearBottom && !m_readyToDelete) {
+            m_readyToDelete = true;
+            setOpacity(0.55);
+            setLayered(true);
+        } else if (!nearBottom && m_readyToDelete) {
+            m_readyToDelete = false;
+            setOpacity(1.0);
+        }
+    }
 }
 
 void DesktopWidget::pointerRelease(const ui::PointerEvent& event)
@@ -261,6 +297,12 @@ void DesktopWidget::pointerRelease(const ui::PointerEvent& event)
     m_pressed = false;
     m_dragging = false;
     if (dragged) {
+        if (m_readyToDelete) {
+            m_readyToDelete = false;
+            setOpacity(1.0);
+            m_layer.removeWidgetDeferred(this);
+            return;
+        }
         m_layer.moveWidget(this, geometry().topLeft(), true);
     } else if (onClicked) {
         onClicked();
@@ -286,6 +328,16 @@ std::unique_ptr<DesktopWidget> createDesktopWidget(WidgetLayer& layer, WidgetKin
         return std::make_unique<NotesWidget>(layer, size);
     case WidgetKind::Weather:
         return std::make_unique<WeatherWidget>(layer, size);
+    case WidgetKind::WorldClock:
+        return std::make_unique<WorldClockWidget>(layer, size);
+    case WidgetKind::Countdown:
+        return std::make_unique<CountdownWidget>(layer, size);
+    case WidgetKind::NetworkSpeed:
+        return std::make_unique<NetworkSpeedWidget>(layer, size);
+    case WidgetKind::Todo:
+        return std::make_unique<TodoWidget>(layer, size);
+    case WidgetKind::Launcher:
+        return std::make_unique<LauncherWidget>(layer, size);
     }
     return nullptr;
 }

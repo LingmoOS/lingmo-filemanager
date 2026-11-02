@@ -87,6 +87,8 @@ private:
     ui::PointF m_pressWindow;
     ui::PointF m_dragOrigin;
     std::unique_ptr<ui::Animation> m_sizeAnimation;
+    std::unique_ptr<ui::Animation> m_wiggleAnimation;
+    bool m_readyToDelete = false;
 };
 
 // The widget of a kind, as the desktop's settings name it.

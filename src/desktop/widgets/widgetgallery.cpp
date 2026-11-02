@@ -99,8 +99,54 @@ void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
                                 quiet);
         return;
     }
+    case WidgetKind::WorldClock: {
+        // Two clock faces side by side
+        for (int i = 0; i < 2; ++i) {
+            const double cx = rect.x + rect.width * (0.28 + i * 0.44);
+            const double cy = rect.y + rect.height * 0.42;
+            const double r = std::min(rect.width, rect.height) * 0.20;
+            painter.fillRoundedRect({cx-r, cy-r, r*2, r*2}, r, quiet);
+            painter.fillRoundedRect({cx-r, cy-r, r*2, r*2}, r, ui::Color{0,0,0,0});
+            painter.drawLine({cx, cy}, {cx, cy-r*0.6}, accent, 1.2);
+            painter.drawLine({cx, cy}, {cx+r*0.4, cy}, accent, 1.2);
+        }
+        return;
     }
-}
+    case WidgetKind::Countdown: {
+        painter.fillRoundedRect({rect.x, rect.y+rect.height*0.12, rect.width*0.7, 6}, 3, quiet);
+        painter.fillRoundedRect({rect.x, rect.y+rect.height*0.36, rect.width*0.52, 24}, 3, accent);
+        painter.fillRoundedRect({rect.x, rect.y+rect.height*0.70, rect.width*0.4, 5}, 2.5, quiet);
+        return;
+    }
+    case WidgetKind::NetworkSpeed: {
+        // Up and down arrows
+        for (int i = 0; i < 2; ++i) {
+            const double bx = rect.x + rect.width*(0.10 + i*0.50);
+            const double by = rect.y + rect.height*0.22;
+            ui::Path p;
+            if (i == 0) { p.moveTo(bx+5,by); p.lineTo(bx,by+8); p.lineTo(bx+10,by+8); p.close(); }
+            else { p.moveTo(bx,by); p.lineTo(bx+10,by); p.lineTo(bx+5,by+8); p.close(); }
+            painter.fillPath(p, i==0 ? accent : quiet);
+            painter.fillRoundedRect({rect.x+rect.width*(0.04+i*0.50), rect.y+rect.height*0.56, rect.width*0.38, 5}, 2.5, i==0 ? accent : quiet);
+        }
+        return;
+    }
+    case WidgetKind::Todo: {
+        for (int i = 0; i < 4; ++i) {
+            const double y = rect.y + rect.height*(0.18 + i*0.19);
+            painter.fillEllipse({rect.x, y, 6, 6}, i < 2 ? accent : quiet);
+            painter.fillRoundedRect({rect.x+10, y+1, rect.width*(i<2?0.58:0.74)-10, 4}, 2, i<2 ? quiet.withAlpha(0.47) : quiet);
+        }
+        return;
+    }
+    case WidgetKind::Launcher: {
+        const double cell = rect.width / 3.2;
+        for (int row = 0; row < 2; ++row)
+            for (int col = 0; col < 2; ++col)
+                painter.fillRoundedRect({rect.x+col*(cell+4), rect.y+rect.height*0.1+row*(cell+4), cell, cell}, 4, row==0&&col==0 ? accent : quiet);
+        return;
+    }
+    }
 
 } // namespace
 
@@ -143,6 +189,21 @@ public:
             break;
         case WidgetKind::Weather:
             m_title->setText(tr("Weather"));
+            break;
+        case WidgetKind::WorldClock:
+            m_title->setText(tr("World Clock"));
+            break;
+        case WidgetKind::Countdown:
+            m_title->setText(tr("Countdown"));
+            break;
+        case WidgetKind::NetworkSpeed:
+            m_title->setText(tr("Network"));
+            break;
+        case WidgetKind::Todo:
+            m_title->setText(tr("To-Do"));
+            break;
+        case WidgetKind::Launcher:
+            m_title->setText(tr("Launcher"));
             break;
         }
         m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.82)));
@@ -247,7 +308,8 @@ WidgetGallery::WidgetGallery()
 
     for (WidgetKind kind : {WidgetKind::Clock, WidgetKind::Calendar, WidgetKind::System,
                             WidgetKind::Battery, WidgetKind::NowPlaying, WidgetKind::Notes,
-                            WidgetKind::Weather}) {
+                            WidgetKind::Weather, WidgetKind::WorldClock, WidgetKind::Countdown,
+                            WidgetKind::NetworkSpeed, WidgetKind::Todo, WidgetKind::Launcher}) {
         PreviewCard* card = m_panelView->addChild<PreviewCard>(kind);
         card->onClicked = [this, kind] {
             if (onAdd)

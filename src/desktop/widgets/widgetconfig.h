@@ -22,6 +22,11 @@ enum class WidgetKind {
     NowPlaying,
     Notes,
     Weather,
+    WorldClock,
+    Countdown,
+    NetworkSpeed,
+    Todo,
+    Launcher,
 };
 
 enum class WidgetSize {

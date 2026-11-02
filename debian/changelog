@@ -1,3 +1,21 @@
+lingmo-filemanager (5.0.3+lingmo5u1) unstable; urgency=medium
+
+  * desktop widgets: add 5 new widget types:
+    - WorldClock: shows up to 4 time zones, configurable in settings.
+    - Countdown: counts down to a named target date (days/hours/min/sec).
+    - NetworkSpeed: real-time upload/download from /proc/net/dev with
+      sparkline history in Large size.
+    - Todo: persistent per-instance checklist with 400 ms debounce save;
+      Large size adds an inline add-item field.
+    - Launcher: pinned-app icon grid (2×2 Small, 4×2 Medium, 4×4 Large)
+      reading Launcher/Pins from settings, launching via base::Process.
+  * desktop widgets: editing mode now animates cards with a ±1.8° sway
+    (700 ms InOutQuad, infinite loop) matching iOS/macOS wiggle style.
+  * desktop widgets: dragging a card within 64px of the window bottom
+    dims it to 55% opacity; releasing there removes it (drag-to-delete).
+
+ -- Lingmo OS Team <team@lingmo.org>  Mon, 02 Nov 2026 18:00:00 +0800
+
 lingmo-filemanager (5.0.2+lingmo5u1) unstable; urgency=medium
 
   * widgets/weather: show system theme icon for weather conditions (WMO

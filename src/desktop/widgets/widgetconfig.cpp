@@ -29,6 +29,16 @@ const char* widgetKindKey(WidgetKind kind)
         return "notes";
     case WidgetKind::Weather:
         return "weather";
+    case WidgetKind::WorldClock:
+        return "worldclock";
+    case WidgetKind::Countdown:
+        return "countdown";
+    case WidgetKind::NetworkSpeed:
+        return "networkspeed";
+    case WidgetKind::Todo:
+        return "todo";
+    case WidgetKind::Launcher:
+        return "launcher";
     }
     return "clock";
 }
@@ -62,6 +72,16 @@ bool widgetKindFromKey(std::string_view key, WidgetKind& kind)
         kind = WidgetKind::Notes;
     else if (key == "weather")
         kind = WidgetKind::Weather;
+    else if (key == "worldclock")
+        kind = WidgetKind::WorldClock;
+    else if (key == "countdown")
+        kind = WidgetKind::Countdown;
+    else if (key == "networkspeed")
+        kind = WidgetKind::NetworkSpeed;
+    else if (key == "todo")
+        kind = WidgetKind::Todo;
+    else if (key == "launcher")
+        kind = WidgetKind::Launcher;
     else
         return false;
     return true;
