@@ -4,6 +4,7 @@
 #include "desktop/widgets/todowidget.h"
 
 #include <algorithm>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <sstream>
@@ -79,8 +80,11 @@ public:
                              ui::Color{255, 255, 255, 230}, 1.5);
         } else {
             // Quiet outlined circle
-            painter.drawRoundedRect(circleRect, {circleSize / 2, 0, ui::Corners::All},
-                                    ui::Color{0, 0, 0, 0}, 1.5,
+            painter.fillRoundedRect(circleRect, circleSize / 2,
+                                     theme.text.withAlpha(0.06));
+            painter.drawRoundedRect(circleRect,
+                                    {circleSize / 2, 0, ui::Corners::Circular},
+                                    ui::Color {0, 0, 0, 0}, 1.5,
                                     theme.text.withAlpha(0.30));
         }
 

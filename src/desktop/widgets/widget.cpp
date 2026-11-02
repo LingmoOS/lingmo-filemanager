@@ -277,7 +277,7 @@ void DesktopWidget::pointerMove(const ui::PointerEvent& event)
         return;
     m_layer.moveWidget(this, {m_dragOrigin.x + delta.x, m_dragOrigin.y + delta.y}, false);
     if (window()) {
-        const bool nearBottom = window()->geometry().height - geometry().bottom() < 64.0;
+        const bool nearBottom = window()->size().height - geometry().bottom() < 64.0;
         if (nearBottom && !m_readyToDelete) {
             m_readyToDelete = true;
             setOpacity(0.55);
