@@ -21,7 +21,7 @@
 #include "base/settings.h"
 #include "base/thread_pool.h"
 #include "core/config.h"
-#include "ui/icon_loader.h"
+#include "ui/icon.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/path.h"
@@ -256,6 +256,9 @@ WeatherWidget::WeatherWidget(WidgetLayer& layer, WidgetSize size)
     m_humidity->setFontSize(10);
     m_humidity->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.5)));
 
+    m_weatherIcon = addChild<ui::ThemeIcon>();
+    m_weatherIcon->setVisible(false);
+
     m_timer.setInterval(std::chrono::seconds(30));
     m_timer.setSingleShot(false);
     m_timer.onTimeout = [this] { refresh(); };
@@ -364,14 +367,17 @@ void WeatherWidget::updateLabels()
                                         + base::Locale::system().toString(m_data.humidity, 0) + "%"
                                 : std::string());
 
-    // Load weather icon
-    if (valid && window()) {
-        const int iconSize = size() == WidgetSize::Small ? 36
-                           : size() == WidgetSize::Large ? 64 : 48;
-        m_weatherIcon = ui::IconLoader::instance().themeIcon(
-            weatherIconName(m_data.code), iconSize, window()->scale());
-    } else {
-        m_weatherIcon = nullptr;
+    // Load weather icon via ThemeIcon (self-drawing View)
+    if (m_weatherIcon) {
+        if (valid) {
+            const double iconSize = size() == WidgetSize::Small ? 36
+                                   : size() == WidgetSize::Large ? 64 : 48;
+            m_weatherIcon->setIconName(weatherIconName(m_data.code));
+            m_weatherIcon->setSize(iconSize);
+            m_weatherIcon->setVisible(size() != WidgetSize::Small);
+        } else {
+            m_weatherIcon->setVisible(false);
+        }
     }
 
     requestLayout();
@@ -396,6 +402,12 @@ void WeatherWidget::layoutContent()
     m_condition->setGeometry({content.x, content.bottom() - conditionHeight - humidityHeight - 2,
                               textWidth, conditionHeight});
     m_humidity->setGeometry({content.x, content.bottom() - humidityHeight, textWidth, humidityHeight});
+
+    // Position the weather icon at the top-right of the content area
+    if (m_weatherIcon && m_weatherIcon->isVisible()) {
+        const double iconSize = m_weatherIcon->sizeHint().width;
+        m_weatherIcon->setGeometry({content.right() - iconSize - 4, content.y + 4, iconSize, iconSize});
+    }
 }
 
 void WeatherWidget::paintContent(ui::Painter& painter)
@@ -403,21 +415,20 @@ void WeatherWidget::paintContent(ui::Painter& painter)
     if (size() == WidgetSize::Small)
         return;
 
-    const ui::RectF content = contentRect();
-    const int iconSize = size() == WidgetSize::Large ? 64 : 48;
-    const double cx = content.right() - iconSize / 2.0 - 8;
-    const double cy = content.y + iconSize / 2.0 + 12;
-
-    // Prefer system icon, fallback to hand-drawn
-    if (m_weatherIcon) {
-        painter.drawImage(m_weatherIcon, {cx - iconSize / 2.0, cy - iconSize / 2.0,
-                          static_cast<double>(iconSize), static_cast<double>(iconSize)});
-        return;
+    // ThemeIcon draws itself; only draw the hand-drawn fallback when the
+    // system icon is not showing (icon name not found in the theme).
+    if (m_weatherIcon && m_weatherIcon->isVisible()) {
+        const std::string iconPath = m_weatherIcon->path();
+        if (!iconPath.empty())
+            return;  // system icon found — ThemeIcon already drew it
     }
 
     // Fallback: hand-drawn weather graphics
     const ui::Theme& theme = ui::Theme::current();
+    const ui::RectF content = contentRect();
     const double size = std::min(64.0, content.width * 0.24);
+    const double cx = content.right() - size / 2 - 8;
+    const double cy = content.y + size / 2 + 12;
     const ui::Color ink = theme.text.withAlpha(0.62);
     const ui::Color accent = theme.highlight;
     const int code = m_data.valid ? m_data.code : 0;

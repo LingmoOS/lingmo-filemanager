@@ -26,6 +26,7 @@
 
 #include <curl/curl.h>
 #include <filesystem>
+#include <fstream>
 #include <functional>
 
 using Lingmo::i18n::tr;

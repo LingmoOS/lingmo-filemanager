@@ -15,7 +15,7 @@
 #include "base/settings.h"
 #include "core/config.h"
 #include "ui/color_id.h"
-#include "ui/icon_loader.h"
+#include "ui/icon.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/theme.h"
@@ -34,6 +34,7 @@ public:
         , m_iconSize(iconSize)
     {
         setCursorShape(ui::CursorShape::Pointer);
+        m_icon = addChild<ui::ThemeIcon>(m_app.icon, double(iconSize));
         m_label = addChild<ui::Label>();
         m_label->setText(m_app.name);
         m_label->setAlignment(ui::Label::Alignment::Center);
@@ -46,30 +47,9 @@ public:
 
     void paint(ui::Painter& painter) override
     {
-        const ui::RectF cell = localRect();
-        if (cell.width <= 0 || cell.height <= 0)
-            return;
-
-        // Hover highlight
         if (m_hovered) {
             const ui::Theme& theme = ui::Theme::current();
-            painter.fillRoundedRect(cell, 8, theme.text.withAlpha(0.09));
-        }
-
-        // Icon image centred in the top 70 % of the cell
-        const double iconAreaH = cell.height * 0.70;
-        const double iconX = cell.x + (cell.width - m_iconSize) / 2.0;
-        const double iconY = cell.y + (iconAreaH - m_iconSize) / 2.0;
-        const ui::RectF iconRect{iconX, iconY, double(m_iconSize), double(m_iconSize)};
-
-        sk_sp<SkImage> img = ui::IconLoader::instance().themeIcon(
-                m_app.icon, m_iconSize, 1.0);
-        if (img)
-            painter.drawImage(iconRect, img);
-        else {
-            // Fallback: a tinted placeholder square
-            const ui::Theme& theme = ui::Theme::current();
-            painter.fillRoundedRect(iconRect, 8, theme.highlight.withAlpha(0.22));
+            painter.fillRoundedRect(localRect(), 8, theme.text.withAlpha(0.09));
         }
     }
 
@@ -77,9 +57,12 @@ public:
     {
         const ui::RectF cell = localRect();
         const double iconAreaH = cell.height * 0.70;
+        const double iconX = cell.x + (cell.width - m_iconSize) / 2.0;
+        const double iconY = cell.y + (iconAreaH - m_iconSize) / 2.0;
+        m_icon->setGeometry({iconX, iconY, double(m_iconSize), double(m_iconSize)});
         const double labelY = cell.y + iconAreaH;
-        const double labelH = std::max(0.0, cell.height - iconAreaH);
-        m_label->setGeometry({cell.x + 2, labelY, std::max(0.0, cell.width - 4), labelH});
+        m_label->setGeometry({cell.x + 2, labelY, std::max(0.0, cell.width - 4),
+                               std::max(0.0, cell.height - iconAreaH)});
     }
 
 protected:
@@ -113,6 +96,7 @@ private:
     LauncherWidget::App m_app;
     int m_iconSize;
     bool m_hovered = false;
+    ui::ThemeIcon* m_icon = nullptr;
     ui::Label* m_label = nullptr;
 };
 

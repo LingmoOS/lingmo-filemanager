@@ -12,6 +12,7 @@
 
 namespace Lingmo::ui {
 class Label;
+class ThemeIcon;
 }
 
 namespace fm {
@@ -55,7 +56,7 @@ private:
     WeatherData m_data;
     bool m_fetching = false;
     std::chrono::steady_clock::time_point m_lastFetch {};
-    sk_sp<SkImage> m_weatherIcon;
+    ui::ThemeIcon* m_weatherIcon = nullptr;
 };
 
 } // namespace fm
