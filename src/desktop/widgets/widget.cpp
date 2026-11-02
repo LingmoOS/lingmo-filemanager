@@ -5,6 +5,7 @@
 #include "desktop/widgets/widget.h"
 
 #include <algorithm>
+#include <chrono>
 #include <cmath>
 
 #include "base/event_loop.h"
@@ -48,9 +49,38 @@ DesktopWidget::DesktopWidget(WidgetLayer& layer, WidgetKind kind, WidgetSize siz
 
 void DesktopWidget::setSize(WidgetSize size)
 {
-    m_size = size;
-    requestLayout();
-    requestPaint();
+    if (m_size == size || m_resizing)
+        return;
+
+    // No window: fall back to instant change.
+    if (!window()) {
+        m_size = size;
+        requestLayout();
+        requestPaint();
+        return;
+    }
+
+    m_resizing = true;
+    const ui::RectF current = geometry();
+    const ui::SizeF target = widgetSizeSpec(size);
+
+    m_sizeAnimation = std::make_unique<ui::Animation>(window());
+    m_sizeAnimation->setDuration(std::chrono::milliseconds(200));
+    m_sizeAnimation->setEasing(ui::Animation::Easing::OutCubic);
+    m_sizeAnimation->onUpdate = [this, current, target](double t) {
+        const double w = current.width + (target.width - current.width) * t;
+        const double h = current.height + (target.height - current.height) * t;
+        setGeometry({current.x, current.y, w, h});
+    };
+    m_sizeAnimation->onFinished = [this, size] {
+        m_size = size;
+        m_resizing = false;
+        m_sizeAnimation.reset();
+        requestLayout();
+        if (m_layer.onChanged)
+            m_layer.onChanged();
+    };
+    m_sizeAnimation->start();
 }
 
 void DesktopWidget::setInstanceId(std::string id)

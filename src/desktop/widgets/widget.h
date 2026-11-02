@@ -9,6 +9,7 @@
 #include <string>
 
 #include "desktop/widgets/widgetconfig.h"
+#include "ui/animation.h"
 #include "ui/view.h"
 
 namespace Lingmo::ui {
@@ -82,8 +83,10 @@ private:
     bool m_hovered = false;
     bool m_pressed = false;
     bool m_dragging = false;
+    bool m_resizing = false;
     ui::PointF m_pressWindow;
     ui::PointF m_dragOrigin;
+    std::unique_ptr<ui::Animation> m_sizeAnimation;
 };
 
 // The widget of a kind, as the desktop's settings name it.

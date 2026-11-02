@@ -1,3 +1,21 @@
+lingmo-filemanager (5.0.2+lingmo5u1) unstable; urgency=medium
+
+  * widgets/weather: show system theme icon for weather conditions (WMO
+    code mapped to 31 icon names); hand-drawn fallback kept when icon
+    loading fails.
+  * widgets/weather: add shared in-memory cache (15 min TTL, LRU max 10
+    cities) so multiple WeatherWidgets share a single network request.
+  * widgets/nowplaying: download HTTP/HTTPS album-art URLs to
+    ~/.cache/lingmo-filemanager/album-art/ and load via ImageView; local
+    file:// URLs continue to load directly as before.
+  * widgets/widget: animate size changes with a 200 ms OutCubic transition
+    instead of an instant geometry update.
+  * widgets/widgetlayer: animate widget addition (scale 0.8→1, opacity
+    0→1, 300 ms OutCubic) and removal (scale 1→0.8, opacity 1→0, 200 ms
+    OutCubic); widget is destroyed only after the exit animation finishes.
+
+ -- Lingmo OS Team <team@lingmo.org>  Mon, 02 Nov 2026 16:00:00 +0800
+
 lingmo-filemanager (5.0.1+lingmo5u1) unstable; urgency=medium
 
   * Add the Simplified Chinese translation.

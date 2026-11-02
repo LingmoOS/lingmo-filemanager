@@ -12,14 +12,21 @@
 #include <vector>
 
 #include "base/dbus.h"
+#include "base/event_loop.h"
 #include "base/i18n.h"
+#include "base/paths.h"
 #include "base/strings.h"
+#include "base/thread_pool.h"
 #include "base/url.h"
 #include "ui/image_view.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/path.h"
 #include "ui/theme.h"
+
+#include <curl/curl.h>
+#include <filesystem>
+#include <functional>
 
 using Lingmo::i18n::tr;
 
@@ -341,6 +348,7 @@ NowPlayingWidget::NowPlayingWidget(WidgetLayer& layer, WidgetSize size)
 
 NowPlayingWidget::~NowPlayingWidget()
 {
+    *m_alive = false;
     m_poll.stop();
     m_source.reset();
 }
@@ -371,12 +379,91 @@ void NowPlayingWidget::loadArt(const std::string& url)
     m_artUrl = url;
     std::string path;
     if (!url.empty()) {
-        if (const std::optional<std::string> local = base::url::toLocalFile(url))
+        // Local file (file:// URL)
+        if (const std::optional<std::string> local = base::url::toLocalFile(url)) {
             path = *local;
+        } else if (url.starts_with("http://") || url.starts_with("https://")) {
+            // Remote URL: download asynchronously to cache
+            downloadArt(url);
+            return;
+        }
     }
     m_artView->setSource(path);
     m_artView->setVisible(!path.empty());
     m_artView->setSourceSize({m_artRect.width, m_artRect.height});
+}
+
+void NowPlayingWidget::downloadArt(const std::string& url)
+{
+    // Build a stable cache path from the URL hash
+    const std::string cacheDir = base::paths::cacheHome() + "/lingmo-filemanager/album-art/";
+    std::filesystem::create_directories(cacheDir);
+    const std::string filename = std::to_string(std::hash<std::string>{}(url)) + ".jpg";
+    const std::string cachePath = cacheDir + filename;
+
+    // Already cached — load immediately
+    if (std::filesystem::exists(cachePath)) {
+        m_artView->setSource(cachePath);
+        m_artView->setVisible(true);
+        m_artView->setSourceSize({m_artRect.width, m_artRect.height});
+        return;
+    }
+
+    // Hide the art while downloading
+    m_artView->setSource({});
+    m_artView->setVisible(false);
+
+    base::EventLoop* loop = base::EventLoop::current();
+    if (!loop)
+        return;
+
+    base::ThreadPool::global().post([url, cachePath, loop, alive = m_alive, this] {
+        // Download via libcurl on the worker thread
+        static std::once_flag once;
+        std::call_once(once, [] { curl_global_init(CURL_GLOBAL_DEFAULT); });
+
+        CURL* curl = curl_easy_init();
+        if (!curl)
+            return;
+
+        std::string body;
+        const auto appendBody = [](char* data, size_t size, size_t count, void* user) -> size_t {
+            static_cast<std::string*>(user)->append(data, size * count);
+            return size * count;
+        };
+
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
+        curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10L);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "lingmo-filemanager/5.0");
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, +appendBody);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &body);
+
+        const CURLcode result = curl_easy_perform(curl);
+        long status = 0;
+        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &status);
+        curl_easy_cleanup(curl);
+
+        bool ok = (result == CURLE_OK && status >= 200 && status < 300 && !body.empty());
+        if (ok) {
+            // Write to cache file
+            std::ofstream file(cachePath, std::ios::binary);
+            ok = file.good();
+            if (ok)
+                file.write(body.data(), std::streamsize(body.size()));
+        }
+
+        loop->post([alive, ok, cachePath, this] {
+            if (!*alive)
+                return;
+            if (ok) {
+                m_artView->setSource(cachePath);
+                m_artView->setVisible(true);
+                m_artView->setSourceSize({m_artRect.width, m_artRect.height});
+            }
+        });
+    });
 }
 
 void NowPlayingWidget::updateControls()

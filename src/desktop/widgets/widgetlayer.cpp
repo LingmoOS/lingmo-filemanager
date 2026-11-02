@@ -14,6 +14,7 @@
 #include "base/event_loop.h"
 #include "base/i18n.h"
 #include "desktop/widgets/widget.h"
+#include "ui/animation.h"
 #include "ui/menu.h"
 #include "ui/path.h"
 #include "ui/window.h"
@@ -157,6 +158,27 @@ void WidgetLayer::addWidget(WidgetKind kind, WidgetSize size)
     if (!widget)
         return;
     widget->setEditing(m_editing);
+
+    // Entrance animation: scale 0.8→1 and opacity 0→1 over 300ms
+    if (m_window) {
+        widget->setOpacity(0.0);
+        widget->setTransform({.scale = 0.8});
+        widget->setLayered(true);
+
+        auto anim = std::make_shared<ui::Animation>(m_window);
+        anim->setDuration(std::chrono::milliseconds(300));
+        anim->setEasing(ui::Animation::Easing::OutCubic);
+        anim->onUpdate = [widget](double t) {
+            widget->setOpacity(t);
+            widget->setTransform({.scale = 0.8 + 0.2 * t});
+        };
+        anim->onFinished = [widget, anim] {
+            widget->setLayered(false);
+            widget->setTransform({});
+        };
+        anim->start();
+    }
+
     updateBlur();
     if (onChanged)
         onChanged();
@@ -180,12 +202,36 @@ void WidgetLayer::removeWidget(DesktopWidget* widget)
     const auto found = std::find(m_widgets.begin(), m_widgets.end(), widget);
     if (found == m_widgets.end())
         return;
+
+    // Remove from list immediately so it is not returned by placements() etc.
     m_widgets.erase(found);
-    // Destroyed here, after the layer no longer lists it.
-    takeChild(widget);
-    updateBlur();
-    if (onChanged)
-        onChanged();
+
+    // Exit animation: scale 1→0.8 and opacity 1→0 over 200ms, then destroy.
+    if (m_window) {
+        widget->setLayered(true);
+        auto anim = std::make_shared<ui::Animation>(m_window);
+        anim->setDuration(std::chrono::milliseconds(200));
+        anim->setEasing(ui::Animation::Easing::OutCubic);
+        anim->onUpdate = [widget](double t) {
+            widget->setOpacity(1.0 - t);
+            widget->setTransform({.scale = 1.0 - 0.2 * t});
+        };
+        std::shared_ptr<bool> alive = m_alive;
+        anim->onFinished = [this, widget, alive, anim] {
+            if (*alive)
+                takeChild(widget); // destroys the widget
+            updateBlur();
+            if (*alive && onChanged)
+                onChanged();
+        };
+        anim->start();
+    } else {
+        // No window: destroy immediately
+        takeChild(widget);
+        updateBlur();
+        if (onChanged)
+            onChanged();
+    }
 }
 
 void WidgetLayer::removeWidgetDeferred(DesktopWidget* widget)

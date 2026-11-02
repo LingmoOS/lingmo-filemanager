@@ -55,6 +55,7 @@ private:
     WeatherData m_data;
     bool m_fetching = false;
     std::chrono::steady_clock::time_point m_lastFetch {};
+    sk_sp<SkImage> m_weatherIcon;
 };
 
 } // namespace fm

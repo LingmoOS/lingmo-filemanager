@@ -21,6 +21,7 @@
 #include "base/settings.h"
 #include "base/thread_pool.h"
 #include "core/config.h"
+#include "ui/icon_loader.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/path.h"
@@ -36,6 +37,45 @@ namespace {
 constexpr const char* kGeocoding = "https://geocoding-api.open-meteo.com/v1/search";
 constexpr const char* kForecast = "https://api.open-meteo.com/v1/forecast";
 constexpr auto kRefreshInterval = std::chrono::minutes(15);
+constexpr auto kCacheExpiry = std::chrono::minutes(15);
+constexpr size_t kMaxCacheEntries = 10;
+
+// Weather cache: shared across all WeatherWidget instances
+struct CachedWeather
+{
+    WeatherData data;
+    std::chrono::steady_clock::time_point fetchTime;
+};
+
+static std::map<std::string, CachedWeather> s_weatherCache;
+static std::mutex s_cacheMutex;
+
+std::optional<WeatherData> getCachedWeather(const std::string& city)
+{
+    std::lock_guard lock(s_cacheMutex);
+    auto it = s_weatherCache.find(city);
+    if (it == s_weatherCache.end())
+        return std::nullopt;
+
+    const auto age = std::chrono::steady_clock::now() - it->second.fetchTime;
+    if (age > kCacheExpiry) {
+        s_weatherCache.erase(it);
+        return std::nullopt;
+    }
+    return it->second.data;
+}
+
+void setCachedWeather(const std::string& city, const WeatherData& data)
+{
+    std::lock_guard lock(s_cacheMutex);
+    // LRU eviction: remove oldest entry if cache is full
+    if (s_weatherCache.size() >= kMaxCacheEntries) {
+        auto oldest = std::min_element(s_weatherCache.begin(), s_weatherCache.end(),
+            [](const auto& a, const auto& b) { return a.second.fetchTime < b.second.fetchTime; });
+        s_weatherCache.erase(oldest);
+    }
+    s_weatherCache[city] = {data, std::chrono::steady_clock::now()};
+}
 
 struct HttpResponse
 {
@@ -165,6 +205,37 @@ bool isSnow(int code)
     return (code >= 71 && code <= 77) || code == 85 || code == 86;
 }
 
+const char* weatherIconName(int code)
+{
+    if (code == 0)
+        return "weather-clear";
+    if (code <= 2)
+        return "weather-few-clouds";
+    if (code == 3)
+        return "weather-overcast";
+    if (code == 45 || code == 48)
+        return "weather-fog";
+    if (code >= 51 && code <= 55)
+        return "weather-showers-scattered";
+    if (code == 56 || code == 57)
+        return "weather-freezing-rain";
+    if (code >= 61 && code <= 65)
+        return "weather-showers";
+    if (code == 66 || code == 67)
+        return "weather-freezing-rain";
+    if (code >= 71 && code <= 75)
+        return "weather-snow";
+    if (code == 77)
+        return "weather-snow-scattered";
+    if (code >= 80 && code <= 82)
+        return "weather-showers";
+    if (code == 85 || code == 86)
+        return "weather-snow";
+    if (code >= 95 && code <= 99)
+        return "weather-storm";
+    return "weather-none-available";
+}
+
 } // namespace
 
 WeatherWidget::WeatherWidget(WidgetLayer& layer, WidgetSize size)
@@ -207,6 +278,17 @@ void WeatherWidget::refresh()
         m_data = {};
         updateLabels();
         return;
+    }
+
+    // Check cache first: avoid network request if fresh data exists
+    if (city == m_requestedCity) {
+        const auto cached = getCachedWeather(city);
+        if (cached) {
+            m_data = *cached;
+            m_lastFetch = std::chrono::steady_clock::now();
+            updateLabels();
+            return;
+        }
     }
 
     const auto now = std::chrono::steady_clock::now();
@@ -259,6 +341,7 @@ void WeatherWidget::fetch(const std::string& city)
 void WeatherWidget::apply(const WeatherData& data)
 {
     m_data = data;
+    setCachedWeather(m_requestedCity, data);
     updateLabels();
 }
 
@@ -280,6 +363,17 @@ void WeatherWidget::updateLabels()
                                 ? std::string(tr("Humidity")) + " "
                                         + base::Locale::system().toString(m_data.humidity, 0) + "%"
                                 : std::string());
+
+    // Load weather icon
+    if (valid && window()) {
+        const int iconSize = size() == WidgetSize::Small ? 36
+                           : size() == WidgetSize::Large ? 64 : 48;
+        m_weatherIcon = ui::IconLoader::instance().themeIcon(
+            weatherIconName(m_data.code), iconSize, window()->scale());
+    } else {
+        m_weatherIcon = nullptr;
+    }
+
     requestLayout();
     requestPaint();
 }
@@ -308,16 +402,26 @@ void WeatherWidget::paintContent(ui::Painter& painter)
 {
     if (size() == WidgetSize::Small)
         return;
-    const ui::Theme& theme = ui::Theme::current();
+
     const ui::RectF content = contentRect();
+    const int iconSize = size() == WidgetSize::Large ? 64 : 48;
+    const double cx = content.right() - iconSize / 2.0 - 8;
+    const double cy = content.y + iconSize / 2.0 + 12;
+
+    // Prefer system icon, fallback to hand-drawn
+    if (m_weatherIcon) {
+        painter.drawImage(m_weatherIcon, {cx - iconSize / 2.0, cy - iconSize / 2.0,
+                          static_cast<double>(iconSize), static_cast<double>(iconSize)});
+        return;
+    }
+
+    // Fallback: hand-drawn weather graphics
+    const ui::Theme& theme = ui::Theme::current();
     const double size = std::min(64.0, content.width * 0.24);
-    const double cx = content.right() - size / 2 - 8;
-    const double cy = content.y + size / 2 + 12;
     const ui::Color ink = theme.text.withAlpha(0.62);
     const ui::Color accent = theme.highlight;
     const int code = m_data.valid ? m_data.code : 0;
 
-    // A sun, then a cloud when the code has one; rain or snow falls below it.
     if (m_data.valid && code <= 2) {
         const double radius = size * 0.22;
         painter.fillEllipse({cx - radius, cy - radius, radius * 2, radius * 2}, accent);

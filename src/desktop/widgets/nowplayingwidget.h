@@ -38,6 +38,8 @@ private:
     void setTrack(bool present, const std::string& title, const std::string& artist, bool playing,
                   bool canControl, bool canPrevious, bool canNext, const std::string& artUrl);
     void loadArt(const std::string& url);
+    // Downloads an HTTP/HTTPS art URL to the local cache and then loads it.
+    void downloadArt(const std::string& url);
     void updateControls();
 
     ui::Label* m_title = nullptr;
@@ -57,6 +59,8 @@ private:
     bool m_canControl = false;
     bool m_canPrevious = false;
     bool m_canNext = false;
+    // Alive flag for async download callbacks.
+    std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
 };
 
 } // namespace fm
