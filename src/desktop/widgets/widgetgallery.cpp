@@ -18,8 +18,6 @@ using Lingmo::i18n::tr;
 
 namespace fm {
 
-namespace {
-
 void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
 {
     const ui::Theme& theme = ui::Theme::current();
@@ -146,9 +144,9 @@ void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
                 painter.fillRoundedRect({rect.x+col*(cell+4), rect.y+rect.height*0.1+row*(cell+4), cell, cell}, 4, row==0&&col==0 ? accent : quiet);
         return;
     }
-    }
+}
 
-} // namespace
+// ── PreviewCard / PanelView class definitions ─────────────────────────────────
 
 class WidgetGallery::PreviewCard final : public ui::View
 {
