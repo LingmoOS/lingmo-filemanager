@@ -1,3 +1,22 @@
+lingmo-filemanager (5.0.5+lingmo5u1) unstable; urgency=medium
+
+  * desktop widgets: thread safety, SSL, and efficiency fixes.
+    - worldclockwidget: serialise setenv/tzset/localtime_r with a mutex so
+      concurrent threads never see a partially updated TZ variable.
+    - nowplayingwidget: add CURLOPT_SSL_VERIFYPEER and CURLOPT_SSL_VERIFYHOST
+      to album art downloads, matching weatherwidget.
+    - widget/weatherwidget/nowplayingwidget: consolidate curl_global_init into
+      a single RAII object; two independent once_flags would each call it.
+    - countdownwidget: replace std::localtime with localtime_r (thread-safe);
+      set unit labels in constructor so the first frame is not blank.
+    - networkspeedwidget: switch history from std::vector to std::deque so
+      the per-second pop_front is O(1) instead of O(n).
+    - systemwidget: add std::max(0, …) guards on memory row geometry to
+      prevent overflow when font size is large.
+    - todowidget: add ItemRow::setDone() for in-place toggle updates.
+
+ -- Lingmo OS Team <team@lingmo.org>  Tue, 03 Nov 2026 16:00:00 +0800
+
 lingmo-filemanager (5.0.4+lingmo5u1) unstable; urgency=medium
 
   * desktop widgets: fix SSL verification, timer interval and theme colour.
