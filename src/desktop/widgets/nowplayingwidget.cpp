@@ -420,9 +420,6 @@ void NowPlayingWidget::downloadArt(const std::string& url)
 
     base::ThreadPool::global().post([url, cachePath, loop, alive = m_alive, this] {
         // Download via libcurl on the worker thread
-        static std::once_flag once;
-        std::call_once(once, [] { curl_global_init(CURL_GLOBAL_DEFAULT); });
-
         CURL* curl = curl_easy_init();
         if (!curl)
             return;
@@ -434,6 +431,8 @@ void NowPlayingWidget::downloadArt(const std::string& url)
         };
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
         curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
         curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10L);

@@ -4,9 +4,9 @@
 #pragma once
 
 #include <cstdint>
+#include <deque>
 #include <string>
 #include <utility>
-#include <vector>
 
 #include "base/timer.h"
 #include "desktop/widgets/widget.h"
@@ -47,7 +47,7 @@ private:
     bool     m_firstSample = true;
     double   m_rxSpeed   = 0;
     double   m_txSpeed   = 0;
-    std::vector<double> m_history;
+    std::deque<double> m_history;
     ui::RectF m_sparkRect;
 };
 

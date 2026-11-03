@@ -102,8 +102,6 @@ std::optional<std::string> urlEncode(CURL* curl, const std::string& value)
 
 std::optional<HttpResponse> get(const std::string& url)
 {
-    static std::once_flag once;
-    std::call_once(once, [] { curl_global_init(CURL_GLOBAL_DEFAULT); });
     CURL* curl = curl_easy_init();
     if (!curl)
         return std::nullopt;

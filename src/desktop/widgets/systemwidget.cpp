@@ -129,8 +129,11 @@ void SystemWidget::layoutContent()
     m_memory->setFontSize(size() == WidgetSize::Small ? 11 : 13);
     m_cpu->setGeometry({content.x, content.y, content.width, labelHeight});
     m_cpuBar = {content.x, content.y + labelHeight + 4, content.width, kBarHeight};
-    m_memory->setGeometry({content.x, content.y + rowHeight + gap, content.width, labelHeight});
-    m_memoryBar = {content.x, content.y + rowHeight + gap + labelHeight + 4, content.width, kBarHeight};
+    const double memY = content.y + rowHeight + gap;
+    m_memory->setGeometry({content.x, memY, content.width,
+                           std::max(0.0, content.bottom() - memY - kBarHeight - 4)});
+    m_memoryBar = {content.x, std::min(memY + labelHeight + 4, content.bottom() - kBarHeight),
+                   content.width, kBarHeight};
 }
 
 void SystemWidget::paintContent(ui::Painter& painter)

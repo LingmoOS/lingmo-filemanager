@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstring>
 #include <ctime>
+#include <mutex>
 #include <sstream>
 
 #include "base/i18n.h"
@@ -40,12 +41,22 @@ std::string zoneLabel(const std::string& zone)
     return city;
 }
 
+// A per-process mutex that serialises every TZ manipulation so that
+// concurrent threads (WeatherWidget's thread pool, etc.) never see a
+// half-written TZ environment variable.
+static std::mutex& tzMutex()
+{
+    static std::mutex m;
+    return m;
+}
+
 // Format the wall-clock time for the given zone as HH:MM.
 std::string zoneTime(const std::string& zone)
 {
     const std::time_t now = std::time(nullptr);
-    const char* prevTz = std::getenv("TZ");
+    std::lock_guard<std::mutex> lock(tzMutex());
 
+    const char* prevTz = std::getenv("TZ");
     std::string tzCopy;
     if (prevTz)
         tzCopy = prevTz;
@@ -57,7 +68,6 @@ std::string zoneTime(const std::string& zone)
     std::memset(&local, 0, sizeof(local));
     localtime_r(&now, &local);
 
-    // Restore the previous TZ so we don't leak the zone into other code.
     if (prevTz)
         setenv("TZ", tzCopy.c_str(), 1);
     else

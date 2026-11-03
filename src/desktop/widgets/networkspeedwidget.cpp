@@ -158,7 +158,7 @@ void NetworkSpeedWidget::sample()
 
         m_history.push_back(m_rxSpeed + m_txSpeed);
         if (int(m_history.size()) > kHistoryLength)
-            m_history.erase(m_history.begin());
+            m_history.pop_front();  // O(1) with deque
     }
 
     if (size() == WidgetSize::Small) {

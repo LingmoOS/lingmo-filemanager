@@ -8,6 +8,8 @@
 #include <chrono>
 #include <cmath>
 
+#include <curl/curl.h>
+
 #include "base/event_loop.h"
 #include "desktop/widgets/calendarwidget.h"
 #include "desktop/widgets/batterywidget.h"

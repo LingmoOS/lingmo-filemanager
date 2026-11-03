@@ -73,6 +73,14 @@ CountdownWidget::CountdownWidget(WidgetLayer& layer, WidgetSize size)
     m_timer.setSingleShot(false);
     m_timer.onTimeout = [this] { refresh(); };
     m_timer.start();
+
+    // Set unit labels immediately so the first frame is not blank.
+    // retranslateContent() will keep them in sync on language changes.
+    m_daysUnit ->setText(tr("days"));
+    m_hoursUnit->setText(tr("hours"));
+    m_minsUnit ->setText(tr("min"));
+    m_secsUnit ->setText(tr("sec"));
+
     refresh();
 }
 
@@ -117,10 +125,11 @@ void CountdownWidget::loadConfig()
     if (!parsed) {
         // Default: one year ahead from today.
         const std::time_t now = std::time(nullptr);
-        std::tm* future = std::localtime(&now);
-        future->tm_year  += 1;
-        future->tm_isdst  = -1;
-        m_targetTime = std::mktime(future);
+        std::tm future = {};
+        localtime_r(&now, &future);
+        future.tm_year  += 1;
+        future.tm_isdst  = -1;
+        m_targetTime = std::mktime(&future);
     }
 }
 

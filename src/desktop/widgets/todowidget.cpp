@@ -51,6 +51,16 @@ public:
 
     ui::SizeF sizeHint() const override { return {0, 36}; }
 
+    // Update the done state in place instead of a full rebuild, so the
+    // strikethrough and checkmark reflect the toggle without recreating rows.
+    void setDone(bool done)
+    {
+        if (m_done == done)
+            return;
+        m_done = done;
+        requestPaint();
+    }
+
     void paint(ui::Painter& painter) override
     {
         const ui::RectF cell = localRect();
