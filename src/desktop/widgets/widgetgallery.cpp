@@ -332,6 +332,7 @@ void WidgetGallery::retranslate()
 {
     m_title->setText(tr("Widgets"));
     m_subtitle->setText(tr("Add widgets to your desktop"));
+    m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
     m_done->setText(tr("Done"));
     for (PreviewCard* card : m_cards)
         card->retranslate();
@@ -344,7 +345,6 @@ void WidgetGallery::paint(ui::Painter& painter)
 
 void WidgetGallery::layout()
 {
-    m_subtitle->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.6)));
     const ui::RectF area = localRect();
     const int count = int(m_cards.size());
     const int columns = std::max(1, count <= 5 ? count : 3);

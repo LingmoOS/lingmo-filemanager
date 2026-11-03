@@ -109,6 +109,8 @@ std::optional<HttpResponse> get(const std::string& url)
         return std::nullopt;
     HttpResponse response;
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 2L);
     curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curl, CURLOPT_NOSIGNAL, 1L);
     curl_easy_setopt(curl, CURLOPT_TIMEOUT, 8L);
@@ -259,7 +261,7 @@ WeatherWidget::WeatherWidget(WidgetLayer& layer, WidgetSize size)
     m_weatherIcon = addChild<ui::ThemeIcon>();
     m_weatherIcon->setVisible(false);
 
-    m_timer.setInterval(std::chrono::seconds(30));
+    m_timer.setInterval(kRefreshInterval);
     m_timer.setSingleShot(false);
     m_timer.onTimeout = [this] { refresh(); };
     m_timer.start();
