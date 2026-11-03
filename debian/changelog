@@ -1,3 +1,19 @@
+lingmo-filemanager (5.0.4+lingmo5u1) unstable; urgency=medium
+
+  * desktop widgets: fix SSL verification, timer interval and theme colour.
+    - weatherwidget: explicitly enable CURLOPT_SSL_VERIFYPEER and
+      CURLOPT_SSL_VERIFYHOST so HTTPS requests to open-meteo are always
+      validated even when libcurl defaults are overridden system-wide.
+    - weatherwidget: change refresh timer interval from 30 s to
+      kRefreshInterval (15 min) to match the cache expiry; the previous
+      value caused repeated settings-file reads on every tick with no
+      network benefit.
+    - widgetgallery: move subtitle colour update from layout() to
+      retranslate() so it tracks theme changes instead of firing on every
+      geometry pass.
+
+ -- Lingmo OS Team <team@lingmo.org>  Tue, 03 Nov 2026 15:40:00 +0800
+
 lingmo-filemanager (5.0.3+lingmo5u1) unstable; urgency=medium
 
   * desktop widgets: add 5 new widget types:
