@@ -9,6 +9,7 @@
 
 #include "base/i18n.h"
 #include "ui/button.h"
+#include "ui/icon.h"
 #include "ui/keys.h"
 #include "ui/label.h"
 #include "ui/painter.h"
@@ -18,133 +19,24 @@ using Lingmo::i18n::tr;
 
 namespace fm {
 
-void paintPreview(ui::Painter& painter, WidgetKind kind, const ui::RectF& rect)
+// Freedesktop icon name for each widget kind, used in the gallery preview.
+static const char* widgetIconName(WidgetKind kind)
 {
-    const ui::Theme& theme = ui::Theme::current();
-    const ui::Color quiet = theme.text.withAlpha(0.18);
-    const ui::Color accent = theme.highlight;
     switch (kind) {
-    case WidgetKind::Clock: {
-        painter.fillRoundedRect({rect.x, rect.y + rect.height * 0.16, rect.width * 0.78, 12},
-                                theme.smallRadius, quiet);
-        painter.fillRoundedRect({rect.x, rect.y + rect.height * 0.42, rect.width * 0.52, 8},
-                                theme.smallRadius, quiet);
-        return;
+    case WidgetKind::Clock:        return "org.gnome.clocks";
+    case WidgetKind::Calendar:     return "org.gnome.Calendar";
+    case WidgetKind::System:       return "lingmo-system-monitor";
+    case WidgetKind::Battery:      return "battery";
+    case WidgetKind::NowPlaying:   return "applications-multimedia";
+    case WidgetKind::Notes:        return "org.gnome.Notes";
+    case WidgetKind::Weather:      return "org.gnome.Weather";
+    case WidgetKind::WorldClock:   return "gworldclock";
+    case WidgetKind::Countdown:    return "ktimer";
+    case WidgetKind::NetworkSpeed: return "mate-netspeed-applet";
+    case WidgetKind::Todo:         return "org.gnome.Todo";
+    case WidgetKind::Launcher:     return "gnome-panel-launcher";
     }
-    case WidgetKind::Calendar: {
-        const double cell = rect.width / 8;
-        for (int row = 0; row < 4; ++row) {
-            for (int column = 0; column < 7; ++column) {
-                const double size = std::max(2.0, cell * 0.4);
-                painter.fillRoundedRect({rect.x + cell * 0.4 + column * cell,
-                                         rect.y + cell * 0.7 + row * (cell * 0.8), size, size},
-                                        size / 2, row == 0 && column == 2 ? accent : quiet);
-            }
-        }
-        return;
-    }
-    case WidgetKind::System: {
-        for (int i = 0; i < 2; ++i) {
-            const double y = rect.y + rect.height * (0.28 + i * 0.32);
-            painter.fillRoundedRect({rect.x, y, rect.width, 6}, 3, quiet);
-            painter.fillRoundedRect({rect.x, y, rect.width * (i == 0 ? 0.62 : 0.38), 6}, 3, accent);
-        }
-        return;
-    }
-    case WidgetKind::Battery: {
-        const double y = rect.y + rect.height * 0.36;
-        painter.fillRoundedRect({rect.x, y, rect.width * 0.74, rect.height * 0.26}, 3, quiet);
-        painter.fillRoundedRect({rect.x, y, rect.width * 0.46, rect.height * 0.26}, 3, accent);
-        painter.fillRoundedRect({rect.x + rect.width * 0.78, y + rect.height * 0.07,
-                                 rect.width * 0.04, rect.height * 0.12},
-                                1, quiet);
-        return;
-    }
-    case WidgetKind::NowPlaying: {
-        const double art = std::min(rect.width * 0.34, rect.height * 0.7);
-        painter.fillRoundedRect({rect.x, rect.y + rect.height * 0.15, art, art}, 4, quiet);
-        painter.fillRoundedRect({rect.x + art + 4, rect.y + rect.height * 0.25,
-                                 rect.width - art - 4, 5},
-                                2.5, quiet);
-        painter.fillRoundedRect({rect.x + art + 4, rect.y + rect.height * 0.42,
-                                 (rect.width - art - 4) * 0.62, 4},
-                                2, quiet);
-        painter.fillRoundedRect({rect.x + art + 4, rect.y + rect.height * 0.66, 8, 8}, 2, accent);
-        painter.fillRoundedRect({rect.x + art + 18, rect.y + rect.height * 0.66, 8, 8}, 2, quiet);
-        painter.fillRoundedRect({rect.x + art + 32, rect.y + rect.height * 0.66, 8, 8}, 2, quiet);
-        return;
-    }
-    case WidgetKind::Notes: {
-        for (int i = 0; i < 4; ++i) {
-            const double width = i == 3 ? rect.width * 0.52 : rect.width * (0.84 - i * 0.06);
-            painter.fillRoundedRect({rect.x, rect.y + rect.height * (0.20 + i * 0.17), width, 5},
-                                    2.5, i == 0 ? accent : quiet);
-        }
-        return;
-    }
-    case WidgetKind::Weather: {
-        const double radius = std::min(rect.width, rect.height) * 0.16;
-        const double cx = rect.x + rect.width * 0.32;
-        const double cy = rect.y + rect.height * 0.34;
-        painter.fillEllipse({cx - radius, cy - radius, radius * 2, radius * 2}, accent);
-        painter.fillRoundedRect({rect.x + rect.width * 0.22, rect.y + rect.height * 0.48,
-                                 rect.width * 0.48, rect.height * 0.20},
-                                radius, quiet);
-        painter.fillRoundedRect({rect.x + rect.width * 0.44, rect.y + rect.height * 0.36,
-                                 rect.width * 0.34, rect.height * 0.20},
-                                radius * 0.8, quiet);
-        painter.fillRoundedRect({rect.x, rect.y + rect.height * 0.74, rect.width * 0.44, 5}, 2.5,
-                                quiet);
-        return;
-    }
-    case WidgetKind::WorldClock: {
-        // Two clock faces side by side
-        for (int i = 0; i < 2; ++i) {
-            const double cx = rect.x + rect.width * (0.28 + i * 0.44);
-            const double cy = rect.y + rect.height * 0.42;
-            const double r = std::min(rect.width, rect.height) * 0.20;
-            painter.fillRoundedRect({cx-r, cy-r, r*2, r*2}, r, quiet);
-            painter.fillRoundedRect({cx-r, cy-r, r*2, r*2}, r, ui::Color{0,0,0,0});
-            painter.drawLine({cx, cy}, {cx, cy-r*0.6}, accent, 1.2);
-            painter.drawLine({cx, cy}, {cx+r*0.4, cy}, accent, 1.2);
-        }
-        return;
-    }
-    case WidgetKind::Countdown: {
-        painter.fillRoundedRect({rect.x, rect.y+rect.height*0.12, rect.width*0.7, 6}, 3, quiet);
-        painter.fillRoundedRect({rect.x, rect.y+rect.height*0.36, rect.width*0.52, 24}, 3, accent);
-        painter.fillRoundedRect({rect.x, rect.y+rect.height*0.70, rect.width*0.4, 5}, 2.5, quiet);
-        return;
-    }
-    case WidgetKind::NetworkSpeed: {
-        // Up and down arrows
-        for (int i = 0; i < 2; ++i) {
-            const double bx = rect.x + rect.width*(0.10 + i*0.50);
-            const double by = rect.y + rect.height*0.22;
-            ui::Path p;
-            if (i == 0) { p.moveTo(bx+5,by); p.lineTo(bx,by+8); p.lineTo(bx+10,by+8); p.close(); }
-            else { p.moveTo(bx,by); p.lineTo(bx+10,by); p.lineTo(bx+5,by+8); p.close(); }
-            painter.fillPath(p, i==0 ? accent : quiet);
-            painter.fillRoundedRect({rect.x+rect.width*(0.04+i*0.50), rect.y+rect.height*0.56, rect.width*0.38, 5}, 2.5, i==0 ? accent : quiet);
-        }
-        return;
-    }
-    case WidgetKind::Todo: {
-        for (int i = 0; i < 4; ++i) {
-            const double y = rect.y + rect.height*(0.18 + i*0.19);
-            painter.fillEllipse({rect.x, y, 6, 6}, i < 2 ? accent : quiet);
-            painter.fillRoundedRect({rect.x+10, y+1, rect.width*(i<2?0.58:0.74)-10, 4}, 2, i<2 ? quiet.withAlpha(0.47) : quiet);
-        }
-        return;
-    }
-    case WidgetKind::Launcher: {
-        const double cell = rect.width / 3.2;
-        for (int row = 0; row < 2; ++row)
-            for (int col = 0; col < 2; ++col)
-                painter.fillRoundedRect({rect.x+col*(cell+4), rect.y+rect.height*0.1+row*(cell+4), cell, cell}, 4, row==0&&col==0 ? accent : quiet);
-        return;
-    }
-    }
+    return "applications-system";
 }
 
 // ── PreviewCard / PanelView class definitions ─────────────────────────────────
@@ -156,6 +48,10 @@ public:
         : m_kind(kind)
     {
         setCursorShape(ui::CursorShape::Pointer);
+
+        m_icon = addChild<ui::ThemeIcon>(widgetIconName(kind), 48);
+        m_icon->setThemeSize(48);
+
         m_title = addChild<ui::Label>();
         m_title->setTextAlignment(ui::Label::TextAlignment::Center);
         m_title->setFontSize(12);
@@ -168,42 +64,18 @@ public:
     void retranslate()
     {
         switch (m_kind) {
-        case WidgetKind::Clock:
-            m_title->setText(tr("Clock"));
-            break;
-        case WidgetKind::Calendar:
-            m_title->setText(tr("Calendar"));
-            break;
-        case WidgetKind::System:
-            m_title->setText(tr("System"));
-            break;
-        case WidgetKind::Battery:
-            m_title->setText(tr("Battery"));
-            break;
-        case WidgetKind::NowPlaying:
-            m_title->setText(tr("Now Playing"));
-            break;
-        case WidgetKind::Notes:
-            m_title->setText(tr("Notes"));
-            break;
-        case WidgetKind::Weather:
-            m_title->setText(tr("Weather"));
-            break;
-        case WidgetKind::WorldClock:
-            m_title->setText(tr("World Clock"));
-            break;
-        case WidgetKind::Countdown:
-            m_title->setText(tr("Countdown"));
-            break;
-        case WidgetKind::NetworkSpeed:
-            m_title->setText(tr("Network"));
-            break;
-        case WidgetKind::Todo:
-            m_title->setText(tr("To-Do"));
-            break;
-        case WidgetKind::Launcher:
-            m_title->setText(tr("Launcher"));
-            break;
+        case WidgetKind::Clock:        m_title->setText(tr("Clock"));       break;
+        case WidgetKind::Calendar:     m_title->setText(tr("Calendar"));    break;
+        case WidgetKind::System:       m_title->setText(tr("System"));      break;
+        case WidgetKind::Battery:      m_title->setText(tr("Battery"));     break;
+        case WidgetKind::NowPlaying:   m_title->setText(tr("Now Playing")); break;
+        case WidgetKind::Notes:        m_title->setText(tr("Notes"));       break;
+        case WidgetKind::Weather:      m_title->setText(tr("Weather"));     break;
+        case WidgetKind::WorldClock:   m_title->setText(tr("World Clock")); break;
+        case WidgetKind::Countdown:    m_title->setText(tr("Countdown"));   break;
+        case WidgetKind::NetworkSpeed: m_title->setText(tr("Network"));     break;
+        case WidgetKind::Todo:         m_title->setText(tr("To-Do"));       break;
+        case WidgetKind::Launcher:     m_title->setText(tr("Launcher"));    break;
         }
         m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.82)));
     }
@@ -214,22 +86,31 @@ public:
     {
         const ui::Theme& theme = ui::Theme::current();
         const ui::RectF preview = previewRect();
-        const ui::Color fill = m_hovered ? theme.highlight.withAlpha(theme.darkMode ? 0.28 : 0.16)
-                                         : theme.text.withAlpha(theme.darkMode ? 0.08 : 0.05);
-        painter.drawShadow(preview, theme.mediumRadius, m_hovered ? 14 : 8,
-                           ui::Color {0, 0, 0, uint8_t(theme.darkMode ? (m_hovered ? 80 : 45)
-                                                                      : (m_hovered ? 45 : 25))},
+        const ui::Color fill = m_hovered
+            ? theme.highlight.withAlpha(theme.darkMode ? 0.28 : 0.16)
+            : theme.text.withAlpha(theme.darkMode ? 0.08 : 0.05);
+        painter.drawShadow(preview, theme.mediumRadius,
+                           m_hovered ? 14 : 8,
+                           ui::Color{0, 0, 0, uint8_t(theme.darkMode
+                               ? (m_hovered ? 80 : 45)
+                               : (m_hovered ? 45 : 25))},
                            {0, 2});
         painter.fillRoundedRect(preview, theme.mediumRadius, fill);
         if (m_hovered)
             painter.drawRoundedRect(preview, {theme.mediumRadius, 0, ui::Corners::Continuous},
-                                    ui::Color {0, 0, 0, 0}, 1, theme.highlight.withAlpha(0.45));
-        paintPreview(painter, m_kind, preview.shrunk({preview.width * 0.2, preview.height * 0.24,
-                                                     preview.width * 0.2, preview.height * 0.24}));
+                                    ui::Color{0, 0, 0, 0}, 1,
+                                    theme.highlight.withAlpha(0.45));
     }
 
     void layout() override
     {
+        const ui::RectF preview = previewRect();
+        const double iconSize = m_icon->sizeHint().width;
+        // Icon centred in the preview area.
+        m_icon->setGeometry({preview.x + (preview.width - iconSize) / 2.0,
+                             preview.y + (preview.height - iconSize) / 2.0,
+                             iconSize, iconSize});
+        // Title below the preview card.
         m_title->setGeometry({0, geometry().height - 24, geometry().width, 20});
     }
 
@@ -259,8 +140,9 @@ private:
     }
 
     WidgetKind m_kind;
-    ui::Label* m_title = nullptr;
-    bool m_hovered = false;
+    ui::ThemeIcon* m_icon  = nullptr;
+    ui::Label*     m_title = nullptr;
+    bool           m_hovered = false;
 };
 
 // The panel: the only part of the gallery that takes presses. The dim around
