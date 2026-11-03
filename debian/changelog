@@ -1,3 +1,11 @@
+lingmo-filemanager (5.0.6+lingmo5u1) unstable; urgency=medium
+
+  * widget gallery: replace hand-drawn previews with real system icons.
+    Each widget kind now shows its actual freedesktop theme icon (48 px,
+    centred in the preview card) instead of a custom-drawn placeholder.
+
+ -- Lingmo OS Team <team@lingmo.org>  Tue, 03 Nov 2026 16:20:00 +0800
+
 lingmo-filemanager (5.0.5+lingmo5u1) unstable; urgency=medium
 
   * desktop widgets: thread safety, SSL, and efficiency fixes.
