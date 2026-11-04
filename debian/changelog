@@ -1,3 +1,12 @@
+lingmo-filemanager (5.0.8+lingmo5u1) unstable; urgency=medium
+
+  * desktop: add icon corner setting; new icons appear at the chosen
+    corner of the work area (Top Right / Top Left / Bottom Left /
+    Bottom Right). Exposed via a SetIconCorner D-Bus method and persisted
+    to Desktop/iconCorner in filemanager.conf.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 04 Nov 2026 13:00:00 +0800
+
 lingmo-filemanager (5.0.7+lingmo5u1) unstable; urgency=medium
 
   * desktop: add View and Sort By submenus to the background right-click

@@ -23,6 +23,11 @@ public:
 
     Positioner& positioner() { return m_positioner; }
 
+    // Where new icons appear on the desktop grid.
+    enum class IconCorner { TopRight = 0, TopLeft = 1, BottomLeft = 2, BottomRight = 3 };
+    void setIconCorner(IconCorner corner);
+    IconCorner iconCorner() const { return m_iconCorner; }
+
     void setIconSize(double size);
     void setMaximumIconSize(double size) { m_maximumIconSize = size; }
     // The work area in the view's coordinates; the grid keeps 12 px inside it.
@@ -78,6 +83,7 @@ private:
     double m_cellHeight = 0;
     int m_columns = 1;
     int m_rows = 1;
+    IconCorner m_iconCorner = IconCorner::TopRight;
     std::vector<base::Subscription> m_subscriptions;
 };
 

@@ -131,6 +131,9 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
     const int savedSortMode = int(settings.intValue("Desktop/sortMode", -1));
     if (savedSortMode >= 0)
         m_model->setSortMode(savedSortMode);
+    const int savedCorner = int(settings.intValue("Desktop/iconCorner", 0));
+    if (savedCorner >= 0 && savedCorner <= 3)
+        m_view->setIconCorner(static_cast<DesktopGridView::IconCorner>(savedCorner));
     m_view->setVisible(m_showDesktopIcons);
 
     // Clicking the empty desktop leaves the preview on its item.

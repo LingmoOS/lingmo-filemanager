@@ -7,6 +7,7 @@
 #include "app/dialogs.h"
 #include "app/previewservice.h"
 #include "desktop/desktopwindow.h"
+#include "desktop/desktopview.h"
 #include "core/launcher.h"
 #include "core/lister.h"
 #include "core/standardfolders.h"
@@ -14,6 +15,8 @@
 #include "ops/operations.h"
 
 #include "base/event_loop.h"
+#include "base/paths.h"
+#include "base/settings.h"
 #include "base/url.h"
 #include "ui/application.h"
 #include "ui/trusted_connection.h"
@@ -92,6 +95,16 @@ void Application::exportObjects()
     m_fileManager->addMethod("RefreshWidgets", [this] {
         if (m_desktop)
             m_desktop->refreshWidgets();
+    });
+    m_fileManager->addMethod("SetIconCorner", [this](int32_t corner) {
+        if (!m_desktop)
+            return;
+        if (corner < 0 || corner > 3)
+            return;
+        const auto c = static_cast<DesktopGridView::IconCorner>(corner);
+        m_desktop->view()->setIconCorner(c);
+        base::Settings settings(base::paths::lingmoConfig("filemanager"));
+        settings.setValue("Desktop/iconCorner", int(corner));
     });
     m_fileManager->publish();
 

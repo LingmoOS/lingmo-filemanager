@@ -304,6 +304,14 @@ void DesktopGridView::setWorkArea(const ui::RectF& area)
     requestLayout();
 }
 
+void DesktopGridView::setIconCorner(IconCorner corner)
+{
+    if (m_iconCorner == corner)
+        return;
+    m_iconCorner = corner;
+    requestLayout();
+}
+
 void DesktopGridView::updateMetrics()
 {
     m_cellWidth = std::ceil(std::max(88.0, m_iconSize + 44));
@@ -315,8 +323,28 @@ void DesktopGridView::updateMetrics()
     const double availableHeight = std::max(0.0, area.height - 24);
     const double width = std::floor(availableWidth / m_cellWidth) * m_cellWidth;
     const double height = std::floor(availableHeight / m_cellHeight) * m_cellHeight;
-    // Anchored to the work area's top right, 12 px in.
-    m_grid = {area.x + area.width - 12 - width, area.y + 12, width, height};
+    // Anchored to the chosen corner of the work area, 12 px in.
+    double gridX, gridY;
+    switch (m_iconCorner) {
+    case IconCorner::TopLeft:
+        gridX = area.x + 12;
+        gridY = area.y + 12;
+        break;
+    case IconCorner::BottomLeft:
+        gridX = area.x + 12;
+        gridY = area.y + area.height - 12 - height;
+        break;
+    case IconCorner::BottomRight:
+        gridX = area.x + area.width - 12 - width;
+        gridY = area.y + area.height - 12 - height;
+        break;
+    case IconCorner::TopRight:
+    default:
+        gridX = area.x + area.width - 12 - width;
+        gridY = area.y + 12;
+        break;
+    }
+    m_grid = {gridX, gridY, width, height};
     m_columns = std::max(1, int(std::floor(width / m_cellWidth)));
     m_rows = std::max(1, int(std::floor(height / m_cellHeight)));
     m_positioner.setGrid(m_columns, m_rows);
