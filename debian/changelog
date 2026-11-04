@@ -1,3 +1,15 @@
+lingmo-filemanager (5.0.7+lingmo5u1) unstable; urgency=medium
+
+  * desktop: add View and Sort By submenus to the background right-click
+    menu. View provides Large/Medium/Small icon sizes (with checkmark on
+    the active size), Auto Arrange Icons, Align Icons to Grid, and Show
+    Desktop Icons. Sort By offers Name, Size, Item Type and Modified Date
+    (with checkmark on the active sort). Selections are persisted in
+    filemanager.conf under Desktop/iconSize, Desktop/showIcons,
+    Desktop/autoArrange and Desktop/sortMode.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 04 Nov 2026 13:00:00 +0800
+
 lingmo-filemanager (5.0.6+lingmo5u1) unstable; urgency=medium
 
   * widget gallery: replace hand-drawn previews with real system icons.

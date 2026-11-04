@@ -78,6 +78,12 @@ private:
     std::string widgetLayoutKey() const;
     void openWidgetGallery();
     void closeWidgetGallery();
+    // Desktop view / sort options.
+    bool desktopIconsVisible() const { return m_showDesktopIcons; }
+    void setDesktopIconsVisible(bool visible);
+    bool autoArrange() const { return m_autoArrange; }
+    void setAutoArrange(bool enabled);
+    void alignIconsToGrid();
 
     ui::TrustedConnection* m_connection;
     FileManagerHost& m_host;
@@ -96,6 +102,8 @@ private:
     bool m_restoring = false;
     bool m_activated = false;
     bool m_widgetsLoaded = false;
+    bool m_showDesktopIcons = true;
+    bool m_autoArrange = false;
     base::Timer m_saveLayout;
     base::Timer m_saveWidgets;
     base::Timer m_restoreLayout;

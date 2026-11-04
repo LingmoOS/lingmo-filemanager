@@ -34,6 +34,7 @@
 #include <cmath>
 
 using Lingmo::i18n::tr;
+using Lingmo::i18n::trNoop;
 
 namespace fm {
 
@@ -123,6 +124,14 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
         settings.setValue("Desktop/iconSize", int(std::lround(m_view->iconSize())));
     };
     m_view->onContextMenu = [this](ui::PointF position) { showContextMenu(position); };
+
+    // Restore desktop view preferences: icon visibility, auto-arrange, sort order.
+    m_showDesktopIcons = settings.boolValue("Desktop/showIcons", true);
+    m_autoArrange      = settings.boolValue("Desktop/autoArrange", false);
+    const int savedSortMode = int(settings.intValue("Desktop/sortMode", -1));
+    if (savedSortMode >= 0)
+        m_model->setSortMode(savedSortMode);
+    m_view->setVisible(m_showDesktopIcons);
 
     // Clicking the empty desktop leaves the preview on its item.
     m_preview = std::make_unique<PreviewClient>();
@@ -453,10 +462,84 @@ void DesktopWindow::showContextMenu(ui::PointF position)
 {
     m_menu = createFolderMenu(*m_model, [this] { refreshDesktop(); });
     if (!m_model->hasSelection()) {
+        // ── View submenu ────────────────────────────────────────────────────
+        ui::Menu* view = m_menu->addSubmenu(tr("View"));
+
+        // Icon size choices: Large / Medium / Small
+        const double currentSize = m_view->iconSize();
+        struct SizeItem { const char* name; double size; };
+        for (const SizeItem& s : {SizeItem{trNoop("Large Icons"),  96.0},
+                                   SizeItem{trNoop("Medium Icons"), 64.0},
+                                   SizeItem{trNoop("Small Icons"),  32.0}}) {
+            const double sz = s.size;
+            const size_t idx = view->addItem(tr(s.name), [this, sz] {
+                m_view->setIconSize(sz);
+                base::Settings settings(settingsPath());
+                settings.setValue("Desktop/iconSize", int(sz));
+            });
+            view->setItemChecked(idx, std::abs(currentSize - sz) < 4.0);
+        }
+        view->addSeparator();
+
+        // Auto Arrange – resets positioner to default cell positions
+        const size_t autoIdx = view->addItem(tr("Auto Arrange Icons"), [this] {
+            setAutoArrange(!autoArrange());
+        });
+        view->setItemChecked(autoIdx, autoArrange());
+
+        // Align to Grid – snaps icons to nearest default cells
+        view->addItem(tr("Align Icons to Grid"), [this] { alignIconsToGrid(); });
+
+        view->addSeparator();
+
+        // Show / hide all desktop icons
+        const size_t showIdx = view->addItem(tr("Show Desktop Icons"), [this] {
+            setDesktopIconsVisible(!desktopIconsVisible());
+        });
+        view->setItemChecked(showIdx, desktopIconsVisible());
+
+        // ── Sort By submenu ─────────────────────────────────────────────────
+        ui::Menu* sortBy = m_menu->addSubmenu(tr("Sort By"));
+        struct SortItem { const char* name; int mode; };
+        for (const SortItem& s : {SortItem{trNoop("Name"),          0},
+                                   SortItem{trNoop("Size"),          1},
+                                   SortItem{trNoop("Item Type"),     3},
+                                   SortItem{trNoop("Modified Date"), 2}}) {
+            const int mode = s.mode;
+            const size_t idx = sortBy->addItem(tr(s.name), [this, mode] {
+                m_model->setSortMode(mode);
+                base::Settings settings(settingsPath());
+                settings.setValue("Desktop/sortMode", mode);
+            });
+            sortBy->setItemChecked(idx, m_model->sortMode() == mode);
+        }
+
         m_menu->addSeparator();
         m_menu->addItem(tr("Edit Widgets…"), [this] { openWidgetGallery(); });
     }
     m_menu->popup(m_window.get(), position);
+}
+
+void DesktopWindow::setDesktopIconsVisible(bool visible)
+{
+    m_showDesktopIcons = visible;
+    m_view->setVisible(visible);
+    base::Settings settings(settingsPath());
+    settings.setValue("Desktop/showIcons", visible);
+}
+
+void DesktopWindow::setAutoArrange(bool enabled)
+{
+    m_autoArrange = enabled;
+    base::Settings settings(settingsPath());
+    settings.setValue("Desktop/autoArrange", enabled);
+    if (enabled)
+        m_view->positioner().reset();
+}
+
+void DesktopWindow::alignIconsToGrid()
+{
+    m_view->positioner().reset();
 }
 
 // The folder keys without history, path editor, closing or refresh.
