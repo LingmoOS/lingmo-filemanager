@@ -20,9 +20,9 @@ class FolderModel;
 
 // The desktop's icons on fixed cells. The grid runs
 // in stripes (columns, as the desktop flows top to bottom) of perStripe
-// cells; cell = stripe * perStripe + pos. New icons take the rightmost
-// stripe first, filled from the top. Cells are kept by URL, saved as
-// [stripes, perStripe, then url, stripe, pos for each icon].
+// cells; cell = stripe * perStripe + pos. New icons take the corner stripe
+// first (configurable), filled from the top or bottom. Cells are kept by URL,
+// saved as [stripes, perStripe, then url, stripe, pos for each icon].
 class Positioner
 {
 public:
@@ -33,10 +33,16 @@ public:
         Down,
     };
 
+    // Matches DesktopGridView::IconCorner: TopRight=0, TopLeft=1,
+    // BottomLeft=2, BottomRight=3.
+    enum class Corner { TopRight = 0, TopLeft = 1, BottomLeft = 2, BottomRight = 3 };
+
     explicit Positioner(FolderModel& model);
     ~Positioner();
 
     void setGrid(int stripes, int perStripe);
+    // Change the corner new icons fill from; triggers a re-layout of defaults.
+    void setCorner(Corner corner);
     int stripes() const { return m_stripes; }
     int perStripe() const { return m_perStripe; }
 
@@ -93,6 +99,7 @@ private:
     FolderModel& m_model;
     int m_stripes = 0;
     int m_perStripe = 0;
+    Corner m_corner = Corner::TopRight;
     Layout m_layout;
     std::map<std::string, std::string> m_renames;
     std::vector<std::string> m_positions;

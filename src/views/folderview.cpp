@@ -758,6 +758,12 @@ uint32_t FolderView::dragUpdate(const ui::DragEvent& event)
     if (!m_dropUrlsKnown)
         return ui::MoveAction;
     updateDropTarget(m_dropUrls, m_dropSourceActions, event.modifiers, event.position);
+    // On the desktop, a drag between icons in the same view is always a move
+    // (rearrange), not a copy.  Force MoveAction so the compositor accepts the
+    // drop; the underlying canDropUrls / drop path checks m_dragging and routes
+    // it to move.emit rather than OperationsClient.
+    if (m_desktopStyle && m_model.dragging())
+        return ui::MoveAction;
     return dropActionFor(event.modifiers, m_dropSourceActions, ui::NoAction);
 }
 

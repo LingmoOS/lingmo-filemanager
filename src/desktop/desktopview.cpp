@@ -309,6 +309,7 @@ void DesktopGridView::setIconCorner(IconCorner corner)
     if (m_iconCorner == corner)
         return;
     m_iconCorner = corner;
+    m_positioner.setCorner(static_cast<Positioner::Corner>(corner));
     requestLayout();
 }
 

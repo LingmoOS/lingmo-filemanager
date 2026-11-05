@@ -111,6 +111,17 @@ void Positioner::setGrid(int stripes, int perStripe)
     changed.emit();
 }
 
+void Positioner::setCorner(Corner corner)
+{
+    if (m_corner == corner)
+        return;
+    m_corner = corner;
+    // Re-derive default cells; only affects icons that have no saved position.
+    if (m_positions.empty() && !m_deferApply)
+        placeAllByDefault();
+    changed.emit();
+}
+
 int Positioner::cellCount() const
 {
     return m_layout.last() + 1;
@@ -146,15 +157,25 @@ bool Positioner::insideGrid(int cell) const
     return cell >= 0 && (gridCells() == 0 || cell < gridCells());
 }
 
-// The rightmost stripe from the top, then the one to its left; past the grid,
-// or with no grid yet, the cells simply follow on.
+// The corner stripe from the top or bottom, then the next stripe inward; past
+// the grid, or with no grid yet, the cells simply follow on.
 int Positioner::defaultCell(int ordinal) const
 {
     if (ordinal >= gridCells())
         return ordinal;
 
-    const int stripe = m_stripes - 1 - ordinal / m_perStripe;
-    return stripe * m_perStripe + ordinal % m_perStripe;
+    const int stripeOrdinal = ordinal / m_perStripe;
+    const int posOrdinal    = ordinal % m_perStripe;
+
+    // Stripe index (column): left corners fill 0→N, right corners fill N→0.
+    const bool rightSide = (m_corner == Corner::TopRight || m_corner == Corner::BottomRight);
+    const int stripe = rightSide ? m_stripes - 1 - stripeOrdinal : stripeOrdinal;
+
+    // Position within the stripe: top corners fill 0→N, bottom corners fill N→0.
+    const bool bottomSide = (m_corner == Corner::BottomLeft || m_corner == Corner::BottomRight);
+    const int pos = bottomSide ? m_perStripe - 1 - posOrdinal : posOrdinal;
+
+    return stripe * m_perStripe + pos;
 }
 
 // The first free default cell, else the first gap, else the cell after the last.
