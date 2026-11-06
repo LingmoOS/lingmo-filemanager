@@ -1371,3 +1371,87 @@ msgstr "雷暴"
 #: src/views/foldermenu.cpp
 msgid "Refresh"
 msgstr "刷新"
+
+msgid "View"
+msgstr "视图"
+
+msgid "Large Icons"
+msgstr "大图标"
+
+msgid "Medium Icons"
+msgstr "中等图标"
+
+msgid "Small Icons"
+msgstr "小图标"
+
+msgid "Auto Arrange Icons"
+msgstr "自动排列图标"
+
+msgid "Align Icons to Grid"
+msgstr "将图标对齐到网格"
+
+msgid "Show Desktop Icons"
+msgstr "显示桌面图标"
+
+msgid "Sort By"
+msgstr "排序方式"
+
+msgid "Item Type"
+msgstr "项目类型"
+
+msgid "Modified Date"
+msgstr "修改日期"
+
+msgid "No battery"
+msgstr "无电池"
+
+msgid "days"
+msgstr "天"
+
+msgid "hours"
+msgstr "小时"
+
+msgid "min"
+msgstr "分"
+
+msgid "sec"
+msgstr "秒"
+
+msgid "Event"
+msgstr "事件"
+
+msgid "Event reached!"
+msgstr "时间已到！"
+
+msgid "Download"
+msgstr "下载"
+
+msgid "Upload"
+msgstr "上传"
+
+msgid "Add"
+msgstr "添加"
+
+msgid "New task…"
+msgstr "新建任务…"
+
+msgid "No tasks"
+msgstr "暂无任务"
+
+msgid "All done!"
+msgstr "已全部完成！"
+
+msgid "left"
+msgstr "剩余"
+
+msgid "World Clock"
+msgstr "世界时钟"
+
+msgid "Countdown"
+msgstr "倒计时"
+
+msgid "To-Do"
+msgstr "待办事项"
+
+msgid "Launcher"
+msgstr "启动器"
