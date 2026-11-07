@@ -48,8 +48,10 @@ public:
     WidgetLayer* widgets() const { return m_widgets; }
     // Opens the widget gallery on the desktop, as the desktop's own menu does.
     void editWidgets();
+    void editNotificationWidgets();
     // Reads the widget settings again, such as the weather city.
     void refreshWidgets();
+    void refreshWidgetAppearance();
     FolderModel& model() { return *m_model; }
 
     // FolderModelHost.
@@ -62,6 +64,7 @@ public:
     void notify(const std::string& message) override;
 
 private:
+    bool m_notificationTarget = false;
     friend class DesktopRoot;
 
     void followPrimaryOutput();

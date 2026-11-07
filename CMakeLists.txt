@@ -95,6 +95,15 @@ target_include_directories(fileoperations-core PUBLIC ${PROJECT_SOURCE_DIR} daem
 target_link_libraries(fileoperations-core PUBLIC Lingmo::SDKBase Lingmo::Files ${LIBZIP_LIBRARY}
                       PkgConfig::LibArchive)
 
+# Shared runtime provider: the notification centre loads these same widgets.
+file(GLOB DESKTOP_WIDGET_SOURCES CONFIGURE_DEPENDS src/desktop/widgets/*.cpp)
+add_library(lingmo-desktop-widgets SHARED ${DESKTOP_WIDGET_SOURCES} src/core/config.cpp)
+target_include_directories(lingmo-desktop-widgets PRIVATE src)
+target_compile_options(lingmo-desktop-widgets PRIVATE -include${CMAKE_CURRENT_SOURCE_DIR}/src/core/common.h)
+target_link_libraries(lingmo-desktop-widgets PRIVATE Lingmo::SDK PkgConfig::ICU PkgConfig::LibCurl)
+set_target_properties(lingmo-desktop-widgets PROPERTIES VERSION 1.0 SOVERSION 1 CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN YES)
+install(TARGETS lingmo-desktop-widgets LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
 add_executable(lingmo-filemanager-daemon daemon/main.cpp)
 target_link_libraries(lingmo-filemanager-daemon PRIVATE fileoperations-core)
 

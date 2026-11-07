@@ -15,7 +15,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -121,11 +121,13 @@ void SystemWidget::layoutContent()
     const ui::RectF content = contentRect();
     if (content.width <= 0 || content.height <= 0)
         return;
-    const double labelHeight = std::max(16.0, m_cpu->sizeHint().height);
+    const double labelHeight = size()==WidgetSize::Small ? 24 : 28;
     const double rowHeight = labelHeight + 4 + kBarHeight;
-    const double gap = 14;
-    m_cpu->setFontSize(size() == WidgetSize::Small ? 11 : 13);
-    m_memory->setFontSize(size() == WidgetSize::Small ? 11 : 13);
+    const double gap = std::max(14.0, content.height * 0.18);
+    m_cpu->setFontSize(size() == WidgetSize::Small ? 14 : 18);
+    m_cpu->setWeight(600);
+    m_memory->setFontSize(size() == WidgetSize::Small ? 14 : 18);
+    m_memory->setWeight(600);
     m_cpu->setGeometry({content.x, content.y, content.width, labelHeight});
     m_cpuBar = {content.x, content.y + labelHeight + 4, content.width, kBarHeight};
     const double memY = content.y + rowHeight + gap;
@@ -137,7 +139,7 @@ void SystemWidget::layoutContent()
 
 void SystemWidget::paintContent(ui::Painter& painter)
 {
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const ui::Color track = theme.text.withAlpha(0.14);
     const ui::Color fill = theme.highlight;
     const auto bar = [&painter, &track, &fill](const ui::RectF& rect, double value) {

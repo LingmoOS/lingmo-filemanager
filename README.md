@@ -59,3 +59,7 @@ ctest --test-dir build --output-on-failure
 ## License
 
 BSD-3-Clause; see [LICENSE](LICENSE).
+
+## Desktop widgets
+
+The searchable widget centre, desktop and Notification Center layouts, appearance settings and verification steps are described in [Desktop widgets](docs/desktop-widgets.md).

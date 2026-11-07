@@ -40,7 +40,14 @@ public:
     bool editing() const { return m_editing; }
     void setEditing(bool editing);
 
+    void setAppearance(bool visible, int colorMode, bool desktopActive);
+    bool monochrome() const { return m_monochrome && !m_editing; }
+    void setFlowLayout(bool flow) { m_flow = flow; }
+    double flowHeight() const;
     void addWidget(WidgetKind kind, WidgetSize size = WidgetSize::Medium);
+    // Drop position is the requested card centre, in window coordinates.
+    void addWidgetAt(WidgetKind kind, WidgetSize size, ui::PointF windowPosition);
+    void setGalleryBlurRect(ui::RectF rect);
     void removeWidget(DesktopWidget* widget);
     // Above the other cards, and last in the saved order.
     void raiseWidget(DesktopWidget* widget);
@@ -79,10 +86,13 @@ private:
 
     ui::Window* m_window = nullptr;
     ui::RectF m_workArea;
+    ui::RectF m_galleryBlur;
     std::vector<DesktopWidget*> m_widgets;
     std::unique_ptr<ui::Menu> m_menu;
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
     bool m_editing = false;
+    bool m_monochrome = false;
+    bool m_flow = false;
 };
 
 } // namespace fm

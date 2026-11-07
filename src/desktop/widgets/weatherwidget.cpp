@@ -28,7 +28,7 @@
 #include "ui/theme.h"
 
 using Lingmo::base::json::Value;
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -244,17 +244,17 @@ WeatherWidget::WeatherWidget(WidgetLayer& layer, WidgetSize size)
     setName("weather-widget");
     m_city = addChild<ui::Label>();
     m_city->setFontSize(11);
-    m_city->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.58)));
+    m_city->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
     m_city->setElide(ui::Label::Elide::Right);
     m_temperature = addChild<ui::Label>();
     m_temperature->setWeight(300);
     m_condition = addChild<ui::Label>();
     m_condition->setFontSize(11);
-    m_condition->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.68)));
+    m_condition->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.68)));
     m_condition->setElide(ui::Label::Elide::Right);
     m_humidity = addChild<ui::Label>();
     m_humidity->setFontSize(10);
-    m_humidity->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.5)));
+    m_humidity->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.5)));
 
     m_weatherIcon = addChild<ui::ThemeIcon>();
     m_weatherIcon->setVisible(false);
@@ -397,6 +397,10 @@ void WeatherWidget::layoutContent()
     m_city->setGeometry({content.x, content.y, content.width, cityHeight});
     const double textWidth = small ? content.width : std::max(0.0, content.width - 100);
     m_temperature->setFontSize(small ? 34 : large ? 54 : 44);
+    m_temperature->setWeight(500);m_temperature->setVerticallyCentered(true);
+    m_city->setWeight(600);
+    m_condition->setColor(widgetTheme(this).text.withAlpha(.7));
+    m_humidity->setColor(widgetTheme(this).text.withAlpha(.6));
     m_temperature->setGeometry({content.x, content.y + cityHeight + 2, textWidth,
                                 std::max(0.0, content.height - cityHeight - conditionHeight - humidityHeight - 8)});
     m_condition->setGeometry({content.x, content.bottom() - conditionHeight - humidityHeight - 2,
@@ -424,7 +428,7 @@ void WeatherWidget::paintContent(ui::Painter& painter)
     }
 
     // Fallback: hand-drawn weather graphics
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const ui::RectF content = contentRect();
     const double size = std::min(64.0, content.width * 0.24);
     const double cx = content.right() - size / 2 - 8;
@@ -467,9 +471,9 @@ void WeatherWidget::paintContent(ui::Painter& painter)
 
 void WeatherWidget::retranslateContent()
 {
-    m_city->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.58)));
-    m_condition->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.68)));
-    m_humidity->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.5)));
+    m_city->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
+    m_condition->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.68)));
+    m_humidity->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.5)));
     refresh();
 }
 

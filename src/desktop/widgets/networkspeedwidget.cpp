@@ -17,7 +17,7 @@
 #include "ui/path.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -56,7 +56,7 @@ NetworkSpeedWidget::NetworkSpeedWidget(WidgetLayer& layer, WidgetSize size)
     m_combined->setWeight(300);
     m_combined->setElide(ui::Label::Elide::Right);
 
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const ui::Color sub = theme.text.withAlpha(0.62);
     m_downLabel->setColor(ui::ColorRecipe(sub));
     m_upLabel->setColor(ui::ColorRecipe(sub));
@@ -143,6 +143,7 @@ std::string NetworkSpeedWidget::formatSpeed(double bytesPerSec)
 void NetworkSpeedWidget::sample()
 {
     const auto [rx, tx] = readProcNet();
+    const auto now=std::chrono::steady_clock::now();
 
     if (m_firstSample) {
         m_prevRx = rx;
@@ -151,8 +152,9 @@ void NetworkSpeedWidget::sample()
     } else {
         const uint64_t deltaRx = rx >= m_prevRx ? rx - m_prevRx : 0;
         const uint64_t deltaTx = tx >= m_prevTx ? tx - m_prevTx : 0;
-        m_rxSpeed = double(deltaRx);
-        m_txSpeed = double(deltaTx);
+        const double elapsed=std::max(0.001,std::chrono::duration<double>(now-m_lastSample).count());
+        m_rxSpeed = double(deltaRx)/elapsed;
+        m_txSpeed = double(deltaTx)/elapsed;
         m_prevRx  = rx;
         m_prevTx  = tx;
 
@@ -161,6 +163,10 @@ void NetworkSpeedWidget::sample()
             m_history.pop_front();  // O(1) with deque
     }
 
+    m_lastSample=now;
+    m_combined->setText(formatSpeed(m_rxSpeed + m_txSpeed));
+    m_downSpeed->setText(formatSpeed(m_rxSpeed));
+    m_upSpeed->setText(formatSpeed(m_txSpeed));
     if (size() == WidgetSize::Small) {
         m_combined->setText(formatSpeed(m_rxSpeed + m_txSpeed));
     } else {
@@ -182,7 +188,7 @@ void NetworkSpeedWidget::layoutContent()
     if (content.width <= 0 || content.height <= 0)
         return;
 
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const ui::Color sub = theme.text.withAlpha(0.62);
 
     if (size() == WidgetSize::Small) {
@@ -269,7 +275,7 @@ void NetworkSpeedWidget::layoutContent()
 
 void NetworkSpeedWidget::paintContent(ui::Painter& painter)
 {
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
 
     if (size() == WidgetSize::Small) {
         // Draw a small ↓↑ icon in the upper portion of the card.
@@ -388,7 +394,7 @@ void NetworkSpeedWidget::paintContent(ui::Painter& painter)
 
 void NetworkSpeedWidget::retranslateContent()
 {
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const ui::Color sub = theme.text.withAlpha(0.62);
     m_downLabel->setColor(ui::ColorRecipe(sub));
     m_upLabel->setColor(ui::ColorRecipe(sub));

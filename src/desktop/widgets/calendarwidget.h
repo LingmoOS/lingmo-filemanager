@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "desktop/widgets/widget.h"
+#include "base/timer.h"
 
 namespace Lingmo::ui {
 class Label;
@@ -34,6 +35,8 @@ private:
     void updateDayLabels();
 
     ui::Label* m_title = nullptr;
+    base::Timer m_dayTimer;
+    int m_lastDay=0;
     std::vector<ui::Label*> m_weekdays;
     std::vector<ui::Label*> m_days;
     MonthArrow* m_previous = nullptr;

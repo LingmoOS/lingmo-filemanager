@@ -4,6 +4,7 @@
 #include "desktop/widgets/noteswidget.h"
 
 #include <chrono>
+#include <algorithm>
 #include <filesystem>
 #include <fstream>
 #include <functional>
@@ -13,9 +14,10 @@
 #include "base/paths.h"
 #include "desktop/widgets/widgetlayer.h"
 #include "ui/text_area.h"
+#include "ui/label.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -23,13 +25,14 @@ NotesWidget::NotesWidget(WidgetLayer& layer, WidgetSize size)
     : DesktopWidget(layer, WidgetKind::Notes, size)
 {
     setName("notes-widget");
+    m_title=addChild<ui::Label>(tr("Notes"));m_title->setFontSize(12);m_title->setWeight(600);
     m_text = addChild<ui::TextArea>();
     m_text->setPlaceholder(tr("Write a note…"));
     m_text->setWrapMode(ui::TextArea::WrapMode::WordWrap);
     m_text->setFrameVisible(false);
     m_text->setPadding({4, 4, 4, 4});
     m_text->setFontSize(size == WidgetSize::Small ? 11 : 13);
-    m_text->setTextColor(ui::Theme::current().text);
+    m_text->setTextColor(widgetTheme(this).text);
     m_text->onTextChanged = [this] {
         if (!m_loaded)
             return;
@@ -95,13 +98,17 @@ void NotesWidget::layoutContent()
     if (content.width <= 0 || content.height <= 0)
         return;
     m_text->setFontSize(size() == WidgetSize::Small ? 11 : size() == WidgetSize::Large ? 15 : 13);
-    m_text->setGeometry(content);
+    m_text->setTextColor(widgetTheme(this).text);
+    m_title->setColor(widgetTheme(this).highlight);
+    m_title->setGeometry({content.x,content.y,content.width,20});
+    m_text->setGeometry({content.x,content.y+26,content.width,std::max(0.0,content.height-26)});
 }
 
 void NotesWidget::retranslateContent()
 {
+    m_title->setText(tr("Notes"));
     m_text->setPlaceholder(tr("Write a note…"));
-    m_text->setTextColor(ui::Theme::current().text);
+    m_text->setTextColor(widgetTheme(this).text);
 }
 
 } // namespace fm

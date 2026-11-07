@@ -46,7 +46,7 @@ struct WidgetPlacement
 
 // Between two cards, and the corner of a card.
 inline constexpr double kWidgetGap = 16;
-inline constexpr double kWidgetRadius = 18;
+inline constexpr double kWidgetRadius = 24;
 
 // The keys the desktop's JSON stores; unknown ones are dropped when read.
 const char* widgetKindKey(WidgetKind kind);

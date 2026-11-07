@@ -12,6 +12,7 @@
 #include "base/i18n.h"
 #include "base/paths.h"
 #include "base/process.h"
+#include "base/dbus.h"
 #include "base/settings.h"
 #include "core/config.h"
 #include "ui/color_id.h"
@@ -20,7 +21,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -41,6 +42,8 @@ public:
         m_label->setElide(ui::Label::Elide::Right);
         m_label->setFontSize(10);
         m_label->setWrap(true);
+        m_label->setMaximumLineCount(2);
+        setToolTip(m_app.name);
     }
 
     bool acceptsPointer() const override { return true; }
@@ -48,7 +51,7 @@ public:
     void paint(ui::Painter& painter) override
     {
         if (m_hovered) {
-            const ui::Theme& theme = ui::Theme::current();
+            const ui::Theme& theme = widgetTheme(this);
             painter.fillRoundedRect(localRect(), 8, theme.text.withAlpha(0.09));
         }
     }
@@ -57,6 +60,9 @@ public:
     {
         const ui::RectF cell = localRect();
         const double iconAreaH = cell.height * 0.70;
+        m_iconSize=int(std::max(12.0,std::min({double(m_iconSize),cell.width-12,iconAreaH-6})));
+        m_icon->setSize(m_iconSize);
+        m_icon->setColor(widgetMonochrome(this) ? std::optional<ui::ColorRecipe>(widgetTheme(this).text) : std::nullopt);
         const double iconX = cell.x + (cell.width - m_iconSize) / 2.0;
         const double iconY = cell.y + (iconAreaH - m_iconSize) / 2.0;
         m_icon->setGeometry({iconX, iconY, double(m_iconSize), double(m_iconSize)});
@@ -87,7 +93,9 @@ protected:
         const std::string program = m_app.command[0];
         const std::vector<std::string> args(m_app.command.begin() + 1,
                                             m_app.command.end());
-        base::Process::startDetached(program, args);
+        if(auto* bus=base::dbus::Connection::session())
+            base::dbus::Proxy(bus,"org.lingmo.AppRuntime","/AppRuntime","org.lingmo.AppRuntime")
+                .send("launchCommand",m_app.desktopId,m_app.command,std::string(),std::string());
     }
 
     void hoverChanged() override { requestPaint(); }
@@ -114,7 +122,7 @@ LauncherWidget::LauncherWidget(WidgetLayer& layer, WidgetSize size)
 
 std::string LauncherWidget::settingsFile()
 {
-    return base::paths::lingmoConfig("filemanager") + "/launcher.conf";
+    return fm::settingsFile();
 }
 
 int LauncherWidget::columns() const
@@ -163,7 +171,7 @@ void LauncherWidget::loadPins()
     for (const std::string& id : ids) {
         // Try user-local first, then system
         for (const std::string& dir : {localApps, systemApps}) {
-            const std::string path = dir + id + ".desktop";
+            const std::string path = dir + id + (id.ends_with(".desktop") ? "" : ".desktop");
             if (!std::filesystem::exists(path))
                 continue;
             // Read file contents for DesktopEntry::parse
@@ -192,7 +200,8 @@ void LauncherWidget::loadPins()
 
     // Fallback: scan /usr/share/applications/ if still empty
     if (m_apps.empty()) {
-        for (const auto& dirEntry : std::filesystem::directory_iterator(systemApps)) {
+        std::error_code scanError;
+        for (const auto& dirEntry : std::filesystem::directory_iterator(systemApps,scanError)) {
             if (dirEntry.path().extension() != ".desktop")
                 continue;
             const std::string path = dirEntry.path().string();
@@ -271,6 +280,7 @@ void LauncherWidget::layoutContent()
 
 void LauncherWidget::retranslateContent()
 {
+    loadPins();
     rebuildIcons();
 }
 

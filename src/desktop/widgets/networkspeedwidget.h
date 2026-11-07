@@ -4,6 +4,7 @@
 #pragma once
 
 #include <cstdint>
+#include <chrono>
 #include <deque>
 #include <string>
 #include <utility>
@@ -45,6 +46,7 @@ private:
     uint64_t m_prevRx    = 0;
     uint64_t m_prevTx    = 0;
     bool     m_firstSample = true;
+    std::chrono::steady_clock::time_point m_lastSample;
     double   m_rxSpeed   = 0;
     double   m_txSpeed   = 0;
     std::deque<double> m_history;

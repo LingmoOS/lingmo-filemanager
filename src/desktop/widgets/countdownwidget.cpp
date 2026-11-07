@@ -13,12 +13,13 @@
 #include "base/i18n.h"
 #include "base/paths.h"
 #include "base/settings.h"
+#include "core/config.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/path.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -52,7 +53,7 @@ CountdownWidget::CountdownWidget(WidgetLayer& layer, WidgetSize size)
     m_secsVal    = addChild<ui::Label>();
     for (ui::Label* v : {m_daysVal, m_hoursVal, m_minsVal, m_secsVal}) {
         v->setWeight(300);
-        v->setColor(ui::ColorRecipe(ui::Theme::current().text));
+        v->setColor(ui::ColorRecipe(widgetTheme(this).text));
     }
 
     m_daysUnit   = addChild<ui::Label>();
@@ -60,12 +61,12 @@ CountdownWidget::CountdownWidget(WidgetLayer& layer, WidgetSize size)
     m_minsUnit   = addChild<ui::Label>();
     m_secsUnit   = addChild<ui::Label>();
     for (ui::Label* u : {m_daysUnit, m_hoursUnit, m_minsUnit, m_secsUnit}) {
-        u->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.55)));
+        u->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.55)));
     }
 
     m_expired = addChild<ui::Label>();
     m_expired->setWeight(500);
-    m_expired->setColor(ui::ColorRecipe(ui::Theme::current().highlight));
+    m_expired->setColor(ui::ColorRecipe(widgetTheme(this).highlight));
 
     loadConfig();
 
@@ -91,7 +92,7 @@ CountdownWidget::~CountdownWidget()
 
 std::string CountdownWidget::settingsFile()
 {
-    return base::paths::lingmoConfig("filemanager") + "/countdown.ini";
+    return fm::settingsFile();
 }
 
 void CountdownWidget::loadConfig()
@@ -101,6 +102,7 @@ void CountdownWidget::loadConfig()
     if (m_eventName.empty())
         m_eventName = tr("Event");
 
+    m_eventLabel->setText(m_eventName);
     const std::string dateStr = settings.stringValue("Countdown/TargetDate");
     bool parsed = false;
     if (!dateStr.empty()) {
@@ -160,6 +162,7 @@ void CountdownWidget::refresh()
 
 void CountdownWidget::layoutContent()
 {
+    m_expired->setColor(widgetTheme(this).highlight);
     const ui::RectF content = contentRect();
     if (content.width <= 0 || content.height <= 0)
         return;
@@ -206,8 +209,8 @@ void CountdownWidget::layoutContent()
         double stripY      = content.y;
         double stripHeight = content.height;
 
-        if (size() == WidgetSize::Large) {
-            // Event label at top.
+        {
+            // Name the event at every size rather than presenting anonymous digits.
             m_eventLabel->setFontSize(14);
             m_eventLabel->setWeight(600);
             const double evH = std::max(18.0, m_eventLabel->sizeHint().height);
@@ -223,6 +226,9 @@ void CountdownWidget::layoutContent()
         for (int i = 0; i < 4; ++i) {
             const double cx = content.x + colW * i;
             vals[i]->setFontSize(valSize);
+            vals[i]->setVerticallyCentered(true);
+            vals[i]->setTextAlignment(ui::Label::TextAlignment::Center);
+            units[i]->setTextAlignment(ui::Label::TextAlignment::Center);
             // Value label occupies the upper portion of the strip.
             const double valH = std::max(0.0, stripHeight - unitH - 4);
             vals[i]->setGeometry({cx, stripY, colW, valH});
@@ -240,7 +246,7 @@ void CountdownWidget::paintContent(ui::Painter& painter)
     if (m_isExpired || m_targetTime <= 0)
         return;
 
-    const ui::Theme& theme   = ui::Theme::current();
+    const ui::Theme& theme   = widgetTheme(this);
     const ui::RectF  content = contentRect();
 
     // Fraction of the current 24-hour cycle that has elapsed, used as the

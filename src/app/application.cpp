@@ -92,6 +92,9 @@ void Application::exportObjects()
         if (m_desktop)
             m_desktop->editWidgets();
     });
+    m_fileManager->addMethod("EditNotificationWidgets", [this] {
+        if (m_desktop) m_desktop->editNotificationWidgets();
+    });
     m_fileManager->addMethod("RefreshWidgets", [this] {
         if (m_desktop)
             m_desktop->refreshWidgets();

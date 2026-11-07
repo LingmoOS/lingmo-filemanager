@@ -34,7 +34,7 @@ ClockWidget::ClockWidget(WidgetLayer& layer, WidgetSize size)
     m_time = addChild<ui::Label>();
     m_time->setElide(ui::Label::Elide::Right);
     m_date = addChild<ui::Label>();
-    m_date->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
+    m_date->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
     m_date->setElide(ui::Label::Elide::Right);
 
     m_timer.setInterval(std::chrono::seconds(1));
@@ -76,10 +76,13 @@ void ClockWidget::layoutContent()
     else if (size() == WidgetSize::Large)
         timeSize = 48;
     m_time->setFontSize(timeSize);
-    m_time->setWeight(300);
+    m_time->setWeight(500);
+    m_time->setVerticallyCentered(true);
+    m_time->setTextAlignment(ui::Label::TextAlignment::Center);
+    m_date->setTextAlignment(ui::Label::TextAlignment::Center);
     m_date->setFontSize(size() == WidgetSize::Small ? 11 : 13);
     m_date->setWeight(500);
-    m_date->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
+    m_date->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
 
     const double dateHeight = std::max(16.0, m_date->sizeHint().height);
     m_time->setGeometry({content.x, content.y, content.width,

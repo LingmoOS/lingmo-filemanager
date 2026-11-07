@@ -8,6 +8,7 @@
 
 namespace Lingmo::ui {
 class TextArea;
+class Label;
 }
 
 namespace fm {
@@ -31,6 +32,7 @@ private:
     std::string notePath() const;
 
     ui::TextArea* m_text = nullptr;
+    ui::Label* m_title = nullptr;
     base::Timer m_saveTimer;
     bool m_loaded = false;
 };

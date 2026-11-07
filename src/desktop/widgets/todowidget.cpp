@@ -10,6 +10,7 @@
 #include <sstream>
 
 #include "base/i18n.h"
+#include "base/event_loop.h"
 #include "base/json.h"
 #include "base/paths.h"
 #include "base/settings.h"
@@ -23,7 +24,7 @@
 #include "ui/text_field.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 using Lingmo::base::json::Value;
 
 namespace fm {
@@ -58,7 +59,7 @@ public:
         if (m_done == done)
             return;
         m_done = done;
-        requestPaint();
+        requestLayout(); requestPaint();
     }
 
     void paint(ui::Painter& painter) override
@@ -67,7 +68,7 @@ public:
         if (cell.width <= 0)
             return;
 
-        const ui::Theme& theme = ui::Theme::current();
+        const ui::Theme& theme = widgetTheme(this);
 
         // Hover highlight
         if (m_hovered)
@@ -118,7 +119,7 @@ public:
         const double labelH = std::max(0.0, m_label->sizeHint().height);
         m_label->setGeometry({labelX, cell.y + (cell.height - labelH) / 2.0, labelW, labelH});
         m_label->setColor(ui::ColorRecipe(
-                ui::Theme::current().text.withAlpha(m_done ? 0.40 : 0.92)));
+                widgetTheme(this).text.withAlpha(m_done ? 0.40 : 0.92)));
     }
 
 protected:
@@ -128,8 +129,10 @@ protected:
 
     void pointerRelease(const ui::PointerEvent& event) override
     {
-        if (localRect().contains(event.position))
-            m_owner->toggleItem(m_index);
+        if (event.button==ui::MouseButton::Left && localRect().contains(event.position)) {
+            auto* owner=m_owner;const auto index=m_index;
+            base::EventLoop::current()->post([owner,index,alive=owner->m_alive]{if(*alive)owner->toggleItem(index);});
+        }
     }
 
 private:
@@ -163,6 +166,7 @@ TodoWidget::TodoWidget(WidgetLayer& layer, WidgetSize size)
     m_addField  = addChild<ui::TextField>();
     m_addButton = addChild<ui::Button>(tr("Add"));
 
+    m_addField->setName("todo-input");m_addButton->setName("todo-add");
     m_addField->setPlaceholder(tr("New task…"));
     m_addField->onAccepted = [this] {
         const std::string t = m_addField->text();
@@ -254,7 +258,9 @@ void TodoWidget::save()
 
 void TodoWidget::addItem(const std::string& text)
 {
-    m_items.push_back({text, false});
+    const auto first=text.find_first_not_of(" \t\r\n");
+    if(first==std::string::npos)return;
+    m_items.push_back({text.substr(first,text.find_last_not_of(" \t\r\n")-first+1), false});
     m_saveTimer.start();
     rebuildRows();
 }
@@ -277,6 +283,8 @@ void TodoWidget::rebuildRows()
 
     for (size_t i = 0; i < m_items.size(); ++i) {
         ItemRow* row = m_list->addChild<ItemRow>(this, i, m_items[i]);
+        row->setLayoutHints({.fillWidth=true});
+        row->setName("todo-row-"+std::to_string(i));
         m_rows.push_back(row);
     }
 
@@ -324,10 +332,12 @@ void TodoWidget::layoutContent()
     }
 
     // Medium / Large
-    m_countLabel->setVisible(false);
+    m_countLabel->setFontSize(13);m_countLabel->setWeight(500);
+    m_countLabel->setVisible(m_items.empty());
+    if(m_items.empty())m_countLabel->setGeometry({content.x,content.y+8,content.width,24});
     m_scroll->setVisible(true);
 
-    if (isLarge) {
+    if (isLarge || isMedium) {
         // Input row at the bottom
         m_addField->setVisible(true);
         m_addButton->setVisible(true);

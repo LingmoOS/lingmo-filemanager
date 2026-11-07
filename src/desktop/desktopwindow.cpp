@@ -104,15 +104,36 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
     m_widgets = widgets.get();
     widgets->setDesktopWindow(m_window.get());
     widgets->onChanged = [this] { m_saveWidgets.start(); };
-    widgets->onEditWidgets = [this] { openWidgetGallery(); };
+    widgets->onEditWidgets = [this] { editWidgets(); };
     m_root->addChild(std::move(widgets));
 
     auto gallery = std::make_unique<WidgetGallery>();
     m_gallery = gallery.get();
-    gallery->onAdd = [this](WidgetKind kind) {
-        m_widgets->addWidget(kind);
+    gallery->onTargetChanged = [this](bool notifications) {
+        m_notificationTarget = notifications;
+        if (!notifications) {
+            base::Settings settings(settingsPath());
+            settings.setValue("DesktopWidgets/visible", true);settings.sync();
+            refreshWidgetAppearance();
+        }
+    };
+    gallery->onAddSized = [this](WidgetKind kind, WidgetSize size) {
+        if (m_notificationTarget) {
+            base::Settings settings(settingsPath());
+            auto placements=parseWidgets(settings.stringValue("NotificationWidgets/layout.v1"));
+            placements.push_back({kind,size,0,0});
+            settings.setValue("NotificationWidgets/layout.v1",serializeWidgets(placements));
+            settings.setValue("NotificationWidgets/visible",true);settings.sync();return;
+        }
+        m_widgets->addWidget(kind, size);
         m_saveWidgets.start();
     };
+    gallery->onAddAt = [this](WidgetKind kind, WidgetSize size, ui::PointF position) {
+        if (m_notificationTarget) return;
+        m_widgets->addWidgetAt(kind, size, position);
+        m_saveWidgets.start();
+    };
+    gallery->onSidebarGeometry = [this](ui::RectF rect) { m_widgets->setGalleryBlurRect(rect); };
     gallery->onDone = [this] { closeWidgetGallery(); };
     m_root->addChild(std::move(gallery));
 
@@ -171,6 +192,7 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
             loadWidgetLayout();
     };
     m_window->onActiveChanged = [this] {
+        refreshWidgetAppearance();
         // Not while a name is being edited: taking the keys back closes it.
         if (m_window->isActive() && !m_view->isRenaming())
             m_view->contentView()->setFocus();
@@ -382,6 +404,7 @@ void DesktopWindow::loadWidgetLayout()
     base::Settings settings(settingsPath());
     m_widgets->setPlacements(parseWidgets(settings.stringValue(widgetLayoutKey())));
     m_widgetsLoaded = true;
+    refreshWidgetAppearance();
 }
 
 void DesktopWindow::saveWidgetLayout()
@@ -394,23 +417,41 @@ void DesktopWindow::saveWidgetLayout()
 
 void DesktopWindow::editWidgets()
 {
+    m_notificationTarget=false;
+    openWidgetGallery();
+}
+
+void DesktopWindow::editNotificationWidgets()
+{
+    m_notificationTarget=true;
     openWidgetGallery();
 }
 
 void DesktopWindow::refreshWidgets()
 {
+    refreshWidgetAppearance();
     if (m_widgets)
         m_widgets->retranslate();
+}
+
+void DesktopWindow::refreshWidgetAppearance()
+{
+    if (!m_widgets) return;
+    base::Settings settings(settingsPath());
+    m_widgets->setAppearance(settings.boolValue("DesktopWidgets/visible", true),
+        int(settings.intValue("DesktopWidgets/colorMode", 0)), m_window->isActive());
 }
 
 void DesktopWindow::openWidgetGallery()
 {
     if (!m_gallery || !m_widgets)
         return;
+    refreshWidgetAppearance();
     m_gallery->setGeometry(m_root->localRect());
+    m_gallery->setNotificationTarget(m_notificationTarget);
     m_gallery->retranslate();
     m_gallery->setVisible(true);
-    m_gallery->setFocus(ui::FocusReason::Other);
+    m_gallery->focusSearch();
     m_widgets->setEditing(true);
 }
 
@@ -419,8 +460,10 @@ void DesktopWindow::closeWidgetGallery()
     if (!m_gallery)
         return;
     m_gallery->setVisible(false);
-    if (m_widgets)
+    if (m_widgets) {
         m_widgets->setEditing(false);
+        m_widgets->setGalleryBlurRect({});
+    }
     m_view->contentView()->setFocus();
 }
 
@@ -518,7 +561,7 @@ void DesktopWindow::showContextMenu(ui::PointF position)
         }
 
         m_menu->addSeparator();
-        m_menu->addItem(tr("Edit Widgets…"), [this] { openWidgetGallery(); });
+        m_menu->addItem(tr("Edit Widgets…"), [this] { editWidgets(); });
     }
     m_menu->popup(m_window.get(), position);
 }

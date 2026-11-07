@@ -10,14 +10,19 @@
 #include "desktop/widgets/widgetconfig.h"
 #include "ui/animation.h"
 #include "ui/view.h"
+#include "ui/theme.h"
 
 namespace Lingmo::ui {
 class Painter;
+class DialogWindow;
 }
 
 namespace fm {
 
 class WidgetLayer;
+// Palette shared by desktop and notification hosts, including nested controls.
+bool widgetMonochrome(const ui::View* view);
+ui::Theme widgetTheme(const ui::View* view);
 
 // A card on the desktop: the rounded, blurred body, the hover and editing
 // chrome, moving it by hand, and the widget's own content. The layer owns the
@@ -26,7 +31,9 @@ class DesktopWidget : public ui::View
 {
 public:
     DesktopWidget(WidgetLayer& layer, WidgetKind kind, WidgetSize size);
-    ~DesktopWidget() override = default;
+    ~DesktopWidget() override;
+    bool configurable() const;
+    void configure();
 
     WidgetKind kind() const { return m_kind; }
     WidgetSize size() const { return m_size; }
@@ -74,6 +81,7 @@ protected:
     void hoverChanged() override;
 
 private:
+    std::unique_ptr<ui::DialogWindow> m_configDialog;
     WidgetLayer& m_layer;
     WidgetKind m_kind;
     WidgetSize m_size;

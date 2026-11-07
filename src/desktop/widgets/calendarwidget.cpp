@@ -15,7 +15,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -52,7 +52,7 @@ public:
 
     void paint(ui::Painter& painter) override
     {
-        const ui::Theme& theme = ui::Theme::current();
+        const ui::Theme& theme = widgetTheme(this);
         const ui::Color color = theme.text.withAlpha(m_hovered ? 0.9 : 0.55);
         const ui::RectF rect = localRect();
         const double cx = rect.width / 2;
@@ -116,6 +116,11 @@ CalendarWidget::CalendarWidget(WidgetLayer& layer, WidgetSize size)
 
     const base::DateTime now = base::DateTime::fromSecondsSinceEpoch(std::time(nullptr));
     showMonth(now.date.year, now.date.month);
+    m_lastDay=now.date.day;
+    m_dayTimer.setInterval(std::chrono::minutes(1));
+    m_dayTimer.onTimeout=[this]{const auto today=base::DateTime::fromSecondsSinceEpoch(std::time(nullptr));
+        if(today.date.day!=m_lastDay){m_lastDay=today.date.day;updateDayLabels();requestLayout();requestPaint();}};
+    m_dayTimer.start();
 }
 
 CalendarWidget::~CalendarWidget() = default;
@@ -134,7 +139,8 @@ void CalendarWidget::showMonth(int year, int month)
     m_month = month;
 
     const base::Locale& locale = base::Locale::system();
-    m_title->setText(locale.toString(base::CalendarDate {m_year, m_month, 1}, "MMMM yyyy"));
+    m_title->setText(locale.toString(base::CalendarDate {m_year, m_month, 1}, size()==WidgetSize::Small ? "MMM" : "MMMM yyyy"));
+    m_title->setToolTip(locale.toString(base::CalendarDate {m_year, m_month, 1}, "MMMM yyyy"));
 
     const int firstDay = locale.firstDayOfWeek();
     for (int i = 0; i < 7; ++i) {
@@ -192,30 +198,33 @@ void CalendarWidget::layoutContent()
         return;
     const double titleHeight = 22;
     const double weekdayHeight = 16;
-    const double arrowsWidth = 26;
-    m_title->setFontSize(13);
+    const double arrowsWidth = 20;
+    m_title->setFontSize(12);
+    m_title->setColor(widgetTheme(this).highlight);
     m_title->setGeometry({content.x, content.y, std::max(0.0, content.width - arrowsWidth * 2), titleHeight});
-    m_previous->setGeometry({content.right() - arrowsWidth * 2, content.y, arrowsWidth / 2 + 4, titleHeight});
-    m_next->setGeometry({content.right() - arrowsWidth / 2 - 4, content.y, arrowsWidth / 2 + 4, titleHeight});
+    m_previous->setGeometry({content.right() - arrowsWidth * 2, content.y, arrowsWidth, titleHeight});
+    m_next->setGeometry({content.right() - arrowsWidth, content.y, arrowsWidth / 2 + 4, titleHeight});
 
     const double cellWidth = content.width / 7;
     const double weekdayY = content.y + titleHeight + 4;
     for (int i = 0; i < 7; ++i) {
         ui::Label* weekday = m_weekdays[size_t(i)];
         weekday->setFontSize(10);
-        weekday->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.5)));
+        weekday->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.65)));
         weekday->setGeometry({content.x + i * cellWidth, weekdayY, cellWidth, weekdayHeight});
     }
 
     const double gridY = weekdayY + weekdayHeight + 2;
-    const double cellHeight = std::max(0.0, (content.bottom() - gridY) / 6);
+    const int offset=(firstWeekdayOfMonth(m_year,m_month)-base::Locale::system().firstDayOfWeek()+7)%7;
+    const int rows=(offset+daysInMonth(m_year,m_month)+6)/7;
+    const double cellHeight = std::max(0.0, (content.bottom() - gridY) / rows);
     for (int i = 0; i < 42; ++i) {
         ui::Label* day = m_days[size_t(i)];
         const int row = i / 7;
         const int column = i % 7;
         day->setFontSize(std::clamp(cellWidth * 0.42, 9.0, 12.0));
         day->setWeight(i == m_todayIndex ? 700 : 400);
-        day->setColor(i == m_todayIndex ? std::optional<ui::ColorRecipe>(ui::Theme::current().highlight)
+        day->setColor(i == m_todayIndex ? std::optional<ui::ColorRecipe>(widgetTheme(this).highlightedText)
                                         : std::nullopt);
         day->setGeometry({content.x + column * cellWidth, gridY + row * cellHeight, cellWidth, cellHeight});
     }
@@ -223,20 +232,20 @@ void CalendarWidget::layoutContent()
 
 void CalendarWidget::paintContent(ui::Painter& painter)
 {
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const ui::RectF content = contentRect();
     if (content.width <= 0)
         return;
     // Today's day gets a faint disc behind its label.
     if (m_todayIndex >= 0 && size_t(m_todayIndex) < m_days.size()) {
         const ui::RectF cell = m_days[size_t(m_todayIndex)]->geometry();
-        const double radius = std::min(cell.width, cell.height) * 0.34;
+        const double radius = std::min(cell.width, cell.height) * 0.46;
         const double cx = cell.x + cell.width / 2;
         const double cy = cell.y + cell.height / 2;
         painter.fillEllipse({cx - radius, cy - radius, radius * 2, radius * 2},
-                            theme.highlight.withAlpha(0.20));
+                            theme.highlight);
     }
-    painter.drawHorizontalLine(content.x, content.y + 26, content.width, theme.text.withAlpha(0.07), 1);
+
 }
 
 void CalendarWidget::retranslateContent()

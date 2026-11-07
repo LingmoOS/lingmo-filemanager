@@ -15,7 +15,7 @@
 #include "ui/painter.h"
 #include "ui/theme.h"
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -83,14 +83,14 @@ BatteryWidget::BatteryWidget(WidgetLayer& layer, WidgetSize size)
     m_title = addChild<ui::Label>();
     m_title->setFontSize(11);
     m_title->setWeight(600);
-    m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.58)));
+    m_title->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
     m_percent = addChild<ui::Label>();
     m_percent->setWeight(300);
     m_percent->setElide(ui::Label::Elide::Right);
     m_percent->setVerticallyCentered(true);
     m_status = addChild<ui::Label>();
     m_status->setFontSize(11);
-    m_status->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
+    m_status->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
 
     m_timer.setInterval(std::chrono::seconds(30));
     m_timer.setSingleShot(false);
@@ -140,7 +140,10 @@ void BatteryWidget::layoutContent()
                            : ui::RectF();
 
     m_percent->setFontSize(m_present ? (small ? 34.0 : size() == WidgetSize::Large ? 54.0 : 44.0) : 18.0);
-    m_percent->setWeight(m_present ? 300 : 500);
+    m_percent->setWeight(500);
+    m_percent->setVerticallyCentered(true);
+    m_title->setColor(widgetTheme(this).text.withAlpha(.65));
+    m_status->setColor(widgetTheme(this).text.withAlpha(.65));
     const double percentTop = content.y + titleHeight + 2;
     m_percent->setGeometry({content.x, percentTop, content.width,
                             std::max(0.0, statusTop - percentTop - 4)});
@@ -150,10 +153,10 @@ void BatteryWidget::paintContent(ui::Painter& painter)
 {
     if (!m_present || m_levelBar.width <= 0)
         return;
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const double level = std::clamp(m_capacity / 100.0, 0.0, 1.0);
     const bool low = m_capacity >= 0 && m_capacity <= 20 && m_state != "Charging";
-    const ui::Color fill = low ? ui::Color {226, 84, 72, 255} : theme.highlight;
+    const ui::Color fill = low && !widgetMonochrome(this) ? ui::Color {226, 84, 72, 255} : theme.highlight;
     const ui::Color track = theme.text.withAlpha(0.14);
 
     painter.fillRoundedRect(m_levelBar, m_levelBar.height / 2, track);
@@ -170,8 +173,8 @@ void BatteryWidget::paintContent(ui::Painter& painter)
 
 void BatteryWidget::retranslateContent()
 {
-    m_title->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.58)));
-    m_status->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
+    m_title->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
+    m_status->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
     refresh();
 }
 

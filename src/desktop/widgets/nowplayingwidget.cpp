@@ -29,7 +29,7 @@
 #include <fstream>
 #include <functional>
 
-using Lingmo::i18n::tr;
+static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
 
@@ -94,7 +94,7 @@ public:
 
     void paint(ui::Painter& painter) override
     {
-        const ui::Theme& theme = ui::Theme::current();
+        const ui::Theme& theme = widgetTheme(this);
         const ui::Color color = theme.text.withAlpha(isEnabled() ? (m_hovered ? 1.0 : 0.72) : 0.26);
         const ui::RectF rect = localRect();
         const double cx = rect.width / 2;
@@ -310,7 +310,7 @@ NowPlayingWidget::NowPlayingWidget(WidgetLayer& layer, WidgetSize size)
     m_title->setWeight(600);
     m_title->setElide(ui::Label::Elide::Right);
     m_artist = addChild<ui::Label>();
-    m_artist->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
+    m_artist->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
     m_artist->setElide(ui::Label::Elide::Right);
 
     m_previous = addChild<PlaybackButton>(PlaybackButton::Shape::Previous);
@@ -390,7 +390,7 @@ void NowPlayingWidget::loadArt(const std::string& url)
         }
     }
     m_artView->setSource(path);
-    m_artView->setVisible(!path.empty());
+    m_artView->setVisible(!path.empty() && !widgetMonochrome(this));
     m_artView->setSourceSize({m_artRect.width, m_artRect.height});
 }
 
@@ -405,7 +405,7 @@ void NowPlayingWidget::downloadArt(const std::string& url)
     // Already cached — load immediately
     if (std::filesystem::exists(cachePath)) {
         m_artView->setSource(cachePath);
-        m_artView->setVisible(true);
+        m_artView->setVisible(!widgetMonochrome(this));
         m_artView->setSourceSize({m_artRect.width, m_artRect.height});
         return;
     }
@@ -459,7 +459,7 @@ void NowPlayingWidget::downloadArt(const std::string& url)
                 return;
             if (ok) {
                 m_artView->setSource(cachePath);
-                m_artView->setVisible(true);
+                m_artView->setVisible(!widgetMonochrome(this));
                 m_artView->setSourceSize({m_artRect.width, m_artRect.height});
             }
         });
@@ -484,19 +484,20 @@ void NowPlayingWidget::layoutContent()
         return;
     const bool small = size() == WidgetSize::Small;
     const bool large = size() == WidgetSize::Large;
-    const double art = small ? 44 : large ? 124 : 78;
+    const double art = small ? 52 : large ? 124 : 78;
     m_artRect = {content.x, content.y, art, art};
 
-    const double textX = content.x + art + 12;
+    const double textX = small ? content.x : content.x + art + 12;
     const double textWidth = std::max(0.0, content.right() - textX);
     const double titleHeight = std::max(18.0, m_title->sizeHint().height);
     m_title->setFontSize(small ? 12 : large ? 17 : 14);
-    m_title->setGeometry({textX, content.y + 1, textWidth, titleHeight});
+    m_title->setGeometry({textX, content.y + (small ? art + 8 : 1), textWidth, titleHeight});
     m_artist->setFontSize(small ? 10 : large ? 12 : 11);
-    m_artist->setGeometry({textX, content.y + titleHeight + 2, textWidth,
-                           std::max(0.0, content.height - titleHeight - 30)});
+    m_artist->setGeometry({textX, content.y + (small ? art + 10 : 2) + titleHeight, textWidth,
+                           small ? 16.0 : std::max(0.0, content.height - titleHeight - 30)});
 
-    const double button = small ? 20 : 24;
+    m_artist->setColor(widgetTheme(this).text.withAlpha(.65));
+    const double button = small ? 24 : 30;
     const double gap = 2;
     const double controlsWidth = button * 3 + gap * 2;
     const double controlsY = content.bottom() - button;
@@ -505,6 +506,7 @@ void NowPlayingWidget::layoutContent()
     m_play->setGeometry({controlsX + button + gap, controlsY, button, button});
     m_next->setGeometry({controlsX + (button + gap) * 2, controlsY, button, button});
 
+    m_artView->setVisible(!m_artView->source().empty() && !widgetMonochrome(this));
     m_artView->setGeometry(m_artRect);
     m_artView->setCornerRadius(size() == WidgetSize::Small ? 8 : 12);
     m_artView->setSourceSize({m_artRect.width, m_artRect.height});
@@ -514,7 +516,7 @@ void NowPlayingWidget::paintContent(ui::Painter& painter)
 {
     if (m_artRect.width <= 0)
         return;
-    const ui::Theme& theme = ui::Theme::current();
+    const ui::Theme& theme = widgetTheme(this);
     const double radius = size() == WidgetSize::Small ? 8 : 12;
     painter.fillRoundedRect(m_artRect, radius,
                             theme.highlight.withAlpha(theme.darkMode ? 0.18 : 0.11));
@@ -536,7 +538,7 @@ void NowPlayingWidget::paintContent(ui::Painter& painter)
 
 void NowPlayingWidget::retranslateContent()
 {
-    m_artist->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.62)));
+    m_artist->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
     setTrack(m_present, m_trackTitle, m_trackArtist, m_playing, m_canControl, m_canPrevious,
              m_canNext, m_artUrl);
 }

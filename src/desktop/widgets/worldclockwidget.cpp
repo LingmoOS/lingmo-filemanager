@@ -1,255 +1,106 @@
 // SPDX-FileCopyrightText: 2026 LingmoOS Contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
-
 #include "desktop/widgets/worldclockwidget.h"
-
-#include <algorithm>
-#include <cstring>
-#include <ctime>
-#include <mutex>
-#include <sstream>
-
 #include "base/i18n.h"
-#include "base/paths.h"
 #include "base/settings.h"
 #include "core/config.h"
 #include "ui/label.h"
 #include "ui/painter.h"
 #include "ui/theme.h"
-
-using Lingmo::i18n::tr;
-
+#include <algorithm>
+#include <cmath>
+#include <cstdio>
+#include <memory>
+#include <numbers>
+#include <unicode/calendar.h>
+#include <unicode/timezone.h>
+using Lingmo::I18n::tr;
 namespace fm {
-
+WorldClockTime worldClockTime(const std::string& zone,std::time_t now) {
+    WorldClockTime out;
+    std::unique_ptr<icu::TimeZone> tz(icu::TimeZone::createTimeZone(icu::UnicodeString::fromUTF8(zone)));
+    icu::UnicodeString id;tz->getID(id);if(id==icu::UnicodeString("Etc/Unknown"))return out;
+    UErrorCode error=U_ZERO_ERROR;
+    std::unique_ptr<icu::Calendar> target(icu::Calendar::createInstance(tz.release(),error));
+    std::unique_ptr<icu::Calendar> local(icu::Calendar::createInstance(error));
+    if(U_FAILURE(error)||!target||!local)return out;
+    target->setTime(double(now)*1000,error);local->setTime(double(now)*1000,error);
+    out.hour=target->get(UCAL_HOUR_OF_DAY,error);out.minute=target->get(UCAL_MINUTE,error);out.second=target->get(UCAL_SECOND,error);
+    out.dayDifference=target->get(UCAL_JULIAN_DAY,error)-local->get(UCAL_JULIAN_DAY,error);
+    const int targetOffset=target->get(UCAL_ZONE_OFFSET,error)+target->get(UCAL_DST_OFFSET,error);
+    const int localOffset=local->get(UCAL_ZONE_OFFSET,error)+local->get(UCAL_DST_OFFSET,error);
+    out.offsetMinutes=(targetOffset-localOffset)/60000;out.valid=U_SUCCESS(error);return out;
+}
 namespace {
-
-// Default zones shown when the user has not configured any.
-constexpr const char* kDefaultZones[] = {
-    "UTC",
-    "America/New_York",
-    "Europe/London",
-    "Asia/Shanghai",
-};
-
-// Convert an Olson zone name to a short city label, by taking the last
-// segment and replacing underscores with spaces.
-std::string zoneLabel(const std::string& zone)
-{
-    const size_t slash = zone.rfind('/');
-    std::string city = (slash == std::string::npos) ? zone : zone.substr(slash + 1);
-    std::replace(city.begin(), city.end(), '_', ' ');
-    return city;
+std::string cityName(const std::string& zone) {
+    if(zone=="Asia/Shanghai")return tr("Shanghai");
+    if(zone=="America/New_York")return tr("New York");
+    if(zone=="Europe/London")return tr("London");
+    if(zone=="Asia/Tokyo")return tr("Tokyo");
+    if(zone=="Australia/Sydney")return tr("Sydney");
+    auto city=zone.substr(zone.rfind('/')==std::string::npos?0:zone.rfind('/')+1);
+    std::replace(city.begin(),city.end(),'_',' ');return city;
 }
-
-// A per-process mutex that serialises every TZ manipulation so that
-// concurrent threads (WeatherWidget's thread pool, etc.) never see a
-// half-written TZ environment variable.
-static std::mutex& tzMutex()
-{
-    static std::mutex m;
-    return m;
 }
-
-// Format the wall-clock time for the given zone as HH:MM.
-std::string zoneTime(const std::string& zone)
-{
-    const std::time_t now = std::time(nullptr);
-    std::lock_guard<std::mutex> lock(tzMutex());
-
-    const char* prevTz = std::getenv("TZ");
-    std::string tzCopy;
-    if (prevTz)
-        tzCopy = prevTz;
-
-    setenv("TZ", zone.c_str(), 1);
-    tzset();
-
-    std::tm local;
-    std::memset(&local, 0, sizeof(local));
-    localtime_r(&now, &local);
-
-    if (prevTz)
-        setenv("TZ", tzCopy.c_str(), 1);
-    else
-        unsetenv("TZ");
-    tzset();
-
-    std::ostringstream out;
-    out << std::put_time(&local, "%H:%M");
-    return out.str();
-}
-
-} // namespace
-
-WorldClockWidget::WorldClockWidget(WidgetLayer& layer, WidgetSize size)
-    : DesktopWidget(layer, WidgetKind::WorldClock, size)
-{
+WorldClockWidget::WorldClockWidget(WidgetLayer& layer,WidgetSize size):DesktopWidget(layer,WidgetKind::WorldClock,size) {
     setName("world-clock-widget");
-    for (int i = 0; i < 4; ++i) {
-        m_timeLabels[i] = addChild<ui::Label>();
-        m_timeLabels[i]->setElide(ui::Label::Elide::Right);
-        m_cityLabels[i] = addChild<ui::Label>();
-        m_cityLabels[i]->setElide(ui::Label::Elide::Right);
-        m_cityLabels[i]->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.55)));
+    for(int i=0;i<4;++i){
+        m_timeLabels[i]=addChild<ui::Label>();m_cityLabels[i]=addChild<ui::Label>();m_dayLabels[i]=addChild<ui::Label>();
+        m_cityLabels[i]->setName("world-city-"+std::to_string(i));
+        for(auto* label:{m_timeLabels[i],m_cityLabels[i],m_dayLabels[i]}){label->setTextAlignment(ui::Label::TextAlignment::Center);label->setElide(ui::Label::Elide::Right);}
     }
-
-    m_timer.setInterval(std::chrono::seconds(1));
-    m_timer.setSingleShot(false);
-    m_timer.onTimeout = [this] { refresh(); };
-    m_timer.start();
-
-    loadZones();
-    refresh();
+    m_timer.setInterval(std::chrono::seconds(15));m_timer.onTimeout=[this]{refresh();};m_timer.start();loadZones();refresh();
 }
-
-WorldClockWidget::~WorldClockWidget()
-{
-    m_timer.stop();
+WorldClockWidget::~WorldClockWidget()=default;
+void WorldClockWidget::loadZones(){
+    const base::Settings settings(fm::settingsFile());m_zoneCount=0;
+    for(int i=0;i<4;++i){const auto zone=settings.stringValue("WorldClock/Zone"+std::to_string(i+1));if(!zone.empty())m_zones[m_zoneCount++]=zone;}
+    if(!m_zoneCount){const char* zones[]={"America/New_York","Europe/London","Asia/Shanghai","Asia/Tokyo"};for(int i=0;i<4;++i)m_zones[i]=zones[i];m_zoneCount=4;}
+    for(int i=0;i<m_zoneCount;++i){m_cityLabels[i]->setText(cityName(m_zones[i]));m_cityLabels[i]->setToolTip(m_zones[i]);}
 }
-
-void WorldClockWidget::loadZones()
-{
-    m_zoneCount = 0;
-    const base::Settings settings(settingsFile());
-    bool any = false;
-    for (int i = 0; i < 4; ++i) {
-        std::string key = "WorldClock/Zone";
-        key += std::to_string(i + 1);
-        const std::string zone = settings.stringValue(key);
-        if (!zone.empty()) {
-            m_zones[i] = zone;
-            m_cityLabels[i]->setText(zoneLabel(zone));
-            ++m_zoneCount;
-            any = true;
-        } else {
-            m_zones[i].clear();
-            m_cityLabels[i]->setText(std::string());
+void WorldClockWidget::refresh(){
+    const auto now=std::time(nullptr);
+    for(int i=0;i<m_zoneCount;++i){
+        auto& time=m_times[i];time=worldClockTime(m_zones[i],now);
+        char value[24];std::snprintf(value,sizeof(value),"%02d:%02d",time.hour,time.minute);
+        m_timeLabels[i]->setText(time.valid?value:"—");
+        if(!time.valid)m_dayLabels[i]->setText(tr("Invalid time zone"));
+        else {
+            const char* day=time.dayDifference<0?tr("Yesterday"):time.dayDifference>0?tr("Tomorrow"):tr("Today");
+            const int delta=time.offsetMinutes;char offset[24];std::snprintf(offset,sizeof(offset),"%c%d:%02d",delta<0?'-':'+',std::abs(delta)/60,std::abs(delta)%60);
+            m_dayLabels[i]->setText(std::string(day)+" "+offset);
         }
     }
-
-    if (!any) {
-        for (int i = 0; i < 4; ++i) {
-            m_zones[i] = kDefaultZones[i];
-            m_cityLabels[i]->setText(zoneLabel(kDefaultZones[i]));
-        }
-        m_zoneCount = 4;
+    requestLayout();requestPaint();
+}
+void WorldClockWidget::layoutContent(){
+    const auto r=contentRect();const bool small=size()==WidgetSize::Small,large=size()==WidgetSize::Large;
+    const int visible=small?std::min(1,m_zoneCount):m_zoneCount;
+    const int columns=small?1:large?2:std::max(1,visible);const int rows=large?2:1;
+    const double gap=small?0:8,cw=(r.width-gap*(columns-1))/columns,ch=(r.height-gap*(rows-1))/rows;
+    for(int i=0;i<4;++i){
+        const bool shown=i<visible;for(auto* label:{m_cityLabels[i],m_timeLabels[i],m_dayLabels[i]})label->setVisible(shown);
+        m_faces[i]={};if(!shown)continue;
+        const double x=r.x+(i%columns)*(cw+gap),y=r.y+(i/columns)*(ch+gap);
+        const double face=std::max(0.0,std::min(cw,ch-54));m_faces[i]={x+(cw-face)/2,y,face,face};
+        const double baseline=y+face+6;
+        m_cityLabels[i]->setFontSize(small||large?12:10);m_cityLabels[i]->setWeight(600);m_cityLabels[i]->setGeometry({x,baseline,cw,16});
+        m_timeLabels[i]->setFontSize(12);m_timeLabels[i]->setWeight(500);m_timeLabels[i]->setGeometry({x,baseline+17,cw,16});
+        m_dayLabels[i]->setFontSize(small||large?10:8);m_dayLabels[i]->setColor(widgetTheme(this).text.withAlpha(.65));m_dayLabels[i]->setGeometry({x,baseline+34,cw,15});
     }
 }
-
-std::string WorldClockWidget::settingsFile()
-{
-    return base::paths::lingmoConfig("filemanager");
-}
-
-void WorldClockWidget::refresh()
-{
-    for (int i = 0; i < m_zoneCount; ++i) {
-        if (m_zones[i].empty())
-            continue;
-        m_timeLabels[i]->setText(zoneTime(m_zones[i]));
-    }
-    requestLayout();
-    requestPaint();
-}
-
-void WorldClockWidget::layoutContent()
-{
-    const ui::RectF content = contentRect();
-    if (content.width <= 0 || content.height <= 0)
-        return;
-
-    const bool small = size() == WidgetSize::Small;
-    const bool large = size() == WidgetSize::Large;
-
-    double timeSize = 24;
-    double citySize = 11;
-    if (small) {
-        timeSize = 36;
-        citySize = 11;
-    } else if (large) {
-        timeSize = 28;
-        citySize = 12;
-    }
-
-    for (int i = 0; i < 4; ++i) {
-        m_timeLabels[i]->setFontSize(timeSize);
-        m_timeLabels[i]->setWeight(600);
-        m_cityLabels[i]->setFontSize(citySize);
-        m_cityLabels[i]->setWeight(500);
-        m_cityLabels[i]->setColor(ui::ColorRecipe(ui::Theme::current().text.withAlpha(0.55)));
-    }
-
-    if (small) {
-        // Only the first zone.
-        const double timeH = std::max(20.0, m_timeLabels[0]->sizeHint().height);
-        const double cityH = std::max(14.0, m_cityLabels[0]->sizeHint().height);
-        m_timeLabels[0]->setGeometry({content.x, content.y, content.width,
-                                      std::max(0.0, content.height - cityH - 4)});
-        m_cityLabels[0]->setGeometry({content.x, content.bottom() - cityH, content.width, cityH});
-        for (int i = 1; i < 4; ++i) {
-            m_timeLabels[i]->setGeometry({0, 0, 0, 0});
-            m_cityLabels[i]->setGeometry({0, 0, 0, 0});
-        }
-    } else if (large) {
-        // 2×2 grid.
-        const double colW = (content.width - 16) / 2.0;
-        const double rowH = content.height / 2.0;
-        for (int i = 0; i < 4; ++i) {
-            const int col = i % 2;
-            const int row = i / 2;
-            const double x = content.x + col * (colW + 16);
-            const double y = content.y + row * rowH;
-            const double timeH = std::max(20.0, m_timeLabels[i]->sizeHint().height);
-            const double cityH = std::max(14.0, m_cityLabels[i]->sizeHint().height);
-            m_timeLabels[i]->setGeometry({x, y, colW, std::max(0.0, rowH - cityH - 4)});
-            m_cityLabels[i]->setGeometry({x, y + rowH - cityH, colW, cityH});
-        }
-    } else {
-        // Medium: 2 side by side.
-        const double colW = (content.width - 16) / 2.0;
-        for (int i = 0; i < 2; ++i) {
-            const double x = content.x + i * (colW + 16);
-            const double timeH = std::max(20.0, m_timeLabels[i]->sizeHint().height);
-            const double cityH = std::max(14.0, m_cityLabels[i]->sizeHint().height);
-            m_timeLabels[i]->setGeometry({x, content.y, colW,
-                                          std::max(0.0, content.height - cityH - 4)});
-            m_cityLabels[i]->setGeometry({x, content.bottom() - cityH, colW, cityH});
-        }
-        for (int i = 2; i < 4; ++i) {
-            m_timeLabels[i]->setGeometry({0, 0, 0, 0});
-            m_cityLabels[i]->setGeometry({0, 0, 0, 0});
-        }
+void WorldClockWidget::paintContent(ui::Painter& p){
+    const auto& theme=widgetTheme(this);
+    for(int i=0;i<4;++i){const auto r=m_faces[i];if(r.width<=0)continue;const auto time=m_times[i];
+        const bool night=time.hour<6||time.hour>=18;const auto face=night?theme.text.withAlpha(.11):theme.highlight.withAlpha(.10);
+        p.fillEllipse(r,face);const double cx=r.x+r.width/2,cy=r.y+r.height/2,rad=r.width/2;
+        for(int n=0;n<12;++n){const double angle=n*std::numbers::pi/6;const double inner=rad*(n%3==0?.73:.82);
+            p.drawLine({cx+std::sin(angle)*inner,cy-std::cos(angle)*inner},{cx+std::sin(angle)*rad*.9,cy-std::cos(angle)*rad*.9},theme.text.withAlpha(n%3==0?.65:.25),p.scale());}
+        if(!time.valid)continue;
+        auto hand=[&](double turn,double length,double stroke){const auto a=turn*2*std::numbers::pi;p.drawLine({cx,cy},{cx+std::sin(a)*rad*length,cy-std::cos(a)*rad*length},theme.text,stroke*p.scale());};
+        hand((time.hour%12+time.minute/60.0)/12,.48,2.5);hand(time.minute/60.0,.72,1.6);
+        p.fillEllipse({cx-2,cy-2,4,4},theme.highlight);
     }
 }
-
-void WorldClockWidget::paintContent(ui::Painter& painter)
-{
-    const ui::RectF content = contentRect();
-    if (content.width <= 0 || content.height <= 0)
-        return;
-
-    const ui::Theme& theme = ui::Theme::current();
-    const ui::Color ink = theme.text.withAlpha(0.14);
-
-    if (size() == WidgetSize::Large) {
-        // Vertical and horizontal separators for the 2×2 grid.
-        const double colW = (content.width - 16) / 2.0;
-        const double midX = content.x + colW + 8;
-        painter.drawLine({midX, content.y}, {midX, content.bottom()}, ink, 1);
-        const double midY = content.y + content.height / 2.0;
-        painter.drawLine({content.x, midY}, {content.right(), midY}, ink, 1);
-    } else if (size() == WidgetSize::Medium) {
-        // A single vertical divider between the two zones.
-        const double colW = (content.width - 16) / 2.0;
-        const double midX = content.x + colW + 8;
-        painter.drawLine({midX, content.y}, {midX, content.bottom()}, ink, 1);
-    }
+void WorldClockWidget::retranslateContent(){loadZones();refresh();}
 }
-
-void WorldClockWidget::retranslateContent()
-{
-    loadZones();
-    refresh();
-}
-
-} // namespace fm
