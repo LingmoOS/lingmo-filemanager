@@ -105,7 +105,7 @@ protected:
     void bindItem(const FileItem&, int row) override
     {
         FolderModel& model = m_desktop->model();
-        setVisible(!model.isBlank(row));
+        setVisible(m_desktop->iconsVisible() && !model.isBlank(row));
         m_silhouette->icon->setIconName(m_icon->iconName());
         m_silhouette->icon->setSize(m_desktop->iconSize());
 
@@ -179,6 +179,14 @@ DesktopGridView::DesktopGridView(FolderModel& model)
 }
 
 DesktopGridView::~DesktopGridView() = default;
+
+void DesktopGridView::setIconsVisible(bool visible)
+{
+    if (m_iconsVisible == visible)
+        return;
+    m_iconsVisible = visible;
+    updateItems();
+}
 
 std::unique_ptr<IconItem> DesktopGridView::makeItem()
 {

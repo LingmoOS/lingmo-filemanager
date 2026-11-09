@@ -155,7 +155,7 @@ DesktopWindow::DesktopWindow(ui::TrustedConnection* connection, FileManagerHost&
     const int savedCorner = int(settings.intValue("Desktop/iconCorner", 0));
     if (savedCorner >= 0 && savedCorner <= 3)
         m_view->setIconCorner(static_cast<DesktopGridView::IconCorner>(savedCorner));
-    m_view->setVisible(m_showDesktopIcons);
+    m_view->setIconsVisible(m_showDesktopIcons);
 
     // Clicking the empty desktop leaves the preview on its item.
     m_preview = std::make_unique<PreviewClient>();
@@ -569,7 +569,7 @@ void DesktopWindow::showContextMenu(ui::PointF position)
 void DesktopWindow::setDesktopIconsVisible(bool visible)
 {
     m_showDesktopIcons = visible;
-    m_view->setVisible(visible);
+    m_view->setIconsVisible(visible);
     base::Settings settings(settingsPath());
     settings.setValue("Desktop/showIcons", visible);
 }

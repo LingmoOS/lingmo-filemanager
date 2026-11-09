@@ -30,6 +30,8 @@ public:
 
     void setIconSize(double size);
     void setMaximumIconSize(double size) { m_maximumIconSize = size; }
+    void setIconsVisible(bool visible);
+    bool iconsVisible() const { return m_iconsVisible; }
     // The work area in the view's coordinates; the grid keeps 12 px inside it.
     void setWorkArea(const ui::RectF& area);
     // The grid as laid out, in the view's coordinates.
@@ -84,6 +86,7 @@ private:
     int m_columns = 1;
     int m_rows = 1;
     IconCorner m_iconCorner = IconCorner::TopRight;
+    bool m_iconsVisible = true;
     std::vector<base::Subscription> m_subscriptions;
 };
 
