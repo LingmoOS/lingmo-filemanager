@@ -175,6 +175,12 @@ bool isTrusted(const std::string& path)
     if (!isDesktopFile(path))
         return false;
 
+    // A local launcher the user made executable is trusted; the first run of
+    // a launcher that is not asks, and sets this bit.
+    struct stat st;
+    if (::stat(path.c_str(), &st) == 0 && (st.st_mode & S_IXUSR))
+        return true;
+
     char resolved[PATH_MAX];
     if (!::realpath(parentPath(path).c_str(), resolved))
         return false;
@@ -193,7 +199,7 @@ bool isTrusted(const std::string& path)
 bool trustAndLaunch(const std::string& path)
 {
     struct stat st;
-    if (::stat(path.c_str(), &st) != 0 || isDesktopFile(path))
+    if (::stat(path.c_str(), &st) != 0)
         return false;
     // Fails on mounts without permissions; the user agreed to run it all the same.
     if (!(st.st_mode & S_IXUSR))

@@ -10,10 +10,13 @@
 
 #include <climits>
 #include <csignal>
+#include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <string>
 
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <unistd.h>
 
 using namespace Lingmo;
@@ -63,4 +66,23 @@ TEST(LauncherTest, HandedDescriptorStaysOutOfChildren)
 
     ::close(pair[0]);
     ::close(pair[1]);
+}
+
+TEST(LauncherTest, LocalExecutableDesktopIsTrusted)
+{
+    char directory[] = "/tmp/lingmo-launcher-desktop-XXXXXX";
+    ASSERT_NE(::mkdtemp(directory), nullptr);
+    const std::string path = std::string(directory) + "/test.desktop";
+    {
+        std::ofstream file(path);
+        file << "[Desktop Entry]\nType=Application\nName=Test\nExec=true\n";
+    }
+
+    ASSERT_EQ(::chmod(path.c_str(), 0644), 0);
+    EXPECT_FALSE(fm::launcher::isTrusted(path));
+
+    ASSERT_EQ(::chmod(path.c_str(), 0755), 0);
+    EXPECT_TRUE(fm::launcher::isTrusted(path));
+
+    std::filesystem::remove_all(directory);
 }

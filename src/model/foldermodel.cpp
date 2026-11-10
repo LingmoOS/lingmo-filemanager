@@ -1167,9 +1167,13 @@ void FolderModel::openSelected()
             continue;
         }
 
-        // Installed launchers run; any other one opens as text like a plain file.
-        if (mimeType == "application/x-desktop" && launcher::isTrusted(file->path)) {
-            launcher::launchFile(file->path);
+        // Installed or executable launchers run; a local launcher that is not
+        // executable yet asks first, then stays executable and trusted.
+        if (mimeType == "application/x-desktop") {
+            if (launcher::isTrusted(file->path))
+                launcher::launchFile(file->path);
+            else if (m_host)
+                m_host->confirmLaunch(file->path);
             continue;
         }
 
