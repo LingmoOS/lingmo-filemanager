@@ -28,6 +28,7 @@ class WindowTabBar;
 namespace fm {
 
 class FolderWindowRoot;
+class DesktopMenuExporter;
 class PathBar;
 class SideBar;
 
@@ -129,6 +130,7 @@ private:
     bool m_incoming = false;
     bool m_closed = false;
     std::unique_ptr<ui::Menu> m_menu;
+    std::unique_ptr<DesktopMenuExporter> m_menuExporter;
     std::unique_ptr<ui::Toast> m_toast;
     std::unique_ptr<class ArchivePasswordPrompt> m_archivePassword;
     std::vector<base::Subscription> m_pageSubscriptions;

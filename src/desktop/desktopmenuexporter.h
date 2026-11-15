@@ -37,7 +37,8 @@ public:
     // `menu` gives the entries as they are now; `refresh` brings them up to
     // date before a menu shows, as the context menu's actions are.
     DesktopMenuExporter(base::dbus::Connection* bus, std::function<std::vector<Entry>()> menu,
-                        std::function<void()> refresh);
+                        std::function<void()> refresh, uint32_t windowId = 0,
+                        std::string path = kPath);
     ~DesktopMenuExporter();
 
     // Brings the entries up to date and tells a bar what changed.
@@ -53,6 +54,8 @@ private:
     void registerWindow();
 
     base::dbus::Connection* m_bus;
+    const uint32_t m_windowId;
+    const std::string m_path;
     std::function<std::vector<Entry>()> m_menu;
     std::function<void()> m_refresh;
     base::dbus::Object m_object;

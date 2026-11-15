@@ -76,11 +76,13 @@ static void changedEntries(const std::vector<DesktopMenuExporter::Entry>& before
 }
 
 DesktopMenuExporter::DesktopMenuExporter(base::dbus::Connection* bus, std::function<std::vector<Entry>()> menu,
-                                         std::function<void()> refresh)
+                                         std::function<void()> refresh, uint32_t windowId, std::string path)
     : m_bus(bus)
+    , m_windowId(windowId)
+    , m_path(path)
     , m_menu(std::move(menu))
     , m_refresh(std::move(refresh))
-    , m_object(bus, kPath, kInterface)
+    , m_object(bus, m_path, kInterface)
 {
     rebuild();
     m_object.addProperty("Version", [] { return uint32_t(3); });
@@ -171,7 +173,7 @@ DesktopMenuExporter::~DesktopMenuExporter()
 {
     *m_alive = false;
     base::dbus::Proxy registrar(m_bus, kRegistrar, kRegistrarPath, kRegistrar);
-    registrar.send("UnregisterWindow", uint32_t(0));
+    registrar.send("UnregisterWindow", m_windowId);
 }
 
 void DesktopMenuExporter::update()
@@ -205,7 +207,7 @@ void DesktopMenuExporter::update()
 void DesktopMenuExporter::registerWindow()
 {
     base::dbus::Proxy registrar(m_bus, kRegistrar, kRegistrarPath, kRegistrar);
-    registrar.send("RegisterWindow", uint32_t(0), base::dbus::ObjectPath {kPath});
+    registrar.send("RegisterWindow", m_windowId, base::dbus::ObjectPath {m_path});
 }
 
 void DesktopMenuExporter::rebuild()

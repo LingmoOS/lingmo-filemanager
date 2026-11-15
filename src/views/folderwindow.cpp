@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "views/colors.h"
+#include "desktop/desktopmenuexporter.h"
 #include "views/folderwindow.h"
 #include "core/preferences.h"
 #include "views/folderview.h"
@@ -32,6 +33,7 @@
 #include "ui/window_tab_bar.h"
 
 #include <algorithm>
+#include <atomic>
 #include <cmath>
 #include <functional>
 #include <optional>
@@ -51,6 +53,7 @@ static constexpr double kMinimumWidth = 600;
 static constexpr double kMinimumContentWidth = kMinimumWidth - SideBar::kDefaultWidth;
 static constexpr double kNewTabButtonSize = 28;
 static constexpr const char* kTabMimeType = "application/x-lingmo-filemanager-tab";
+static std::atomic<uint32_t> s_nextMenuWindowId {1};
 
 // Where a search looks, home or the folder it started from.
 class SearchScopeBar : public ui::View
@@ -542,6 +545,8 @@ FolderWindow::FolderWindow(FileManagerHost* host, const FolderPage::Start& start
     m_forward = m_root->row->forward;
     m_options = m_root->row->options;
     m_toast = std::make_unique<ui::Toast>(m_window.get());
+    const uint32_t menuWindowId = s_nextMenuWindowId.fetch_add(1);
+    const std::string menuPath = "/org/lingmo/FileManager/WindowMenu/" + std::to_string(menuWindowId);
 
     m_back->onClicked = [this] {
         if (FolderPage* page = currentPage())
@@ -613,6 +618,77 @@ FolderWindow::FolderWindow(FileManagerHost* host, const FolderPage::Start& start
 
     addShortcuts();
     openTabSelecting(start);
+    if (base::dbus::Connection* bus = ui::Application::instance()->sessionBus()) {
+        m_menuExporter = std::make_unique<DesktopMenuExporter>(
+                bus,
+                [this] {
+                    FolderPage* page = currentPage();
+                    if (!page)
+                        return std::vector<DesktopMenuExporter::Entry> {};
+                    FolderModel& model = page->model();
+                    model.prepareContextMenu();
+                    using Entry = DesktopMenuExporter::Entry;
+                    const auto item = [&model](const char* name, std::function<void()> action = {}) {
+                        const auto& source = model.action(name);
+                        Entry entry;
+                        entry.label = source.text;
+                        entry.visible = source.visible;
+                        entry.enabled = source.enabled;
+                        entry.action = std::move(action);
+                        return entry;
+                    };
+                    Entry file;
+                    file.label = tr("File");
+                    file.children = {
+                        item("newFolder", [&model] { model.newFolder(); }),
+                        item("newTextFile", [&model] { model.newTextFile(); }),
+                        item("openInNewWindow", [&model] { model.openInNewWindow(); }),
+                        Entry {.separator = true},
+                        item("properties", [&model] { model.openPropertiesDialog(); }),
+                    };
+                    Entry edit;
+                    edit.label = tr("Edit");
+                    edit.children = {
+                        item("undo", [&model] { model.undo(); }),
+                        item("redo", [&model] { model.redo(); }),
+                        Entry {.separator = true},
+                        item("cut", [&model] { model.cut(); }),
+                        item("copy", [&model] { model.copy(); }),
+                        item("paste", [&model] { model.paste(); }),
+                    };
+                    Entry selectAll;
+                    selectAll.label = tr("Select All");
+                    selectAll.action = [&model] { model.selectAll(); };
+                    edit.children.push_back(std::move(selectAll));
+                    Entry view;
+                    view.label = tr("View");
+                    Entry icons;
+                    icons.label = tr("Icons");
+                    icons.action = [] { Preferences::instance().setViewMethod(Preferences::Grid); };
+                    Entry list;
+                    list.label = tr("List");
+                    list.action = [] { Preferences::instance().setViewMethod(Preferences::List); };
+                    view.children = {std::move(icons), std::move(list), Entry {.separator = true},
+                                     item("showHidden", [&model] { model.setShowHiddenFiles(!model.showHiddenFiles()); })};
+                    Entry go;
+                    go.label = tr("Go");
+                    Entry back;
+                    back.label = tr("Back");
+                    back.action = [page] { page->goBack(); };
+                    back.enabled = model.canGoBack();
+                    Entry forward;
+                    forward.label = tr("Forward");
+                    forward.action = [page] { page->goForward(); };
+                    forward.enabled = model.canGoForward();
+                    go.children = {std::move(back), std::move(forward)};
+                    return std::vector<Entry> {std::move(file), std::move(edit), std::move(view), std::move(go)};
+                },
+                [this] {
+                    if (FolderPage* page = currentPage())
+                        page->model().prepareContextMenu();
+                },
+                menuWindowId, menuPath);
+    }
     updateBackground();
 }
 
@@ -947,6 +1023,8 @@ void FolderWindow::updateHeader()
     for (const Tab& tab : m_tabs)
         tab.page->setHeaderHeight(height);
     m_root->requestLayout();
+    if (m_menuExporter)
+        m_menuExporter->update();
 }
 
 void FolderWindow::updateBackground()

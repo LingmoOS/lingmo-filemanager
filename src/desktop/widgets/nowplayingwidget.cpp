@@ -375,8 +375,16 @@ void NowPlayingWidget::setTrack(bool present, const std::string& title, const st
 
 void NowPlayingWidget::loadArt(const std::string& url)
 {
-    if (url == m_artUrl)
+    if (url == m_artUrl) {
+        // Artwork is hidden while the widget layer is monochrome. The URL
+        // does not change when focus returns to the desktop, so refresh the
+        // visibility here instead of waiting for a new MPRIS metadata event.
+        m_artView->setVisible(!m_artView->source().empty() && !widgetMonochrome(this));
+        m_artView->setSourceSize({m_artRect.width, m_artRect.height});
+        requestLayout();
+        requestPaint();
         return;
+    }
     m_artUrl = url;
     std::string path;
     if (!url.empty()) {
@@ -539,6 +547,7 @@ void NowPlayingWidget::paintContent(ui::Painter& painter)
 void NowPlayingWidget::retranslateContent()
 {
     m_artist->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.62)));
+    loadArt(m_artUrl);
     setTrack(m_present, m_trackTitle, m_trackArtist, m_playing, m_canControl, m_canPrevious,
              m_canNext, m_artUrl);
 }

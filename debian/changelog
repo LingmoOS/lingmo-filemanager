@@ -1,3 +1,10 @@
+lingmo-filemanager (5.1.2+lingmo5u1) unstable; urgency=medium
+
+  * Fix Now Playing artwork refresh when desktop focus changes.
+  * Export menus for regular file manager windows.
+
+ -- Lingmo OS Team <team@lingmo.org>  Mon, 16 Nov 2026 12:00:00 +0800
+
 lingmo-filemanager (5.1.1+lingmo5u1) unstable; urgency=medium
 
   * Run local executable .desktop launchers, and ask before trusting others,
