@@ -1,3 +1,10 @@
+lingmo-filemanager (5.1.3+lingmo5u1) unstable; urgency=medium
+
+  * desktop widgets: redesign the weather card with current conditions,
+    daily high/low temperatures and a localized six-hour forecast row.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 04:45:00 +0800
+
 lingmo-filemanager (5.1.2+lingmo5u1) unstable; urgency=medium
 
   * Fix Now Playing artwork refresh when desktop focus changes.

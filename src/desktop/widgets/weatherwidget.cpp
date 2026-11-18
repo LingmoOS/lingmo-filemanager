@@ -28,6 +28,7 @@
 #include "ui/theme.h"
 
 using Lingmo::base::json::Value;
+using Lingmo::i18n::format;
 static const char* tr(const char* text) { return Lingmo::i18n::dtr("lingmo-filemanager", text); }
 
 namespace fm {
@@ -153,7 +154,9 @@ bool fetchWeather(const std::string& city, WeatherData& data)
 
     std::ostringstream url;
     url << kForecast << "?latitude=" << latitude << "&longitude=" << longitude
-        << "&current=temperature_2m,relative_humidity_2m,weather_code&timezone=auto";
+        << "&current=temperature_2m,relative_humidity_2m,weather_code"
+        << "&daily=temperature_2m_max,temperature_2m_min"
+        << "&hourly=temperature_2m,weather_code&forecast_days=1&timezone=auto";
     const std::optional<HttpResponse> forecast = get(url.str());
     if (!forecast || !forecast->ok)
         return false;
@@ -169,6 +172,43 @@ bool fetchWeather(const std::string& city, WeatherData& data)
     data.temperature = current["temperature_2m"].toDouble();
     data.humidity = int(current["relative_humidity_2m"].toDouble(-1));
     data.code = int(current["weather_code"].toDouble(-1));
+
+    const Value& daily = (*json)["daily"];
+    if (daily.isObject()) {
+        const Value& highs = daily["temperature_2m_max"];
+        const Value& lows = daily["temperature_2m_min"];
+        if (highs.isArray() && highs.size() > 0)
+            data.high = highs[0].toDouble(-1);
+        if (lows.isArray() && lows.size() > 0)
+            data.low = lows[0].toDouble(-1);
+    }
+
+    const Value& hourly = (*json)["hourly"];
+    if (hourly.isObject() && hourly["time"].isArray()
+        && hourly["temperature_2m"].isArray() && hourly["weather_code"].isArray()) {
+        const Value& times = hourly["time"];
+        const Value& temperatures = hourly["temperature_2m"];
+        const Value& codes = hourly["weather_code"];
+        const size_t count = std::min({times.size(), temperatures.size(), codes.size()});
+        size_t first = 0;
+        const std::string currentTime = current["time"].toString();
+        for (size_t i = 0; i < count; ++i) {
+            if (times[i].toString() >= currentTime) {
+                first = i;
+                break;
+            }
+            first = i;
+        }
+        const size_t end = std::min(count, first + 6);
+        data.hourly.reserve(end - first);
+        for (size_t i = first; i < end; ++i) {
+            WeatherHour hour;
+            hour.time = times[i].toString();
+            hour.temperature = temperatures[i].toDouble();
+            hour.code = int(codes[i].toDouble(-1));
+            data.hourly.push_back(std::move(hour));
+        }
+    }
     return true;
 }
 
@@ -236,6 +276,61 @@ const char* weatherIconName(int code)
     return "weather-none-available";
 }
 
+std::string hourText(const std::string& isoTime)
+{
+    const size_t separator = isoTime.find('T');
+    if (separator == std::string::npos || separator + 3 > isoTime.size())
+        return {};
+    int hour = 0;
+    try {
+        hour = std::stoi(isoTime.substr(separator + 1, 2));
+    } catch (...) {
+        return {};
+    }
+    if (hour < 0 || hour > 23)
+        return {};
+    base::ClockTime time;
+    time.hour = hour;
+    return base::Locale::system().toString(time, "h AP");
+}
+
+void drawWeatherGlyph(ui::Painter& painter, const ui::RectF& rect, int code, const ui::Theme& theme)
+{
+    const double size = std::min(rect.width, rect.height);
+    const double cx = rect.x + rect.width / 2;
+    const double cy = rect.y + rect.height / 2;
+    const ui::Color ink = theme.text.withAlpha(0.62);
+    const ui::Color accent = theme.highlight;
+    if (code <= 2) {
+        const double radius = size * 0.18;
+        painter.fillEllipse({cx - radius, cy - radius, radius * 2, radius * 2}, accent);
+        for (int i = 0; i < 8; ++i) {
+            const double angle = i * std::numbers::pi / 4;
+            painter.drawLine({cx + std::cos(angle) * radius * 1.45, cy + std::sin(angle) * radius * 1.45},
+                             {cx + std::cos(angle) * radius * 1.95, cy + std::sin(angle) * radius * 1.95},
+                             ink, std::max(1.0, size * 0.025));
+        }
+        if (code == 2)
+            painter.fillRoundedRect({cx - size * 0.18, cy + size * 0.12, size * 0.42, size * 0.2},
+                                    size * 0.1, theme.text.withAlpha(0.24));
+        return;
+    }
+    painter.fillRoundedRect({cx - size * 0.28, cy + size * 0.02, size * 0.56, size * 0.22},
+                            size * 0.11, theme.text.withAlpha(0.24));
+    painter.fillRoundedRect({cx - size * 0.04, cy - size * 0.14, size * 0.3, size * 0.24},
+                            size * 0.1, theme.text.withAlpha(0.24));
+    if (isRain(code)) {
+        for (int i = 0; i < 3; ++i)
+            painter.drawLine({cx - size * 0.2 + i * size * 0.18, cy + size * 0.28},
+                             {cx - size * 0.25 + i * size * 0.18, cy + size * 0.44}, accent,
+                             std::max(1.0, size * 0.03));
+    } else if (isSnow(code)) {
+        for (int i = 0; i < 3; ++i)
+            painter.fillEllipse({cx - size * 0.2 + i * size * 0.2, cy + size * 0.34, size * 0.06, size * 0.06},
+                                accent);
+    }
+}
+
 } // namespace
 
 WeatherWidget::WeatherWidget(WidgetLayer& layer, WidgetSize size)
@@ -255,9 +350,30 @@ WeatherWidget::WeatherWidget(WidgetLayer& layer, WidgetSize size)
     m_humidity = addChild<ui::Label>();
     m_humidity->setFontSize(10);
     m_humidity->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.5)));
+    m_highLow = addChild<ui::Label>();
+    m_highLow->setFontSize(11);
+    m_highLow->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.68)));
+    m_highLow->setElide(ui::Label::Elide::Right);
 
     m_weatherIcon = addChild<ui::ThemeIcon>();
     m_weatherIcon->setVisible(false);
+
+    for (size_t i = 0; i < m_hourTimes.size(); ++i) {
+        m_hourTimes[i] = addChild<ui::Label>();
+        m_hourTimes[i]->setFontSize(9);
+        m_hourTimes[i]->setTextAlignment(ui::Label::TextAlignment::Center);
+        m_hourTimes[i]->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
+        m_hourTimes[i]->setVisible(false);
+        m_hourIcons[i] = addChild<ui::ThemeIcon>();
+        m_hourIcons[i]->setSize(22);
+        m_hourIcons[i]->setVisible(false);
+        m_hourTemperatures[i] = addChild<ui::Label>();
+        m_hourTemperatures[i]->setFontSize(10);
+        m_hourTemperatures[i]->setWeight(600);
+        m_hourTemperatures[i]->setTextAlignment(ui::Label::TextAlignment::Center);
+        m_hourTemperatures[i]->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.82)));
+        m_hourTemperatures[i]->setVisible(false);
+    }
 
     m_timer.setInterval(kRefreshInterval);
     m_timer.setSingleShot(false);
@@ -366,6 +482,27 @@ void WeatherWidget::updateLabels()
                                 ? std::string(tr("Humidity")) + " "
                                         + base::Locale::system().toString(m_data.humidity, 0) + "%"
                                 : std::string());
+    m_humidity->setVisible(size() == WidgetSize::Small);
+    if (valid && m_data.high >= 0 && m_data.low >= 0) {
+        m_highLow->setText(format(tr("H:{high}° L:{low}°"),
+                                   {{"high", base::Locale::system().toString(std::lround(m_data.high), 0)},
+                                    {"low", base::Locale::system().toString(std::lround(m_data.low), 0)}}));
+    } else {
+        m_highLow->setText({});
+    }
+
+    for (size_t i = 0; i < m_hourTimes.size(); ++i) {
+        const bool show = valid && i < m_data.hourly.size() && size() != WidgetSize::Small;
+        m_hourTimes[i]->setVisible(show);
+        m_hourIcons[i]->setVisible(show);
+        m_hourTemperatures[i]->setVisible(show);
+        if (show) {
+            const WeatherHour& hour = m_data.hourly[i];
+            m_hourTimes[i]->setText(hourText(hour.time));
+            m_hourIcons[i]->setIconName(weatherIconName(hour.code));
+            m_hourTemperatures[i]->setText(base::Locale::system().toString(std::lround(hour.temperature), 0) + "°");
+        }
+    }
 
     // Load weather icon via ThemeIcon (self-drawing View)
     if (m_weatherIcon) {
@@ -394,23 +531,72 @@ void WeatherWidget::layoutContent()
     const double cityHeight = std::max(14.0, m_city->sizeHint().height);
     const double conditionHeight = std::max(14.0, m_condition->sizeHint().height);
     const double humidityHeight = std::max(12.0, m_humidity->sizeHint().height);
-    m_city->setGeometry({content.x, content.y, content.width, cityHeight});
-    const double textWidth = small ? content.width : std::max(0.0, content.width - 100);
+    const ui::Theme& theme = widgetTheme(this);
+    m_humidity->setVisible(small);
+    m_highLow->setVisible(!small);
+    const double textWidth = small ? content.width : std::max(0.0, content.width * 0.52);
+    m_city->setGeometry({content.x, content.y, textWidth, cityHeight});
     m_temperature->setFontSize(small ? 34 : large ? 54 : 44);
-    m_temperature->setWeight(500);m_temperature->setVerticallyCentered(true);
+    m_temperature->setWeight(500);
+    m_temperature->setVerticallyCentered(true);
     m_city->setWeight(600);
-    m_condition->setColor(widgetTheme(this).text.withAlpha(.7));
-    m_humidity->setColor(widgetTheme(this).text.withAlpha(.6));
+    m_condition->setColor(theme.text.withAlpha(.7));
+    m_humidity->setColor(theme.text.withAlpha(.6));
+    m_highLow->setColor(theme.text.withAlpha(.68));
     m_temperature->setGeometry({content.x, content.y + cityHeight + 2, textWidth,
-                                std::max(0.0, content.height - cityHeight - conditionHeight - humidityHeight - 8)});
+                                small ? std::max(0.0, content.height - cityHeight - conditionHeight - humidityHeight - 8)
+                                      : std::max(0.0, content.height * .42)});
     m_condition->setGeometry({content.x, content.bottom() - conditionHeight - humidityHeight - 2,
                               textWidth, conditionHeight});
     m_humidity->setGeometry({content.x, content.bottom() - humidityHeight, textWidth, humidityHeight});
 
-    // Position the weather icon at the top-right of the content area
+    if (!small) {
+        const double sideX = content.right() - std::max(96.0, content.width * .34);
+        const double sideWidth = content.right() - sideX;
+        const double iconSize = m_weatherIcon && m_weatherIcon->isVisible()
+                ? m_weatherIcon->sizeHint().width : (large ? 58 : 46);
+        if (m_weatherIcon && m_weatherIcon->isVisible())
+            m_weatherIcon->setGeometry({content.right() - iconSize, content.y + 2, iconSize, iconSize});
+        m_condition->setGeometry({sideX, content.y + iconSize + 2, sideWidth, conditionHeight});
+        m_highLow->setGeometry({sideX, content.y + iconSize + conditionHeight + 2, sideWidth, 16});
+        m_condition->setTextAlignment(ui::Label::TextAlignment::Right);
+        m_highLow->setTextAlignment(ui::Label::TextAlignment::Right);
+
+        const double rowTop = large ? content.y + content.height * .62 : content.bottom() - 54;
+        const double rowHeight = std::max(42.0, content.bottom() - rowTop);
+        const double cellWidth = content.width / double(m_hourTimes.size());
+        for (size_t i = 0; i < m_hourTimes.size(); ++i) {
+            const bool show = m_data.valid && i < m_data.hourly.size();
+            m_hourTimes[i]->setVisible(show);
+            m_hourIcons[i]->setVisible(show);
+            m_hourTemperatures[i]->setVisible(show);
+            if (show) {
+                const WeatherHour& hour = m_data.hourly[i];
+                m_hourTimes[i]->setText(hourText(hour.time));
+                m_hourIcons[i]->setIconName(weatherIconName(hour.code));
+                m_hourTemperatures[i]->setText(base::Locale::system().toString(std::lround(hour.temperature), 0) + "°");
+            }
+            const double x = content.x + cellWidth * double(i);
+            m_hourTimes[i]->setGeometry({x, rowTop, cellWidth, 14});
+            m_hourIcons[i]->setGeometry({x + (cellWidth - 22) / 2, rowTop + 15, 22, 22});
+            m_hourTemperatures[i]->setGeometry({x, rowTop + rowHeight - 14, cellWidth, 14});
+        }
+    } else {
+        m_condition->setTextAlignment(ui::Label::TextAlignment::Left);
+        m_highLow->setGeometry({0, 0, 0, 0});
+        m_humidity->setGeometry({0, 0, 0, 0});
+        for (size_t i = 0; i < m_hourTimes.size(); ++i) {
+            m_hourTimes[i]->setVisible(false);
+            m_hourIcons[i]->setVisible(false);
+            m_hourTemperatures[i]->setVisible(false);
+        }
+    }
+
+    // Position the weather icon at the top-right of the content area for the compact card.
     if (m_weatherIcon && m_weatherIcon->isVisible()) {
         const double iconSize = m_weatherIcon->sizeHint().width;
-        m_weatherIcon->setGeometry({content.right() - iconSize - 4, content.y + 4, iconSize, iconSize});
+        if (small)
+            m_weatherIcon->setGeometry({content.right() - iconSize - 4, content.y + 4, iconSize, iconSize});
     }
 }
 
@@ -419,52 +605,24 @@ void WeatherWidget::paintContent(ui::Painter& painter)
     if (size() == WidgetSize::Small)
         return;
 
-    // ThemeIcon draws itself; only draw the hand-drawn fallback when the
-    // system icon is not showing (icon name not found in the theme).
-    if (m_weatherIcon && m_weatherIcon->isVisible()) {
-        const std::string iconPath = m_weatherIcon->path();
-        if (!iconPath.empty())
-            return;  // system icon found — ThemeIcon already drew it
-    }
-
-    // Fallback: hand-drawn weather graphics
     const ui::Theme& theme = widgetTheme(this);
     const ui::RectF content = contentRect();
-    const double size = std::min(64.0, content.width * 0.24);
-    const double cx = content.right() - size / 2 - 8;
-    const double cy = content.y + size / 2 + 12;
-    const ui::Color ink = theme.text.withAlpha(0.62);
-    const ui::Color accent = theme.highlight;
-    const int code = m_data.valid ? m_data.code : 0;
-
-    if (m_data.valid && code <= 2) {
-        const double radius = size * 0.22;
-        painter.fillEllipse({cx - radius, cy - radius, radius * 2, radius * 2}, accent);
-        for (int i = 0; i < 8; ++i) {
-            const double angle = i * std::numbers::pi / 4;
-            painter.drawLine({cx + std::cos(angle) * radius * 1.4, cy + std::sin(angle) * radius * 1.4},
-                             {cx + std::cos(angle) * radius * 1.9, cy + std::sin(angle) * radius * 1.9},
-                             ink, 1.2);
+    if (m_data.valid) {
+        if (!m_weatherIcon || m_weatherIcon->path().empty()) {
+            const double iconSize = std::min(64.0, content.width * 0.24);
+            drawWeatherGlyph(painter, {content.right() - iconSize - 4, content.y + 4, iconSize, iconSize},
+                             m_data.code, theme);
         }
-        if (code == 2) {
-            painter.fillRoundedRect({cx - size * 0.16, cy + size * 0.13, size * 0.42, size * 0.22},
-                                    size * 0.11, theme.text.withAlpha(0.24));
-        }
-        return;
-    }
-    if (m_data.valid || !m_requestedCity.empty()) {
-        painter.fillRoundedRect({cx - size * 0.26, cy + size * 0.05, size * 0.52, size * 0.22},
-                                size * 0.11, theme.text.withAlpha(0.24));
-        painter.fillRoundedRect({cx - size * 0.02, cy - size * 0.10, size * 0.30, size * 0.22},
-                                size * 0.10, theme.text.withAlpha(0.24));
-        if (m_data.valid && isRain(code)) {
-            for (int i = 0; i < 3; ++i)
-                painter.drawLine({cx - size * 0.18 + i * size * 0.16, cy + size * 0.32},
-                                 {cx - size * 0.24 + i * size * 0.16, cy + size * 0.46}, accent, 1.5);
-        } else if (m_data.valid && isSnow(code)) {
-            for (int i = 0; i < 3; ++i)
-                painter.fillEllipse({cx - size * 0.20 + i * size * 0.16, cy + size * 0.36, 2.5, 2.5},
-                                    accent);
+        const double cellWidth = content.width / double(m_hourIcons.size());
+        const double rowTop = size() == WidgetSize::Large ? content.y + content.height * .62
+                                                           : content.bottom() - 54;
+        for (size_t i = 0; i < m_hourIcons.size() && i < m_data.hourly.size(); ++i) {
+            if (m_hourIcons[i]->path().empty()) {
+                drawWeatherGlyph(painter,
+                                 {content.x + cellWidth * double(i) + (cellWidth - 22) / 2,
+                                  rowTop + 15, 22, 22},
+                                 m_data.hourly[i].code, theme);
+            }
         }
     }
 }
@@ -474,6 +632,11 @@ void WeatherWidget::retranslateContent()
     m_city->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
     m_condition->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.68)));
     m_humidity->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.5)));
+    m_highLow->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.68)));
+    for (size_t i = 0; i < m_hourTimes.size(); ++i) {
+        m_hourTimes[i]->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.58)));
+        m_hourTemperatures[i]->setColor(ui::ColorRecipe(widgetTheme(this).text.withAlpha(0.82)));
+    }
     refresh();
 }
 

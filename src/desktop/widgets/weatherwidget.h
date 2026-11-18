@@ -3,9 +3,11 @@
 
 #pragma once
 
+#include <array>
 #include <chrono>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/timer.h"
 #include "desktop/widgets/widget.h"
@@ -17,6 +19,13 @@ class ThemeIcon;
 
 namespace fm {
 
+struct WeatherHour
+{
+    std::string time;
+    double temperature = 0;
+    int code = -1;
+};
+
 struct WeatherData
 {
     bool valid = false;
@@ -24,6 +33,9 @@ struct WeatherData
     double temperature = 0;
     int humidity = -1;
     int code = -1;
+    double high = -1;
+    double low = -1;
+    std::vector<WeatherHour> hourly;
     std::string error;
 };
 
@@ -50,6 +62,10 @@ private:
     ui::Label* m_temperature = nullptr;
     ui::Label* m_condition = nullptr;
     ui::Label* m_humidity = nullptr;
+    ui::Label* m_highLow = nullptr;
+    std::array<ui::Label*, 6> m_hourTimes {};
+    std::array<ui::Label*, 6> m_hourTemperatures {};
+    std::array<ui::ThemeIcon*, 6> m_hourIcons {};
     base::Timer m_timer;
     std::shared_ptr<bool> m_alive = std::make_shared<bool>(true);
     std::string m_requestedCity;
