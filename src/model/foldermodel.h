@@ -96,7 +96,8 @@ public:
     // Location.
     const std::string& url() const { return m_url; }
     void setUrl(const std::string& url);
-    std::string resolvedUrl() const { return m_lister.url(); }
+    std::string resolvedUrl() const { return isComputer() ? std::string("computer:///") : m_lister.url(); }
+    bool isComputer() const { return m_url.starts_with("computer:"); }
     bool isTrash() const { return resolvedUrl().starts_with("trash:"); }
     // ~, ~/x, absolute paths and URLs, as the path bar takes them.
     static std::string resolve(const std::string& url);

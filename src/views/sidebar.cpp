@@ -33,6 +33,59 @@ namespace fm {
 
 static constexpr double kSmallSpacing = 6;
 
+class ComputerEntry : public ui::View
+{
+public:
+    ComputerEntry()
+    {
+        setName("computerEntry");
+        setTracksHover(true);
+        setCursorShape(ui::CursorShape::Pointer);
+        m_icon = addChild<ui::ThemeIcon>("computer", 20);
+        m_label = addChild<ui::Label>(tr("Computer"));
+        m_label->setElide(ui::Label::Elide::Right);
+    }
+
+    std::function<void()> onClicked;
+    void setSelected(bool selected)
+    {
+        m_selected = selected;
+        requestLayout();
+        requestPaint();
+    }
+    void retranslate()
+    {
+        m_label->setText(tr("Computer"));
+        requestLayout();
+    }
+
+protected:
+    void layout() override
+    {
+        const ui::Theme& theme = ui::Theme::current();
+        m_icon->setColor(m_selected ? theme.highlight : theme.text);
+        m_label->setColor(m_selected ? theme.highlight : theme.text);
+        m_icon->setGeometry({12, 7, 20, 20});
+        m_label->setGeometry({40, 7, std::max(0.0, geometry().width - 52), 20});
+    }
+    void paint(ui::Painter& painter) override
+    {
+        if (m_selected)
+            painter.drawSmoothRectangle(localRect(), ui::Theme::current().smallRadius,
+                                        ui::Theme::current().highlight.withAlpha(.12));
+    }
+    void pointerRelease(const ui::PointerEvent& event) override
+    {
+        if (event.button == ui::MouseButton::Left && localRect().contains(event.position) && onClicked)
+            onClicked();
+    }
+
+private:
+    ui::ThemeIcon* m_icon = nullptr;
+    ui::Label* m_label = nullptr;
+    bool m_selected = false;
+};
+
 // Where a place is now: disks come and go, and favourites change in other
 // windows, while a menu opened on one stays up.
 static int favoriteRow(const PlacesModel& places, const std::string& url)
@@ -72,7 +125,7 @@ public:
         PlacesModel& places = m_sidebar->places();
         const double rowHeight = snap(std::max(34.0, style::fontHeight() + 12));
         const double spacing = snap(3);
-        double y = snap(32);
+        double y = snap(72);
         std::string category = "Favorites";
         for (int i = 0; i < places.count(); ++i) {
             if (places.at(i).category != category) {
@@ -175,7 +228,7 @@ protected:
         const double headerHeight = snap(32);
         m_favorites->setGeometry({inset + kSmallSpacing, 0, std::max(0.0, width - inset - kSmallSpacing), headerHeight});
 
-        double y = headerHeight;
+        double y = headerHeight + 40;
         std::string category = "Favorites";
         for (int i = 0; i < places.count() && size_t(i) < m_rows.size(); ++i) {
             const PlacesModel::Place& place = places.at(i);
@@ -539,6 +592,11 @@ SideBar::SideBar(double headerHeight)
     m_title->setFontSize(12 * 4.0 / 3);
     m_title->setElide(ui::Label::Elide::Right);
     m_scroll = addChild<ui::ScrollView>();
+    m_computer = addChild<ComputerEntry>();
+    m_computer->onClicked = [this] {
+        if (onClicked)
+            onClicked("computer:///");
+    };
     m_list = m_scroll->setContent<SidebarList>(this);
     m_scroll->setVerticalBarPadding(1, kSmallSpacing);
 
@@ -547,6 +605,7 @@ SideBar::SideBar(double headerHeight)
         updateSelection(m_selectedPath);
         m_scroll->requestLayout();
     }));
+    m_computer->setSelected(false);
     m_subscriptions.push_back(m_places->favoritesChanged.connect([this] { updateSelection(m_selectedPath); }));
     m_subscriptions.push_back(m_places->deviceSetupDone.connect([this](const std::string& path) {
         // Once the device is mounted, as if it had been clicked.
@@ -691,6 +750,7 @@ void SideBar::removeConfirm(ui::ConfirmDialog* dialog)
 void SideBar::retranslate()
 {
     m_list->retranslate();
+    m_computer->retranslate();
     m_places->retranslate();
     if (m_connectDialog)
         m_connectDialog->retranslate();
@@ -716,6 +776,8 @@ void SideBar::updateSelection(const std::string& path)
         selected = *local;
     if (selected.starts_with("trash:/"))
         selected = "trash:/";
+
+    m_computer->setSelected(selected.starts_with("computer:"));
 
     int row = -1;
     for (int i = 0; i < m_places->count(); ++i) {
@@ -746,7 +808,9 @@ void SideBar::layout()
     m_title->setGeometry({left, kSmallSpacing, std::max(0.0, width - left - right), m_headerHeight - kSmallSpacing});
 
     const double top = m_headerHeight + kSmallSpacing;
-    m_scroll->setGeometry({0, top, width, std::max(0.0, geometry().height - top)});
+    m_computer->setGeometry({0, top, width, 34});
+    const double listTop = top + 40;
+    m_scroll->setGeometry({0, listTop, width, std::max(0.0, geometry().height - listTop)});
 }
 
 void SideBar::paint(ui::Painter& painter)

@@ -29,6 +29,10 @@ std::vector<Crumb> pathCrumbs(const std::string& url, std::string* resolved)
         *resolved = path;
 
     std::vector<Crumb> crumbs;
+    if (path.starts_with("computer:/")) {
+        crumbs.push_back({tr("Computer"), "computer:///"});
+        return crumbs;
+    }
     if (path.starts_with("trash:/")) {
         crumbs.push_back({path, path});
         return crumbs;

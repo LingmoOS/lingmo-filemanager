@@ -1,3 +1,10 @@
+lingmo-filemanager (5.1.4+lingmo5u1) unstable; urgency=medium
+
+  * file manager: add a computer:/// overview for standard folders and
+    mounted drives with storage usage cards.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 05:20:00 +0800
+
 lingmo-filemanager (5.1.3+lingmo5u1) unstable; urgency=medium
 
   * desktop widgets: redesign the weather card with current conditions,

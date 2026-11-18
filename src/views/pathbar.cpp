@@ -459,7 +459,7 @@ PathBar::~PathBar() = default;
 bool PathBar::isPath(const std::string& text)
 {
     // File names cannot hold a slash, so text with one is a path to go to.
-    static const std::regex scheme("^(trash|file):");
+    static const std::regex scheme("^(trash|file|computer):");
     return text.find('/') != std::string::npos || text.starts_with('~') || std::regex_search(text, scheme);
 }
 

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "views/folderpage.h"
+#include "views/computerview.h"
 #include "views/previewclient.h"
 #include "core/preferences.h"
 #include "core/shortcutconvention.h"
@@ -57,6 +58,10 @@ FolderPage::FolderPage(FolderModelHost* host, const Start& start)
     }));
     m_subscriptions.push_back(model.urlChanged.connect([this, applySort] {
         applySort();
+        if (m_model->isComputer() && !m_computer)
+            createComputerView();
+        else if (!m_model->isComputer() && m_computer)
+            createView();
         if (m_view) {
             m_view->reset();
             m_pendingViewPosition = m_model->viewPosition();
@@ -86,7 +91,6 @@ FolderPage::FolderPage(FolderModelHost* host, const Start& start)
     }));
 
     createView();
-
     m_model->setUrl(start.url.empty() ? FolderModel::resolve("~") : start.url);
     if (!start.back.empty() || !start.forward.empty())
         m_model->restoreHistory(start.back, start.forward);
@@ -184,6 +188,8 @@ void FolderPage::retranslate()
     m_model->retranslate();
     if (m_view)
         m_view->retranslate();
+    if (m_computer)
+        m_computer->retranslate();
     m_pathStrip->update();
     requestLayout();
 }
@@ -191,6 +197,11 @@ void FolderPage::retranslate()
 void FolderPage::createView()
 {
     m_viewMethod = Preferences::instance().viewMethod();
+    if (m_computer) {
+        std::shared_ptr<View> old = takeChild(m_computer);
+        base::EventLoop::current()->post([old] {});
+        m_computer = nullptr;
+    }
     if (m_view) {
         std::shared_ptr<View> old = takeChild(m_view);
         base::EventLoop::current()->post([old] {});
@@ -199,6 +210,7 @@ void FolderPage::createView()
         std::shared_ptr<View> old = takeChild(m_backdrop);
         base::EventLoop::current()->post([old] {});
     }
+    m_computer = nullptr;
 
     FolderView* view;
     if (m_viewMethod == Preferences::List)
@@ -227,6 +239,25 @@ void FolderPage::createView()
     focusView();
 }
 
+void FolderPage::createComputerView()
+{
+    if (m_view) {
+        std::shared_ptr<View> old = takeChild(m_view);
+        base::EventLoop::current()->post([old] {});
+        m_view = nullptr;
+    }
+    if (m_backdrop) {
+        std::shared_ptr<View> old = takeChild(m_backdrop);
+        base::EventLoop::current()->post([old] {});
+        m_backdrop = nullptr;
+    }
+    if (m_pathStrip)
+        m_pathStrip->setVisible(false);
+    m_computer = addChild<ComputerView>([this](const std::string& url) { openUrl(url); });
+    requestLayout();
+    focusView();
+}
+
 void FolderPage::setHeaderHeight(double height)
 {
     if (m_headerHeight == height)
@@ -238,6 +269,11 @@ void FolderPage::setHeaderHeight(double height)
 void FolderPage::layout()
 {
     const ui::RectF rect = localRect();
+    if (m_computer) {
+        m_computer->setGeometry(rect);
+        m_noResults->setVisible(false);
+        return;
+    }
     if (m_view) {
         m_view->setGeometry(rect);
         if (m_viewMethod == Preferences::List)
@@ -268,6 +304,14 @@ void FolderPage::paint(ui::Painter& painter)
 
 void FolderPage::openUrl(const std::string& url)
 {
+    const bool computer = url == "computer:///" || url.starts_with("computer:/");
+    if (computer && !m_model->isComputer()) {
+        m_model->setUrl("computer:///");
+        focusView();
+        return;
+    }
+    if (!computer && m_model->isComputer())
+        createView();
     m_model->setUrl(url);
     focusView();
 }
@@ -276,6 +320,8 @@ void FolderPage::focusView()
 {
     if (m_view && m_view->contentView())
         m_view->contentView()->setFocus();
+    else if (m_computer)
+        m_computer->setFocus();
 }
 
 void FolderPage::goBack()

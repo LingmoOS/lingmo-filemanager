@@ -24,6 +24,7 @@ namespace fm {
 class FolderModel;
 class FolderModelHost;
 class FolderView;
+class ComputerView;
 class PreviewClient;
 
 // One tab's folder, its model and its grid or list view,
@@ -73,12 +74,14 @@ protected:
 
 private:
     void createView();
+    void createComputerView();
     void restoreViewPosition(bool complete);
     bool handleKey(const ui::KeyEvent& event);
 
     std::unique_ptr<FolderModel> m_model;
     std::unique_ptr<PreviewClient> m_preview;
     FolderView* m_view = nullptr;
+    ComputerView* m_computer = nullptr;
     ui::HeaderBackdrop* m_backdrop = nullptr;
     ui::Label* m_noResults;
     class SearchPathStrip* m_pathStrip = nullptr;

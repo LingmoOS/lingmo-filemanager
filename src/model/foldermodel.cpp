@@ -445,7 +445,8 @@ void FolderModel::setUrl(const std::string& url)
         return;
 
     const bool trash = url.starts_with("trash:/");
-    const std::string resolved = trash ? std::string("trash:/") : resolve(url);
+    const bool computer = url == "computer:///";
+    const std::string resolved = trash ? std::string("trash:/") : computer ? std::string("computer:///") : resolve(url);
 
     // Opening a folder ends a search; opening the searched one lists it again.
     const bool wasSearching = !m_searchText.empty();
@@ -460,7 +461,10 @@ void FolderModel::setUrl(const std::string& url)
     }
 
     if (resolved == resolvedUrl()) {
-        refresh();
+        if (computer)
+            setStatus(Status::Ready);
+        else
+            refresh();
         historyChanged.emit();
         return;
     }
@@ -481,7 +485,11 @@ void FolderModel::setUrl(const std::string& url)
     m_selection.clear();
     m_contents.clear();
     m_folderSizes.reset();
-    m_lister.openUrl(resolved);
+    if (computer) {
+        setStatus(Status::Ready);
+    } else {
+        m_lister.openUrl(resolved);
+    }
 
     urlChanged.emit();
     historyChanged.emit();
@@ -490,6 +498,8 @@ void FolderModel::setUrl(const std::string& url)
 
 std::string FolderModel::folderName() const
 {
+    if (isComputer())
+        return tr("Computer");
     if (m_url.starts_with("trash:/"))
         return tr("Trash");
     std::string path = m_url;

@@ -145,6 +145,7 @@ target_link_libraries(fm-core PUBLIC Lingmo::SDK Lingmo::Files Lingmo::FilesThum
 add_library(fm-ui STATIC
     src/views/colors.cpp
     src/views/completionpopup.cpp
+    src/views/computerview.cpp
     src/views/foldermenu.cpp
     src/views/folderpage.cpp
     src/views/folderview.cpp
