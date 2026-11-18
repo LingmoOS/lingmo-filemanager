@@ -29,7 +29,6 @@ class PlacesModel;
 class ServerPasswordDialog;
 class SidebarList;
 class UnlockVolumeDialog;
-class ComputerEntry;
 
 // The window's title over the places, favourites first, which
 // take drops and reorder by dragging.
@@ -85,7 +84,6 @@ private:
     double m_headerHeight;
     ui::Label* m_title;
     ui::ScrollView* m_scroll;
-    ComputerEntry* m_computer;
     SidebarList* m_list;
     std::string m_selectedPath;
     std::vector<base::Subscription> m_subscriptions;

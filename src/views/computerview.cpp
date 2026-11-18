@@ -30,6 +30,7 @@ using Lingmo::i18n::tr;
 namespace {
 
 constexpr double kMargin = 24;
+constexpr double kTopMargin = 36;
 constexpr double kGap = 14;
 constexpr double kFolderWidth = 142;
 constexpr double kFolderHeight = 132;
@@ -112,7 +113,7 @@ protected:
         const ui::Theme& theme = ui::Theme::current();
         const ui::Color fill = isHovered() ? theme.text.withAlpha(theme.darkMode ? .12 : .07)
                                            : theme.text.withAlpha(theme.darkMode ? .07 : .045);
-        painter.drawSmoothRectangle(localRect(), theme.smallRadius, fill);
+        painter.drawSmoothRectangle(localRect(), theme.mediumRadius, fill);
         if (m_entry.drive && m_entry.total > 0) {
             const double ratio = std::clamp(double(m_entry.used) / double(m_entry.total), 0.0, 1.0);
             const ui::RectF bar {68, 68, std::max(0.0, geometry().width - 82), 7};
@@ -224,8 +225,8 @@ void ComputerView::layout()
     const int folderRows = (folderCount + folderColumns - 1) / folderColumns;
     const double folderWidth = std::max(kFolderWidth, (width - kGap * (folderColumns - 1)) / folderColumns);
     const double titleHeight = std::max(22.0, m_foldersTitle->sizeHint().height);
-    m_foldersTitle->setGeometry({kMargin, kMargin, width, titleHeight});
-    double y = kMargin + titleHeight + 12;
+    m_foldersTitle->setGeometry({kMargin, kTopMargin, width, titleHeight});
+    double y = kTopMargin + titleHeight + 12;
     int folderIndex = 0;
     for (ui::View* card : m_cards) {
         if (folderIndex >= folderCount)

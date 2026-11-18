@@ -1,3 +1,16 @@
+lingmo-filemanager (5.1.6+lingmo5u1) unstable; urgency=medium
+
+  * file manager: use the system medium corner radius for Computer cards.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 05:45:00 +0800
+
+lingmo-filemanager (5.1.5+lingmo5u1) unstable; urgency=medium
+
+  * file manager: place Computer below Home in the sidebar and refine the
+    computer overview heading spacing.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 05:35:00 +0800
+
 lingmo-filemanager (5.1.4+lingmo5u1) unstable; urgency=medium
 
   * file manager: add a computer:/// overview for standard folders and
