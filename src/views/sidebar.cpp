@@ -66,14 +66,17 @@ protected:
         const ui::Theme& theme = ui::Theme::current();
         m_icon->setColor(m_selected ? theme.highlight : theme.text);
         m_label->setColor(m_selected ? theme.highlight : theme.text);
-        m_icon->setGeometry({12, 7, 20, 20});
-        m_label->setGeometry({40, 7, std::max(0.0, geometry().width - 52), 20});
+        const double rowHeight = geometry().height;
+        const double iconY = std::round((rowHeight - 20) / 2);
+        m_icon->setGeometry({kSmallSpacing, iconY, 20, 20});
+        m_label->setGeometry({kSmallSpacing + 20 + kSmallSpacing, iconY,
+                              std::max(0.0, geometry().width - kSmallSpacing * 3 - 20), 20});
     }
     void paint(ui::Painter& painter) override
     {
         if (m_selected)
-            painter.drawSmoothRectangle(localRect(), ui::Theme::current().smallRadius,
-                                        ui::Theme::current().highlight.withAlpha(.12));
+            painter.drawRoundedRect(localRect(), {ui::Theme::current().mediumRadius, 0, ui::Corners::Circular},
+                                    style::textAlpha(0.05));
     }
     void pointerRelease(const ui::PointerEvent& event) override
     {
@@ -297,7 +300,7 @@ protected:
 
             y += rowHeight + spacing;
             if (i == 0) {
-                m_computerRect = {0, y, width, rowHeight};
+                m_computerRect = {inset, y, std::max(0.0, width - inset * 2), rowHeight};
                 m_computer->setGeometry(m_computerRect);
                 y += rowHeight + spacing;
             }
@@ -631,6 +634,10 @@ SideBar::SideBar(double headerHeight)
         m_scroll->requestLayout();
     }));
     m_subscriptions.push_back(m_places->favoritesChanged.connect([this] { updateSelection(m_selectedPath); }));
+    m_subscriptions.push_back(m_places->deviceEjected.connect([this](const std::string& name) {
+        if (onNotification)
+            onNotification(format(tr("You can safely remove {name}."), {{"name", name}}));
+    }));
     m_subscriptions.push_back(m_places->deviceSetupDone.connect([this](const std::string& path) {
         // Once the device is mounted, as if it had been clicked.
         if (onClicked)

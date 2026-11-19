@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -36,6 +37,11 @@ struct FileItem
     // folder's shown name), made with the snapshot; empty until then.
     std::string sortKey;
     uint64_t size = 0;
+    // Present for a Computer view disk entry; ordinary files leave these empty.
+    std::optional<uint64_t> storageUsed;
+    std::optional<uint64_t> storageTotal;
+    std::string filesystemType;
+    std::string mountPoint;
     int64_t modified = 0;
     int64_t accessed = 0;
     int64_t created = 0;

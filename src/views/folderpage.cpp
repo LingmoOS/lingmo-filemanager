@@ -36,6 +36,7 @@ static constexpr double kLargeSpacing = 12;
 FolderPage::FolderPage(FolderModelHost* host, const Start& start)
     : m_model(std::make_unique<FolderModel>(host))
     , m_preview(std::make_unique<PreviewClient>())
+    , m_host(host)
 {
     setName("folderPage");
     setClipsChildren(true);
@@ -253,7 +254,28 @@ void FolderPage::createComputerView()
     }
     if (m_pathStrip)
         m_pathStrip->setVisible(false);
-    m_computer = addChild<ComputerView>([this](const std::string& url) { openUrl(url); });
+    m_computer = addChild<ComputerView>(
+            [this](const std::string& url) { openUrl(url); },
+            [this](const ComputerView::Entry& entry) {
+                if (m_host && entry.url.starts_with("file:")) {
+                    FileItem item = DirectoryLister::makeItem(base::url::toLocalFile(entry.url).value_or(std::string()));
+                    if (entry.drive) {
+                        item.storageUsed = entry.used;
+                        item.storageTotal = entry.total;
+                        item.filesystemType = entry.filesystem;
+                        item.mountPoint = base::url::toLocalFile(entry.url).value_or(std::string());
+                    }
+                    m_host->showProperties({std::make_shared<const FileItem>(std::move(item))});
+                }
+            },
+            [this](const ComputerView::Entry& entry) {
+                if (m_computer)
+                    m_computer->requestEject(entry.id);
+            },
+            [this](const std::string& message) {
+                if (m_host)
+                    m_host->notify(message);
+            });
     requestLayout();
     focusView();
 }

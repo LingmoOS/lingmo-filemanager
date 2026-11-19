@@ -30,13 +30,21 @@ public:
         std::string name;
         std::string url;
         std::string icon;
+        std::string id;
         bool drive = false;
+        bool ejectable = false;
+        std::string filesystem;
         uint64_t used = 0;
         uint64_t total = 0;
     };
 
-    explicit ComputerView(std::function<void(const std::string&)> open);
+    explicit ComputerView(std::function<void(const std::string&)> open,
+                          std::function<void(const Entry&)> properties = {},
+                          std::function<void(const Entry&)> eject = {},
+                          std::function<void(const std::string&)> notify = {});
     ~ComputerView() override;
+
+    void requestEject(const std::string& id);
 
     void retranslate();
 
@@ -48,6 +56,9 @@ private:
     void rebuild();
 
     std::function<void(const std::string&)> m_open;
+    std::function<void(const Entry&)> m_properties;
+    std::function<void(const Entry&)> m_eject;
+    std::function<void(const std::string&)> m_notify;
     std::unique_ptr<PlacesModel> m_places;
     std::vector<base::Subscription> m_subscriptions;
     ui::Label* m_foldersTitle = nullptr;

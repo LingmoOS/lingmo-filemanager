@@ -17,6 +17,8 @@
 
 namespace Lingmo::ui {
 class Label;
+class ProgressBar;
+class SegmentedControl;
 }
 
 namespace fm {
@@ -36,6 +38,9 @@ public:
 
 private:
     std::unique_ptr<ui::View> createContent();
+    std::unique_ptr<ui::View> createGeneralContent();
+    std::unique_ptr<ui::View> createPermissionsContent();
+    void setPage(int index);
 
     FileItemList m_items;
     std::string m_fileName;
@@ -49,6 +54,10 @@ private:
     std::string m_modified;
     std::string m_accessed;
     ui::Label* m_sizeLabel = nullptr;
+    ui::ProgressBar* m_storageBar = nullptr;
+    ui::SegmentedControl* m_pages = nullptr;
+    ui::View* m_pageHost = nullptr;
+    int m_page = 0;
     base::Job m_sizeJob;
     std::shared_ptr<std::atomic_bool> m_cancelled = std::make_shared<std::atomic_bool>(false);
 };

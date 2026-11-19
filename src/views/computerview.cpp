@@ -14,12 +14,14 @@
 #include "base/url.h"
 #include "ui/icon.h"
 #include "ui/label.h"
+#include "ui/menu.h"
 #include "ui/painter.h"
 #include "ui/theme.h"
 
 #include <algorithm>
 #include <array>
 #include <sys/stat.h>
+#include <sys/vfs.h>
 #include <sys/statvfs.h>
 
 namespace fm {
@@ -52,12 +54,41 @@ void storageUsage(const std::string& path, uint64_t& used, uint64_t& total)
     used = total > free ? total - free : 0;
 }
 
+std::string filesystemType(const std::string& path)
+{
+    struct statfs info {};
+    if (::statfs(path.c_str(), &info) != 0)
+        return tr("Unknown");
+    switch (static_cast<unsigned long>(info.f_type)) {
+    case 0xEF53:
+        return "ext4";
+    case 0x9123683E:
+        return "btrfs";
+    case 0x58465342:
+        return "xfs";
+    case 0x01021994:
+        return "tmpfs";
+    case 0x4d44:
+        return "vfat";
+    case 0x5346544e:
+        return "ntfs";
+    case 0x65735546:
+        return "fuse";
+    default:
+        return tr("Unknown");
+    }
+}
+
 class ComputerCard : public ui::View
 {
 public:
-    ComputerCard(ComputerView::Entry entry, std::function<void(const std::string&)> open)
+    ComputerCard(ComputerView::Entry entry, std::function<void(const std::string&)> open,
+                 std::function<void(const ComputerView::Entry&)> properties,
+                 std::function<void(const ComputerView::Entry&)> eject)
         : m_entry(std::move(entry))
         , m_open(std::move(open))
+        , m_properties(std::move(properties))
+        , m_eject(std::move(eject))
     {
         setName("computer-card");
         setTracksHover(true);
@@ -76,15 +107,13 @@ public:
                                          {{"used", locale.formattedDataSize(int64_t(m_entry.used))},
                                           {"total", locale.formattedDataSize(int64_t(m_entry.total))}}));
         } else {
-            m_detail->setText(tr("Open folder"));
+            m_detail->setVisible(false);
         }
     }
 
     void retranslate()
     {
         m_name->setText(m_entry.name);
-        if (!m_entry.drive)
-            m_detail->setText(tr("Open folder"));
         requestLayout();
     }
 
@@ -100,6 +129,7 @@ protected:
             m_name->setGeometry({68, 13, std::max(0.0, rect.width - 80), 22});
             m_detail->setGeometry({68, 38, std::max(0.0, rect.width - 80), 18});
         } else {
+            m_detail->setGeometry({0, 0, 0, 0});
             m_icon->setGeometry({std::max(0.0, (rect.width - 48) / 2), 14, 48, 48});
             m_name->setTextAlignment(ui::Label::TextAlignment::Center);
             m_detail->setTextAlignment(ui::Label::TextAlignment::Center);
@@ -125,13 +155,29 @@ protected:
 
     void pointerRelease(const ui::PointerEvent& event) override
     {
-        if (event.button == ui::MouseButton::Left && localRect().contains(event.position) && m_open)
+        if (!localRect().contains(event.position))
+            return;
+        if (event.button == ui::MouseButton::Right) {
+            m_menu = std::make_unique<ui::Menu>();
+            auto open = m_menu->addItem(tr("Open"), [this] { if (m_open) m_open(m_entry.url); });
+            (void)open;
+            if (m_entry.ejectable && m_eject)
+                m_menu->addItem(tr("Eject"), [this] { m_eject(m_entry); });
+            if (m_properties)
+                m_menu->addItem(tr("Properties"), [this] { m_properties(m_entry); });
+            m_menu->popup(window(), mapToWindow(event.position));
+            return;
+        }
+        if (event.button == ui::MouseButton::Left && event.clickCount >= 2 && m_open)
             m_open(m_entry.url);
     }
 
 private:
     ComputerView::Entry m_entry;
     std::function<void(const std::string&)> m_open;
+    std::function<void(const ComputerView::Entry&)> m_properties;
+    std::function<void(const ComputerView::Entry&)> m_eject;
+    std::unique_ptr<ui::Menu> m_menu;
     ui::ThemeIcon* m_icon = nullptr;
     ui::Label* m_name = nullptr;
     ui::Label* m_detail = nullptr;
@@ -139,8 +185,14 @@ private:
 
 } // namespace
 
-ComputerView::ComputerView(std::function<void(const std::string&)> open)
+ComputerView::ComputerView(std::function<void(const std::string&)> open,
+                           std::function<void(const Entry&)> properties,
+                           std::function<void(const Entry&)> eject,
+                           std::function<void(const std::string&)> notify)
     : m_open(std::move(open))
+    , m_properties(std::move(properties))
+    , m_eject(std::move(eject))
+    , m_notify(std::move(notify))
     , m_places(std::make_unique<PlacesModel>())
 {
     setName("computer-view");
@@ -152,6 +204,10 @@ ComputerView::ComputerView(std::function<void(const std::string&)> open)
     m_drivesTitle->setFontSize(17);
     m_drivesTitle->setWeight(600);
     m_subscriptions.push_back(m_places->changed.connect([this] { rebuild(); }));
+    m_subscriptions.push_back(m_places->deviceEjected.connect([this](const std::string& name) {
+        if (m_notify)
+            m_notify(format(tr("You can safely remove {name}."), {{"name", name}}));
+    }));
     rebuild();
 }
 
@@ -179,11 +235,12 @@ void ComputerView::rebuild()
         const std::string path = Lingmo::base::paths::userDirectory(directory);
         if (!directoryExists(path))
             continue;
-        m_entries.push_back({standardFolderName(path), base::url::fromLocalFile(path), icon, false, 0, 0});
+        m_entries.push_back({standardFolderName(path), base::url::fromLocalFile(path), icon, {}, false, false, {}, 0, 0});
     }
 
     std::vector<Entry> drives;
-    Entry root {tr("System Disk"), base::url::fromLocalFile("/"), "drive-harddisk", true, 0, 0};
+    Entry root {tr("System Disk"), base::url::fromLocalFile("/"), "drive-harddisk", {}, true, false,
+               filesystemType("/"), 0, 0};
     storageUsage("/", root.used, root.total);
     drives.push_back(std::move(root));
     for (int i = 0; i < m_places->count(); ++i) {
@@ -194,15 +251,24 @@ void ComputerView::rebuild()
         if (path.empty() || path == "/")
             continue;
         Entry drive {place.displayName(), place.url, place.iconName.empty() ? "drive-harddisk" : place.iconName,
-                     true, 0, 0};
+                     place.udi, true, place.canEject, filesystemType(path), 0, 0};
         storageUsage(path, drive.used, drive.total);
         drives.push_back(std::move(drive));
     }
     m_entries.insert(m_entries.end(), drives.begin(), drives.end());
-    for (const Entry& entry : m_entries)
-        m_cards.push_back(addChild<ComputerCard>(entry, m_open));
+    for (const Entry& entry : m_entries) {
+        auto ejectAction = m_eject;
+        if (!ejectAction)
+            ejectAction = [this](const Entry& item) { m_places->requestEjectById(item.id); };
+        m_cards.push_back(addChild<ComputerCard>(entry, m_open, m_properties, std::move(ejectAction)));
+    }
     requestLayout();
     requestPaint();
+}
+
+void ComputerView::requestEject(const std::string& id)
+{
+    m_places->requestEjectById(id);
 }
 
 void ComputerView::retranslate()

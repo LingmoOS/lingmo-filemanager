@@ -63,6 +63,7 @@ public:
     void retranslate();
 
     std::function<void(const std::string& url)> onOpenInNewTab;
+    std::function<void(const std::string&)> onNotification;
     std::function<void()> onCloseRequested;
     std::function<void()> onRequestPathEditor;
     std::function<void(ui::PointF windowPosition)> onContextMenu;
@@ -79,6 +80,7 @@ private:
     bool handleKey(const ui::KeyEvent& event);
 
     std::unique_ptr<FolderModel> m_model;
+    FolderModelHost* m_host = nullptr;
     std::unique_ptr<PreviewClient> m_preview;
     FolderView* m_view = nullptr;
     ComputerView* m_computer = nullptr;

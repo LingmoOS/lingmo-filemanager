@@ -146,6 +146,13 @@ PlacesModel::PlacesModel(bool volumes, std::string settingsFile, base::dbus::Con
                 [this](const std::string&, const std::string&, const std::string& message) {
                     deviceOperationFailed.emit(message);
                 }));
+        m_subscriptions.push_back(m_volumes->operationFinished.connect(
+                [this](const std::string& id, const std::string& operation, const std::string&) {
+                    if (operation != "eject")
+                        return;
+                    const std::string name = m_volumes->volume(id).name;
+                    deviceEjected.emit(name.empty() ? id : name);
+                }));
         m_subscriptions.push_back(m_volumes->passphraseRejected.connect([this](const std::string& id) {
             passphraseRequested.emit(id, m_volumes->volume(id).name, true);
         }));
@@ -541,10 +548,26 @@ void PlacesModel::requestEject(int row)
     if (row < 0 || row >= count() || !at(row).isDevice())
         return;
     const std::string id = at(row).udi;
-    if (isMountId(id))
-        unmountLocation(id);
-    else if (m_volumes)
+    if (isMountId(id)) {
+        MountsClient::instance().requestUnmount(id, [this, name = at(row).name](const std::string& error) {
+            if (error.empty())
+                deviceEjected.emit(name);
+            else
+                deviceOperationFailed.emit(error);
+        });
+    } else if (m_volumes) {
         m_volumes->eject(id);
+    }
+}
+
+void PlacesModel::requestEjectById(const std::string& id)
+{
+    for (int row = 0; row < count(); ++row) {
+        if (at(row).udi == id) {
+            requestEject(row);
+            return;
+        }
+    }
 }
 
 void PlacesModel::requestTeardown(int row)

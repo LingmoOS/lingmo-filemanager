@@ -57,6 +57,7 @@ public:
     std::function<void(const std::string& path)> onClicked;
     std::function<void(const std::string& path)> onOpenInNewTab;
     std::function<void(const std::string& path)> onOpenInNewWindow;
+    std::function<void(const std::string& message)> onNotification;
 
     ui::SizeF sizeHint() const override { return {kDefaultWidth, 0}; }
 

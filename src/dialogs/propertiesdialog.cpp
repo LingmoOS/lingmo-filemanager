@@ -9,6 +9,8 @@
 #include "base/locale.h"
 #include "ui/icon.h"
 #include "ui/label.h"
+#include "ui/progress_bar.h"
+#include "ui/segmented_control.h"
 #include "ui/cell_layout.h"
 #include "ui/theme.h"
 
@@ -19,6 +21,7 @@
 using Lingmo::i18n::tr;
 using Lingmo::i18n::trn;
 using Lingmo::i18n::trNoop;
+using Lingmo::i18n::format;
 
 namespace fm {
 
@@ -127,6 +130,41 @@ std::unique_ptr<ui::View> PropertiesDialog::createContent()
 {
     auto layout = std::make_unique<ui::ColumnLayout>();
     layout->setSpacing(kLargeSpacing);
+    m_pages = layout->addChild<ui::SegmentedControl>(std::vector<std::string>{tr("General"), tr("Permissions")},
+                                                     ui::SegmentedControl::Style::Tabs);
+    m_pages->setCurrentIndex(m_page);
+    m_pages->onCurrentChanged = [this](int index) { setPage(index); };
+    m_pageHost = layout->addChild<ui::View>();
+    m_pageHost->setLayoutHints({.fillWidth = true});
+    setPage(m_page);
+    return layout;
+}
+
+void PropertiesDialog::setPage(int index)
+{
+    m_page = std::clamp(index, 0, 1);
+    if (!m_pageHost)
+        return;
+    m_sizeLabel = nullptr;
+    m_storageBar = nullptr;
+    std::shared_ptr<ui::View> old;
+    for (const auto& child : m_pageHost->children()) {
+        old = m_pageHost->takeChild(child.get());
+        break;
+    }
+    if (old)
+        base::EventLoop::current()->post([old] {});
+    if (m_page == 0)
+        m_pageHost->addChild(createGeneralContent());
+    else
+        m_pageHost->addChild(createPermissionsContent());
+    fit();
+}
+
+std::unique_ptr<ui::View> PropertiesDialog::createGeneralContent()
+{
+    auto layout = std::make_unique<ui::ColumnLayout>();
+    layout->setSpacing(kLargeSpacing);
 
     struct Row
     {
@@ -138,6 +176,8 @@ std::unique_ptr<ui::View> PropertiesDialog::createContent()
     std::vector<Row> rows = {
         {trNoop("Type:"), m_mimeType},
         {trNoop("Location:"), m_location, true},
+        {trNoop("File system:"), m_items.front()->filesystemType},
+        {trNoop("Mounted at:"), m_items.front()->mountPoint, true},
         {trNoop("Size:"), m_size.empty() ? std::string(tr("Calculating...")) : m_size, false, true},
         {trNoop("Created:"), m_created},
         {trNoop("Modified:"), m_modified},
@@ -185,6 +225,48 @@ std::unique_ptr<ui::View> PropertiesDialog::createContent()
         if (row.size)
             m_sizeLabel = value;
     }
+    if (m_items.front()->storageTotal && *m_items.front()->storageTotal > 0) {
+        auto* label = form->addChild<ui::Label>(tr("Used:"));
+        label->setColor(ui::ColorId::DisabledText);
+        label->setTextAlignment(ui::Label::TextAlignment::Right);
+        label->setLayoutHints({.preferredWidth = labelWidth, .horizontalAlignment = ui::Alignment::End});
+        auto* meter = form->addChild<ui::RowLayout>();
+        meter->setSpacing(kSmallSpacing);
+        m_storageBar = meter->addChild<ui::ProgressBar>();
+        m_storageBar->setValue(std::clamp(double(*m_items.front()->storageUsed) / double(*m_items.front()->storageTotal),
+                                           0.0, 1.0));
+        m_storageBar->setLayoutHints({.fillWidth = true});
+        const auto& locale = base::Locale::system();
+        meter->addChild<ui::Label>(format(tr("{used} of {total}"),
+                                          {{"used", locale.formattedDataSize(int64_t(*m_items.front()->storageUsed))},
+                                           {"total", locale.formattedDataSize(int64_t(*m_items.front()->storageTotal))}}));
+    }
+    return layout;
+}
+
+std::unique_ptr<ui::View> PropertiesDialog::createPermissionsContent()
+{
+    auto layout = std::make_unique<ui::ColumnLayout>();
+    layout->setSpacing(kLargeSpacing);
+    const FileItem& first = *m_items.front();
+    struct stat info {};
+    const bool local = !first.path.empty() && ::stat(first.path.c_str(), &info) == 0;
+    auto row = [&layout](const std::string& label, const std::string& value) {
+        auto* line = layout->addChild<ui::RowLayout>();
+        line->setSpacing(kLargeSpacing);
+        auto* title = line->addChild<ui::Label>(label);
+        title->setColor(ui::ColorId::DisabledText);
+        title->setLayoutHints({.preferredWidth = 110});
+        line->addChild<ui::Label>(value)->setLayoutHints({.fillWidth = true});
+    };
+    if (!local) {
+        layout->addChild<ui::Label>(tr("Permissions are unavailable for this location."));
+        return layout;
+    }
+    row(tr("Owner:"), std::to_string(info.st_uid));
+    row(tr("Group:"), std::to_string(info.st_gid));
+    row(tr("Mode:"), std::to_string(unsigned(info.st_mode & 0777)));
+    layout->addChild<ui::Label>(tr("Permissions are shown for the selected item."))->setColor(ui::ColorId::DisabledText);
     return layout;
 }
 

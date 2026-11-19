@@ -1,3 +1,25 @@
+lingmo-filemanager (5.1.9+lingmo5u1) unstable; urgency=medium
+
+  * file manager: add Computer card navigation, context actions, removable
+    device eject feedback and General/Permissions property pages.
+  * i18n: translate the Computer actions, property pages and eject feedback.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 10:00:00 +0800
+
+lingmo-filemanager (5.1.8+lingmo5u1) unstable; urgency=medium
+
+  * i18n: translate the Computer overview, weather high/low values and
+    navigation commands in Simplified Chinese.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 08:10:00 +0800
+
+lingmo-filemanager (5.1.7+lingmo5u1) unstable; urgency=medium
+
+  * file manager: match the Computer sidebar selection styling with other
+    favorite entries.
+
+ -- Lingmo OS Team <team@lingmo.org>  Wed, 19 Nov 2026 06:05:00 +0800
+
 lingmo-filemanager (5.1.6+lingmo5u1) unstable; urgency=medium
 
   * file manager: use the system medium corner radius for Computer cards.

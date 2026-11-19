@@ -586,6 +586,7 @@ FolderWindow::FolderWindow(FileManagerHost* host, const FolderPage::Start& start
         if (FolderPage* page = currentPage())
             page->model().openInNewWindow(path);
     };
+    m_sidebar->onNotification = [this](const std::string& message) { notify(message); };
 
     m_root->newTab->onClicked = [this] {
         if (FolderPage* page = currentPage())
@@ -792,6 +793,7 @@ void FolderWindow::openTabSelecting(const FolderPage::Start& start, int index)
         updateTabBar();
     }));
     raw->onOpenInNewTab = [this](const std::string& url) { openTab(url); };
+    raw->onNotification = [this](const std::string& message) { notify(message); };
     raw->onCloseRequested = [this] { closeTab(m_currentTab); };
     raw->onRequestPathEditor = [this] { m_pathBar->openEditor(); };
     raw->onContextMenu = [this](ui::PointF position) { showContextMenu(position); };

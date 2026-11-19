@@ -75,6 +75,7 @@ public:
     // A locked disk asks for its passphrase through passphraseRequested.
     void requestSetup(int row);
     void requestEject(int row);
+    void requestEjectById(const std::string& id);
     void requestTeardown(int row);
 
     std::vector<std::string> recentServers() const;
@@ -89,6 +90,7 @@ public:
     void answerPassphrase(const std::string& udi, const std::string& passphrase);
 
     base::Signal<> changed;
+    base::Signal<std::string> deviceEjected;
     base::Signal<> favoritesChanged;
     base::Signal<std::string> deviceSetupDone;
     base::Signal<std::string> deviceOperationFailed;

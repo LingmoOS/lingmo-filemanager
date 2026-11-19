@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lingmo-filemanager\n"
-"Report-Msgid-Bugs-To: https://github.com/cutefishos\n"
-"POT-Creation-Date: 2026-10-23 09:30+0800\n"
+"Report-Msgid-Bugs-To: https://github.com/LingmoOS\n"
+"POT-Creation-Date: 2026-11-19 08:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -315,11 +315,11 @@ msgid "Save File"
 msgstr ""
 
 #: src/chooser/filechooser.cpp src/dialogs/openwithdialog.cpp
-#: src/model/foldermodel.cpp
+#: src/model/foldermodel.cpp src/views/computerview.cpp
 msgid "Open"
 msgstr ""
 
-#: src/chooser/filechooser.cpp
+#: src/chooser/filechooser.cpp src/desktop/widgets/widget.cpp
 msgid "Save"
 msgstr ""
 
@@ -426,6 +426,7 @@ msgid "Home"
 msgstr ""
 
 #: src/core/standardfolders.cpp src/desktop/desktopwindow.cpp
+#: src/desktop/widgets/widgetgallery.cpp
 msgid "Desktop"
 msgstr ""
 
@@ -462,15 +463,481 @@ msgid "New Window"
 msgstr ""
 
 #: src/desktop/desktopwindow.cpp src/views/foldermenu.cpp
+#: src/views/folderwindow.cpp
 msgid "Select All"
 msgstr ""
 
-#: src/desktop/desktopwindow.cpp
+#: src/desktop/desktopwindow.cpp src/views/folderwindow.cpp
 msgid "File"
 msgstr ""
 
-#: src/desktop/desktopwindow.cpp
+#: src/desktop/desktopwindow.cpp src/views/folderwindow.cpp
 msgid "Edit"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp src/views/folderwindow.cpp
+msgid "View"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Large Icons"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Medium Icons"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Small Icons"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Auto Arrange Icons"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Align Icons to Grid"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Show Desktop Icons"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Sort By"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp src/views/folderwindow.cpp
+#: src/views/listview.cpp
+msgid "Name"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp src/views/folderwindow.cpp
+#: src/views/listview.cpp
+msgid "Size"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Item Type"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp
+msgid "Modified Date"
+msgstr ""
+
+#: src/desktop/desktopwindow.cpp src/desktop/widgets/widgetlayer.cpp
+msgid "Edit Widgets…"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Charging"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "On battery"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Full"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "Not charging"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp src/views/computerview.cpp
+msgid "Unknown"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Battery"
+msgstr ""
+
+#: src/desktop/widgets/batterywidget.cpp
+msgid "No battery"
+msgstr ""
+
+#: src/desktop/widgets/calendarwidget.cpp
+msgid "Previous Month"
+msgstr ""
+
+#: src/desktop/widgets/calendarwidget.cpp
+msgid "Next Month"
+msgstr ""
+
+#: src/desktop/widgets/countdownwidget.cpp
+msgid "days"
+msgstr ""
+
+#: src/desktop/widgets/countdownwidget.cpp
+msgid "hours"
+msgstr ""
+
+#: src/desktop/widgets/countdownwidget.cpp
+msgid "min"
+msgstr ""
+
+#: src/desktop/widgets/countdownwidget.cpp
+msgid "sec"
+msgstr ""
+
+#: src/desktop/widgets/countdownwidget.cpp src/desktop/widgets/widget.cpp
+msgid "Event"
+msgstr ""
+
+#: src/desktop/widgets/countdownwidget.cpp
+msgid "Event reached!"
+msgstr ""
+
+#: src/desktop/widgets/networkspeedwidget.cpp
+#: src/desktop/widgets/widgetgallery.cpp src/model/places.cpp
+msgid "Network"
+msgstr ""
+
+#: src/desktop/widgets/networkspeedwidget.cpp
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Download"
+msgstr ""
+
+#: src/desktop/widgets/networkspeedwidget.cpp
+msgid "Upload"
+msgstr ""
+
+#: src/desktop/widgets/noteswidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Notes"
+msgstr ""
+
+#: src/desktop/widgets/noteswidget.cpp
+msgid "Write a note…"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Previous"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Play"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Next"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Unknown track"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Nothing playing"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "No media"
+msgstr ""
+
+#: src/desktop/widgets/nowplayingwidget.cpp
+msgid "Pause"
+msgstr ""
+
+#: src/desktop/widgets/systemwidget.cpp
+msgid "CPU"
+msgstr ""
+
+#: src/desktop/widgets/systemwidget.cpp
+msgid "Memory"
+msgstr ""
+
+#: src/desktop/widgets/todowidget.cpp
+msgid "Add"
+msgstr ""
+
+#: src/desktop/widgets/todowidget.cpp
+msgid "New task…"
+msgstr ""
+
+#: src/desktop/widgets/todowidget.cpp
+msgid "No tasks"
+msgstr ""
+
+#: src/desktop/widgets/todowidget.cpp
+msgid "All done!"
+msgstr ""
+
+#: src/desktop/widgets/todowidget.cpp
+msgid "left"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Clear"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Mostly clear"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Partly cloudy"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Cloudy"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Fog"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Drizzle"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Rain"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Snow"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Thunderstorm"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp src/desktop/widgets/widgetgallery.cpp
+msgid "Weather"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Set a city in Settings"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Updating…"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Weather unavailable"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+msgid "Humidity"
+msgstr ""
+
+#: src/desktop/widgets/weatherwidget.cpp
+#, python-brace-format
+msgid "H:{high}° L:{low}°"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Click to open · Drag to move · Right-click for options"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Widget Settings"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Time zone"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Use IANA names such as Asia/Shanghai. Leave a field empty to hide that city."
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Event name"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Target date (YYYY-MM-DD)"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Application IDs, separated by commas"
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Enter a valid IANA time zone."
+msgstr ""
+
+#: src/desktop/widgets/widget.cpp
+msgid "Enter a valid date in YYYY-MM-DD format."
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Clock"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Calendar"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "World Clock"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "System"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Now Playing"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Countdown"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "To-Do"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Launcher"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "April"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "New York"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "London"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Shanghai"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Tokyo"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Tuesday, April 1"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Sunny"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "CPU usage"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Your music"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "A little inspiration"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Capture a thought"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Days remaining"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Things to do"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Favorite apps"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "One click away"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Sample preview"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Content updates on your desktop"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Notification Center"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Click a size to add to Notification Center. Open it again to see changes."
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Click to add, or drag a preview onto the desktop."
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Search widgets"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Sample previews · choose a size to add"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "No widgets found. Try another search."
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp
+msgid "Done"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp src/desktop/widgets/widgetlayer.cpp
+msgid "Small"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp src/desktop/widgets/widgetlayer.cpp
+msgid "Medium"
+msgstr ""
+
+#: src/desktop/widgets/widgetgallery.cpp src/desktop/widgets/widgetlayer.cpp
+msgid "Large"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Remove Widget"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Widget Settings…"
+msgstr ""
+
+#: src/desktop/widgets/widgetlayer.cpp
+msgid "Widget Size"
+msgstr ""
+
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Sydney"
+msgstr ""
+
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Invalid time zone"
+msgstr ""
+
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Yesterday"
+msgstr ""
+
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Tomorrow"
+msgstr ""
+
+#: src/desktop/widgets/worldclockwidget.cpp
+msgid "Today"
 msgstr ""
 
 #: src/dialogs/archivepassworddialog.cpp
@@ -742,6 +1209,7 @@ msgid "Set as default"
 msgstr ""
 
 #: src/dialogs/propertiesdialog.cpp src/model/foldermodel.cpp
+#: src/views/computerview.cpp
 msgid "Properties"
 msgstr ""
 
@@ -753,11 +1221,27 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: src/dialogs/propertiesdialog.cpp
+msgid "General"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Permissions"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
 msgid "Type:"
 msgstr ""
 
 #: src/dialogs/propertiesdialog.cpp
 msgid "Location:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "File system:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Mounted at:"
 msgstr ""
 
 #: src/dialogs/propertiesdialog.cpp
@@ -778,6 +1262,35 @@ msgstr ""
 
 #: src/dialogs/propertiesdialog.cpp
 msgid "Accessed:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Used:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+#, python-brace-format
+msgid "{used} of {total}"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Permissions are unavailable for this location."
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Owner:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Group:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Mode:"
+msgstr ""
+
+#: src/dialogs/propertiesdialog.cpp
+msgid "Permissions are shown for the selected item."
 msgstr ""
 
 #. TRANSLATORS: example addresses; keep the two addresses as they are.
@@ -859,6 +1372,11 @@ msgstr[1] ""
 
 #: src/model/foldermodel.cpp
 msgid "Folder"
+msgstr ""
+
+#: src/model/foldermodel.cpp src/model/pathbarmodel.cpp src/model/places.cpp
+#: src/views/sidebar.cpp
+msgid "Computer"
 msgstr ""
 
 #: src/model/foldermodel.cpp src/model/places.cpp src/views/folderwindow.cpp
@@ -983,20 +1501,12 @@ msgstr ""
 msgid "Hide Hidden Files"
 msgstr ""
 
-#: src/model/pathbarmodel.cpp src/model/places.cpp
-msgid "Computer"
-msgstr ""
-
 #: src/model/places.cpp
 msgid "Locations"
 msgstr ""
 
 #: src/model/places.cpp
 msgid "Internal Drives"
-msgstr ""
-
-#: src/model/places.cpp
-msgid "Network"
 msgstr ""
 
 #: src/model/places.cpp
@@ -1053,8 +1563,38 @@ msgstr ""
 msgid "Quick Look"
 msgstr ""
 
+#: src/views/computerview.cpp
+#, python-brace-format
+msgid "{used} used of {total}"
+msgstr ""
+
+#: src/views/computerview.cpp src/views/sidebar.cpp
+msgid "Eject"
+msgstr ""
+
+#: src/views/computerview.cpp
+msgid "My folders"
+msgstr ""
+
+#: src/views/computerview.cpp
+msgid "Devices and drives"
+msgstr ""
+
+#: src/views/computerview.cpp src/views/sidebar.cpp
+#, python-brace-format
+msgid "You can safely remove {name}."
+msgstr ""
+
+#: src/views/computerview.cpp
+msgid "System Disk"
+msgstr ""
+
 #: src/views/foldermenu.cpp
 msgid "New Documents"
+msgstr ""
+
+#: src/views/foldermenu.cpp
+msgid "Refresh"
 msgstr ""
 
 #. TRANSLATORS: the last item of the Open with submenu, which lists every application.
@@ -1091,10 +1631,6 @@ msgid "Files"
 msgstr ""
 
 #: src/views/folderwindow.cpp
-msgid "Close Tab"
-msgstr ""
-
-#: src/views/folderwindow.cpp
 msgid "Icons"
 msgstr ""
 
@@ -1102,8 +1638,20 @@ msgstr ""
 msgid "List"
 msgstr ""
 
-#: src/views/folderwindow.cpp src/views/listview.cpp
-msgid "Name"
+#: src/views/folderwindow.cpp
+msgid "Go"
+msgstr ""
+
+#: src/views/folderwindow.cpp
+msgid "Back"
+msgstr ""
+
+#: src/views/folderwindow.cpp
+msgid "Forward"
+msgstr ""
+
+#: src/views/folderwindow.cpp
+msgid "Close Tab"
 msgstr ""
 
 #: src/views/folderwindow.cpp src/views/listview.cpp
@@ -1120,10 +1668,6 @@ msgstr ""
 
 #: src/views/folderwindow.cpp
 msgid "Type"
-msgstr ""
-
-#: src/views/folderwindow.cpp src/views/listview.cpp
-msgid "Size"
 msgstr ""
 
 #: src/views/listview.cpp
@@ -1153,10 +1697,6 @@ msgstr ""
 
 #: src/views/sidebar.cpp
 msgid "Remove from Favorites"
-msgstr ""
-
-#: src/views/sidebar.cpp
-msgid "Eject"
 msgstr ""
 
 #: src/views/sidebar.cpp
@@ -1195,194 +1735,4 @@ msgstr ""
 
 #: data/lingmo-filemanager.desktop
 msgid "Browse and manage your files"
-msgstr ""
-
-#: src/desktop/desktopwindow.cpp
-msgid "Edit Widgets…"
-msgstr ""
-
-#: src/desktop/widgets/widgetlayer.cpp
-msgid "Remove Widget"
-msgstr ""
-
-#: src/desktop/widgets/widgetlayer.cpp
-msgid "Widget Size"
-msgstr ""
-
-#: src/desktop/widgets/widgetlayer.cpp
-msgid "Small"
-msgstr ""
-
-#: src/desktop/widgets/widgetlayer.cpp
-msgid "Medium"
-msgstr ""
-
-#: src/desktop/widgets/widgetlayer.cpp
-msgid "Large"
-msgstr ""
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "Widgets"
-msgstr ""
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "Add widgets to your desktop"
-msgstr ""
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "Done"
-msgstr ""
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "Clock"
-msgstr ""
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "Calendar"
-msgstr ""
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "System"
-msgstr ""
-
-#: src/desktop/widgets/batterywidget.cpp src/desktop/widgets/widgetgallery.cpp
-msgid "Battery"
-msgstr ""
-
-#: src/desktop/widgets/batterywidget.cpp
-msgid "Charging"
-msgstr ""
-
-#: src/desktop/widgets/batterywidget.cpp
-msgid "On battery"
-msgstr ""
-
-#: src/desktop/widgets/batterywidget.cpp
-msgid "Full"
-msgstr ""
-
-#: src/desktop/widgets/batterywidget.cpp
-msgid "Not charging"
-msgstr ""
-
-#: src/desktop/widgets/batterywidget.cpp
-msgid "Unknown"
-msgstr ""
-
-#: src/desktop/widgets/systemwidget.cpp
-msgid "CPU"
-msgstr ""
-
-#: src/desktop/widgets/systemwidget.cpp
-msgid "Memory"
-msgstr ""
-
-#: src/desktop/widgets/calendarwidget.cpp
-msgid "Previous Month"
-msgstr ""
-
-#: src/desktop/widgets/calendarwidget.cpp
-msgid "Next Month"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp src/desktop/widgets/widgetgallery.cpp
-msgid "Now Playing"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "Nothing playing"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "No media"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "Unknown track"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "Previous"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "Play"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "Pause"
-msgstr ""
-
-#: src/desktop/widgets/nowplayingwidget.cpp
-msgid "Next"
-msgstr ""
-
-
-#: src/desktop/widgets/widgetgallery.cpp
-msgid "Notes"
-msgstr ""
-
-#: src/desktop/widgets/noteswidget.cpp
-msgid "Write a note…"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp src/desktop/widgets/widgetgallery.cpp
-msgid "Weather"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Set a city in Settings"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Updating…"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Weather unavailable"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Humidity"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Clear"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Mostly clear"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Partly cloudy"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Cloudy"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Fog"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Drizzle"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Rain"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Snow"
-msgstr ""
-
-#: src/desktop/widgets/weatherwidget.cpp
-msgid "Thunderstorm"
-msgstr ""
-
-
-#: src/views/foldermenu.cpp
-msgid "Refresh"
 msgstr ""
