@@ -1362,7 +1362,7 @@ msgstr "文件夹"
 #: src/model/foldermodel.cpp src/model/pathbarmodel.cpp src/model/places.cpp
 #: src/views/sidebar.cpp
 msgid "Computer"
-msgstr "计算机"
+msgstr "此电脑"
 
 #: src/model/foldermodel.cpp src/model/places.cpp src/views/folderwindow.cpp
 msgid "Trash"
@@ -1721,6 +1721,10 @@ msgstr "文件管理器"
 #: data/lingmo-filemanager.desktop
 msgid "Browse and manage your files"
 msgstr "浏览并管理您的文件"
+
+#: data/computer.desktop
+msgid "Browse folders, disks and devices"
+msgstr "浏览文件夹、磁盘和设备"
 
 #~ msgid "Open folder"
 #~ msgstr "打开文件夹"

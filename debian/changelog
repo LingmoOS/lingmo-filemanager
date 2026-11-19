@@ -1,3 +1,9 @@
+lingmo-filemanager (5.1.12+lingmo5u1) unstable; urgency=medium
+
+  * Translate the Computer desktop shortcut name as "This PC" in Simplified Chinese.
+
+ -- Lingmo OS Team <team@lingmo.org>  Thu, 19 Nov 2026 16:30:00 +0800
+
 lingmo-filemanager (5.1.9+lingmo5u1) unstable; urgency=medium
 
   * file manager: add Computer card navigation, context actions, removable

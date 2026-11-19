@@ -211,8 +211,12 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/org.lingmo.FileManager1.service
 install(FILES data/60-lingmo-filemanager.rules DESTINATION ${CMAKE_INSTALL_DATADIR}/polkit-1/rules.d)
 
 lingmo_add_translations(lingmo-filemanager SOURCES src daemon mountd
-                          DESKTOP_FILES data/lingmo-filemanager.desktop)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lingmo-filemanager.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+                          DESKTOP_FILES data/lingmo-filemanager.desktop data/computer.desktop)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/lingmo-filemanager.desktop
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/computer.desktop
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/applications
+        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
 if(BUILD_TESTING)
     add_subdirectory(tests)
