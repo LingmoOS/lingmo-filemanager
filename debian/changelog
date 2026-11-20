@@ -1,3 +1,10 @@
+lingmo-filemanager (5.1.14+lingmo5u1) unstable; urgency=medium
+
+  * file manager: give the properties dialog a stable content width so the
+    General and Permissions navigation and form content are laid out fully.
+
+ -- Lingmo OS Team <team@lingmo.org>  Sat, 21 Nov 2026 10:00:00 +0800
+
 lingmo-filemanager (5.1.13+lingmo5u1) unstable; urgency=medium
 
   * file manager: restore Computer folder and drive interactions, add sidebar

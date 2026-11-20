@@ -27,6 +27,10 @@ namespace fm {
 
 static constexpr double kSmallSpacing = 6;
 static constexpr double kLargeSpacing = 12;
+// Keep the two-page property form wide enough for labels and paths.  A zero
+// width makes FramelessDialog rely on an implicit layout width, which is not
+// defined for the nested segmented control and collapses the window.
+static constexpr double kContentWidth = 520;
 
 // "Fri Oct 16 09:30:00 2026", local time.
 static std::string textDate(int64_t milliseconds)
@@ -103,7 +107,7 @@ PropertiesDialog::PropertiesDialog(FileItemList items)
 
     setHeader(40, 4);
     setPadding(kLargeSpacing * 1.5, kSmallSpacing, kLargeSpacing * 2 - kSmallSpacing);
-    setContentFactory([this] { return createContent(); }, 0, 0);
+    setContentFactory([this] { return createContent(); }, kContentWidth, 0);
     onCloseRequested = [this] {
         hide();
         if (onDone)
