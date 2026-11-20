@@ -1,3 +1,10 @@
+lingmo-filemanager (5.1.15+lingmo5u1) unstable; urgency=medium
+
+  * file manager: use the SDK SidebarItem for the Computer destination and
+    keep its context menu in the shared control path.
+
+ -- Lingmo OS Team <team@lingmo.org>  Sat, 21 Nov 2026 11:00:00 +0800
+
 lingmo-filemanager (5.1.14+lingmo5u1) unstable; urgency=medium
 
   * file manager: give the properties dialog a stable content width so the

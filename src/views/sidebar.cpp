@@ -20,6 +20,7 @@
 #include "ui/menu.h"
 #include "ui/painter.h"
 #include "ui/scroll_view.h"
+#include "ui/sidebar.h"
 #include "ui/theme.h"
 #include "ui/window.h"
 
@@ -32,55 +33,6 @@ using Lingmo::i18n::tr;
 namespace fm {
 
 static constexpr double kSmallSpacing = 6;
-
-class ComputerEntry : public ui::View
-{
-public:
-    ComputerEntry()
-    {
-        setName("computerEntry");
-        setTracksHover(true);
-        setCursorShape(ui::CursorShape::Pointer);
-        m_icon = addChild<ui::ThemeIcon>("computer-symbolic", 20);
-        m_label = addChild<ui::Label>(tr("Computer"));
-        m_label->setElide(ui::Label::Elide::Right);
-    }
-
-    void setSelected(bool selected)
-    {
-        m_selected = selected;
-        requestLayout();
-        requestPaint();
-    }
-    void retranslate()
-    {
-        m_label->setText(tr("Computer"));
-        requestLayout();
-    }
-
-protected:
-    void layout() override
-    {
-        const ui::Theme& theme = ui::Theme::current();
-        m_icon->setColor(m_selected ? theme.highlight : theme.text);
-        m_label->setColor(m_selected ? theme.highlight : theme.text);
-        const double rowHeight = geometry().height;
-        const double iconY = std::round((rowHeight - 20) / 2);
-        m_icon->setGeometry({kSmallSpacing, iconY, 20, 20});
-        m_label->setGeometry({kSmallSpacing + 20 + kSmallSpacing, iconY,
-                              std::max(0.0, geometry().width - kSmallSpacing * 3 - 20), 20});
-    }
-    void paint(ui::Painter& painter) override
-    {
-        if (m_selected)
-            painter.drawRoundedRect(localRect(), {ui::Theme::current().mediumRadius, 0, ui::Corners::Circular},
-                                    style::textAlpha(0.05));
-    }
-private:
-    ui::ThemeIcon* m_icon = nullptr;
-    ui::Label* m_label = nullptr;
-    bool m_selected = false;
-};
 
 // Where a place is now: disks come and go, and favourites change in other
 // windows, while a menu opened on one stays up.
@@ -112,7 +64,14 @@ public:
     {
         setName("places");
         m_favorites = addChild<ui::Label>(tr("Favorites"));
-        m_computer = addChild<ComputerEntry>();
+        m_computer = addChild<ui::SidebarItem>("computer", tr("Computer"), "computer-symbolic");
+        m_computer->onActivated = [this] {
+            if (m_sidebar->onClicked)
+                m_sidebar->onClicked("computer:///");
+        };
+        m_computer->onContextMenu = [this](ui::PointF position) {
+            openComputerMenu(m_computer->mapToWindow(position));
+        };
     }
 
     bool acceptsPointer() const override { return true; }
@@ -165,7 +124,6 @@ public:
     void retranslate()
     {
         m_favorites->setText(tr("Favorites"));
-        m_computer->retranslate();
         requestLayout();
     }
 
@@ -178,7 +136,7 @@ public:
 
     void setComputerSelected(bool selected)
     {
-        m_computer->setSelected(selected);
+        m_computer->setCurrent(selected);
         requestLayout();
         requestPaint();
     }
@@ -401,15 +359,8 @@ protected:
             return;
         }
 
-        if (row == -2) {
-            if (row != rowAt(event.position))
-                return;
-            if (m_pressedButton == ui::MouseButton::Left && m_sidebar->onClicked)
-                m_sidebar->onClicked("computer:///");
-            else if (m_pressedButton == ui::MouseButton::Right)
-                openComputerMenu(event.position);
+        if (row == -2)
             return;
-        }
         if (row < 0 || row != rowAt(event.position) || row >= places.count())
             return;
         const PlacesModel::Place place = places.at(row);
@@ -487,7 +438,7 @@ protected:
         m_menu->popup(window(), mapToWindow(position));
     }
 
-    void openComputerMenu(ui::PointF position)
+    void openComputerMenu(ui::PointF windowPosition)
     {
         m_menu = std::make_unique<ui::Menu>();
         m_menu->addItem(tr("Open"), [this] {
@@ -502,7 +453,7 @@ protected:
             if (m_sidebar->onOpenInNewWindow)
                 m_sidebar->onOpenInNewWindow("computer:///");
         });
-        m_menu->popup(window(), mapToWindow(position));
+        m_menu->popup(window(), windowPosition);
     }
 
     // Drops: files go into a place, folders may also be pinned between favourites.
@@ -606,7 +557,7 @@ private:
 
     SideBar* m_sidebar;
     ui::Label* m_favorites;
-    ComputerEntry* m_computer = nullptr;
+    ui::SidebarItem* m_computer = nullptr;
     ui::RectF m_computerRect;
     std::vector<Row> m_rows;
     int m_selected = -1;
