@@ -16,6 +16,7 @@
 #include "ui/label.h"
 #include "ui/menu.h"
 #include "ui/painter.h"
+#include "ui/scroll_view.h"
 #include "ui/theme.h"
 
 #include <algorithm>
@@ -84,11 +85,13 @@ class ComputerCard : public ui::View
 public:
     ComputerCard(ComputerView::Entry entry, std::function<void(const std::string&)> open,
                  std::function<void(const ComputerView::Entry&)> properties,
-                 std::function<void(const ComputerView::Entry&)> eject)
+                 std::function<void(const ComputerView::Entry&)> eject,
+                 std::function<void(const std::string&)> openInNewTab)
         : m_entry(std::move(entry))
         , m_open(std::move(open))
         , m_properties(std::move(properties))
         , m_eject(std::move(eject))
+        , m_openInNewTab(std::move(openInNewTab))
     {
         setName("computer-card");
         setTracksHover(true);
@@ -116,6 +119,8 @@ public:
         m_name->setText(m_entry.name);
         requestLayout();
     }
+
+    bool acceptsPointer() const override { return true; }
 
 protected:
     void layout() override
@@ -159,8 +164,10 @@ protected:
             return;
         if (event.button == ui::MouseButton::Right) {
             m_menu = std::make_unique<ui::Menu>();
-            auto open = m_menu->addItem(tr("Open"), [this] { if (m_open) m_open(m_entry.url); });
-            (void)open;
+            m_menu->addItem(tr("Open"), [this] { if (m_open) m_open(m_entry.url); });
+            if (m_openInNewTab)
+                m_menu->addItem(tr("Open In New Tab"), [this] { m_openInNewTab(m_entry.url); });
+            m_menu->addSeparator();
             if (m_entry.ejectable && m_eject)
                 m_menu->addItem(tr("Eject"), [this] { m_eject(m_entry); });
             if (m_properties)
@@ -177,6 +184,7 @@ private:
     std::function<void(const std::string&)> m_open;
     std::function<void(const ComputerView::Entry&)> m_properties;
     std::function<void(const ComputerView::Entry&)> m_eject;
+    std::function<void(const std::string&)> m_openInNewTab;
     std::unique_ptr<ui::Menu> m_menu;
     ui::ThemeIcon* m_icon = nullptr;
     ui::Label* m_name = nullptr;
@@ -185,22 +193,45 @@ private:
 
 } // namespace
 
+class ComputerView::Content : public ui::View
+{
+public:
+    explicit Content(ComputerView* owner)
+        : m_owner(owner)
+    {
+        setName("computer-content");
+    }
+
+    ui::SizeF sizeHint() const override { return {0, heightForWidth(geometry().width)}; }
+    double heightForWidth(double width) const override { return m_owner->contentHeight(width); }
+
+protected:
+    void layout() override { m_owner->layoutContent(); }
+
+private:
+    ComputerView* m_owner;
+};
+
 ComputerView::ComputerView(std::function<void(const std::string&)> open,
                            std::function<void(const Entry&)> properties,
                            std::function<void(const Entry&)> eject,
-                           std::function<void(const std::string&)> notify)
+                           std::function<void(const std::string&)> notify,
+                           std::function<void(const std::string&)> openInNewTab)
     : m_open(std::move(open))
     , m_properties(std::move(properties))
     , m_eject(std::move(eject))
     , m_notify(std::move(notify))
+    , m_openInNewTab(std::move(openInNewTab))
     , m_places(std::make_unique<PlacesModel>())
 {
     setName("computer-view");
     setClipsChildren(true);
-    m_foldersTitle = addChild<ui::Label>(tr("My folders"));
+    m_content = setContent<Content>(this);
+    m_content->setName("computer-content");
+    m_foldersTitle = m_content->addChild<ui::Label>(tr("My folders"));
     m_foldersTitle->setFontSize(17);
     m_foldersTitle->setWeight(600);
-    m_drivesTitle = addChild<ui::Label>(tr("Devices and drives"));
+    m_drivesTitle = m_content->addChild<ui::Label>(tr("Devices and drives"));
     m_drivesTitle->setFontSize(17);
     m_drivesTitle->setWeight(600);
     m_subscriptions.push_back(m_places->changed.connect([this] { rebuild(); }));
@@ -216,7 +247,7 @@ ComputerView::~ComputerView() = default;
 void ComputerView::rebuild()
 {
     for (ui::View* card : m_cards) {
-        std::shared_ptr<ui::View> old = takeChild(card);
+        std::shared_ptr<ui::View> old = m_content->takeChild(card);
         base::EventLoop::current()->post([old] {});
     }
     m_cards.clear();
@@ -260,8 +291,10 @@ void ComputerView::rebuild()
         auto ejectAction = m_eject;
         if (!ejectAction)
             ejectAction = [this](const Entry& item) { m_places->requestEjectById(item.id); };
-        m_cards.push_back(addChild<ComputerCard>(entry, m_open, m_properties, std::move(ejectAction)));
+        m_cards.push_back(m_content->addChild<ComputerCard>(entry, m_open, m_properties,
+                                                              std::move(ejectAction), m_openInNewTab));
     }
+    m_content->requestLayout();
     requestLayout();
     requestPaint();
 }
@@ -279,9 +312,25 @@ void ComputerView::retranslate()
     requestLayout();
 }
 
-void ComputerView::layout()
+double ComputerView::contentHeight(double width) const
 {
-    const ui::RectF rect = localRect();
+    width = std::max(0.0, width - kMargin * 2);
+    const int folderCount = int(std::count_if(m_entries.begin(), m_entries.end(), [](const Entry& e) { return !e.drive; }));
+    const int folderColumns = std::max(1, int(std::floor((width + kGap) / (kFolderWidth + kGap))));
+    const int folderRows = (folderCount + folderColumns - 1) / folderColumns;
+    const double titleHeight = std::max(22.0, m_foldersTitle->sizeHint().height);
+    double y = kTopMargin + titleHeight + 12;
+    y += folderRows * (kFolderHeight + kGap) + 10;
+    y += titleHeight + 12;
+    const int driveCount = int(m_cards.size()) - folderCount;
+    const int driveColumns = std::max(1, int(std::floor((width + kGap) / (300.0 + kGap))));
+    const int driveRows = (driveCount + driveColumns - 1) / driveColumns;
+    return std::max(geometry().height, y + driveRows * (kDriveHeight + kGap) + kTopMargin);
+}
+
+void ComputerView::layoutContent()
+{
+    const ui::RectF rect = m_content->localRect();
     const ui::Theme& theme = ui::Theme::current();
     m_foldersTitle->setColor(theme.text);
     m_drivesTitle->setColor(theme.text);
@@ -316,6 +365,11 @@ void ComputerView::layout()
         card->setGeometry({kMargin + column * (driveWidth + kGap), y + row * (kDriveHeight + kGap), driveWidth,
                            kDriveHeight});
     }
+}
+
+void ComputerView::layout()
+{
+    ui::ScrollView::layout();
 }
 
 void ComputerView::paint(ui::Painter& painter)

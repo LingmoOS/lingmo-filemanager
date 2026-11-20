@@ -4,7 +4,7 @@
 #pragma once
 
 #include "base/signal.h"
-#include "ui/view.h"
+#include "ui/scroll_view.h"
 
 #include <functional>
 #include <cstdint>
@@ -22,7 +22,7 @@ class PlacesModel;
 
 // A virtual overview for computer:/// containing standard folders and mounted
 // volumes. Entries open their real local URL when activated.
-class ComputerView : public ui::View
+class ComputerView : public ui::ScrollView
 {
 public:
     struct Entry
@@ -41,7 +41,8 @@ public:
     explicit ComputerView(std::function<void(const std::string&)> open,
                           std::function<void(const Entry&)> properties = {},
                           std::function<void(const Entry&)> eject = {},
-                          std::function<void(const std::string&)> notify = {});
+                          std::function<void(const std::string&)> notify = {},
+                          std::function<void(const std::string&)> openInNewTab = {});
     ~ComputerView() override;
 
     void requestEject(const std::string& id);
@@ -53,16 +54,21 @@ protected:
     void paint(ui::Painter& painter) override;
 
 private:
+    class Content;
     void rebuild();
+    void layoutContent();
+    double contentHeight(double width) const;
 
     std::function<void(const std::string&)> m_open;
     std::function<void(const Entry&)> m_properties;
     std::function<void(const Entry&)> m_eject;
     std::function<void(const std::string&)> m_notify;
+    std::function<void(const std::string&)> m_openInNewTab;
     std::unique_ptr<PlacesModel> m_places;
     std::vector<base::Subscription> m_subscriptions;
     ui::Label* m_foldersTitle = nullptr;
     ui::Label* m_drivesTitle = nullptr;
+    Content* m_content = nullptr;
     std::vector<Entry> m_entries;
     std::vector<ui::View*> m_cards;
 };

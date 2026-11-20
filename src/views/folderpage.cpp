@@ -275,6 +275,10 @@ void FolderPage::createComputerView()
             [this](const std::string& message) {
                 if (m_host)
                     m_host->notify(message);
+            },
+            [this](const std::string& url) {
+                if (onOpenInNewTab)
+                    onOpenInNewTab(url);
             });
     requestLayout();
     focusView();

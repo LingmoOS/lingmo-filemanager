@@ -41,13 +41,11 @@ public:
         setName("computerEntry");
         setTracksHover(true);
         setCursorShape(ui::CursorShape::Pointer);
-        m_icon = addChild<ui::ThemeIcon>("computer", 20);
+        m_icon = addChild<ui::ThemeIcon>("computer-symbolic", 20);
         m_label = addChild<ui::Label>(tr("Computer"));
         m_label->setElide(ui::Label::Elide::Right);
     }
 
-    std::function<void()> onClicked;
-    bool acceptsPointer() const override { return true; }
     void setSelected(bool selected)
     {
         m_selected = selected;
@@ -78,12 +76,6 @@ protected:
             painter.drawRoundedRect(localRect(), {ui::Theme::current().mediumRadius, 0, ui::Corners::Circular},
                                     style::textAlpha(0.05));
     }
-    void pointerRelease(const ui::PointerEvent& event) override
-    {
-        if (event.button == ui::MouseButton::Left && localRect().contains(event.position) && onClicked)
-            onClicked();
-    }
-
 private:
     ui::ThemeIcon* m_icon = nullptr;
     ui::Label* m_label = nullptr;
@@ -121,10 +113,6 @@ public:
         setName("places");
         m_favorites = addChild<ui::Label>(tr("Favorites"));
         m_computer = addChild<ComputerEntry>();
-        m_computer->onClicked = [this] {
-            if (m_sidebar->onClicked)
-                m_sidebar->onClicked("computer:///");
-        };
     }
 
     bool acceptsPointer() const override { return true; }
@@ -414,8 +402,12 @@ protected:
         }
 
         if (row == -2) {
-            if (row == rowAt(event.position) && m_pressedButton == ui::MouseButton::Left && m_sidebar->onClicked)
+            if (row != rowAt(event.position))
+                return;
+            if (m_pressedButton == ui::MouseButton::Left && m_sidebar->onClicked)
                 m_sidebar->onClicked("computer:///");
+            else if (m_pressedButton == ui::MouseButton::Right)
+                openComputerMenu(event.position);
             return;
         }
         if (row < 0 || row != rowAt(event.position) || row >= places.count())
@@ -492,6 +484,24 @@ protected:
             requestPaint();
         };
         requestPaint();
+        m_menu->popup(window(), mapToWindow(position));
+    }
+
+    void openComputerMenu(ui::PointF position)
+    {
+        m_menu = std::make_unique<ui::Menu>();
+        m_menu->addItem(tr("Open"), [this] {
+            if (m_sidebar->onClicked)
+                m_sidebar->onClicked("computer:///");
+        });
+        m_menu->addItem(tr("Open In New Tab"), [this] {
+            if (m_sidebar->onOpenInNewTab)
+                m_sidebar->onOpenInNewTab("computer:///");
+        });
+        m_menu->addItem(tr("Open In New Window"), [this] {
+            if (m_sidebar->onOpenInNewWindow)
+                m_sidebar->onOpenInNewWindow("computer:///");
+        });
         m_menu->popup(window(), mapToWindow(position));
     }
 
