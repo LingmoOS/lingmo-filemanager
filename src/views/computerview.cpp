@@ -146,9 +146,12 @@ protected:
     void paint(ui::Painter& painter) override
     {
         const ui::Theme& theme = ui::Theme::current();
-        const ui::Color fill = isHovered() ? theme.text.withAlpha(theme.darkMode ? .12 : .07)
-                                           : theme.text.withAlpha(theme.darkMode ? .07 : .045);
-        painter.drawSmoothRectangle(localRect(), theme.mediumRadius, fill);
+        const ui::Color fill = m_selected ? theme.highlight.withAlpha(theme.darkMode ? .28 : .16)
+                                           : isHovered() ? theme.text.withAlpha(theme.darkMode ? .12 : .07)
+                                                         : theme.text.withAlpha(theme.darkMode ? .07 : .045);
+        painter.drawSmoothRectangle(localRect(), theme.mediumRadius, fill,
+                                    m_selected ? 1 : 0,
+                                    m_selected ? theme.highlight : ui::Color{});
         if (m_entry.drive && m_entry.total > 0) {
             const double ratio = std::clamp(double(m_entry.used) / double(m_entry.total), 0.0, 1.0);
             const ui::RectF bar {68, 68, std::max(0.0, geometry().width - 82), 7};
@@ -177,6 +180,10 @@ protected:
         }
         if (event.button == ui::MouseButton::Left && event.clickCount >= 2 && m_open)
             m_open(m_entry.url);
+        else if (event.button == ui::MouseButton::Left) {
+            m_selected = true;
+            requestPaint();
+        }
     }
 
 private:
@@ -189,6 +196,7 @@ private:
     ui::ThemeIcon* m_icon = nullptr;
     ui::Label* m_name = nullptr;
     ui::Label* m_detail = nullptr;
+    bool m_selected = false;
 };
 
 } // namespace
@@ -338,7 +346,7 @@ void ComputerView::layoutContent()
     const int folderCount = int(std::count_if(m_entries.begin(), m_entries.end(), [](const Entry& e) { return !e.drive; }));
     const int folderColumns = std::max(1, int(std::floor((width + kGap) / (kFolderWidth + kGap))));
     const int folderRows = (folderCount + folderColumns - 1) / folderColumns;
-    const double folderWidth = std::max(kFolderWidth, (width - kGap * (folderColumns - 1)) / folderColumns);
+    const double folderWidth = kFolderWidth;
     const double titleHeight = std::max(22.0, m_foldersTitle->sizeHint().height);
     m_foldersTitle->setGeometry({kMargin, kTopMargin, width, titleHeight});
     double y = kTopMargin + titleHeight + 12;

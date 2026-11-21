@@ -1,3 +1,10 @@
+lingmo-filemanager (5.1.16+lingmo5u1) unstable; urgency=medium
+
+  * improve computer view card sizing, centering and pointer feedback
+  * keep properties dialogs at a stable readable height
+
+ -- Lingmo OS Team <team@lingmo.org>  Sat, 21 Nov 2026 14:00:00 +0800
+
 lingmo-filemanager (5.1.15+lingmo5u1) unstable; urgency=medium
 
   * file manager: use the SDK SidebarItem for the Computer destination and
