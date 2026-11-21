@@ -134,9 +134,12 @@ std::unique_ptr<ui::View> PropertiesDialog::createContent()
 {
     auto layout = std::make_unique<ui::ColumnLayout>();
     layout->setSpacing(kLargeSpacing);
-    m_pages = layout->addChild<ui::SegmentedControl>(std::vector<std::string>{tr("General"), tr("Permissions")},
-                                                     ui::SegmentedControl::Style::Tabs);
-    m_pages->setLayoutHints({.alignment = ui::Alignment::Center});
+    auto* pageNavigation = layout->addChild<ui::RowLayout>();
+    pageNavigation->setLayoutHints({.fillWidth = true});
+    pageNavigation->addChild<ui::View>()->setLayoutHints({.fillWidth = true});
+    m_pages = pageNavigation->addChild<ui::SegmentedControl>(
+            std::vector<std::string>{tr("General"), tr("Permissions")}, ui::SegmentedControl::Style::Tabs);
+    pageNavigation->addChild<ui::View>()->setLayoutHints({.fillWidth = true});
     m_pages->setCurrentIndex(m_page);
     m_pages->onCurrentChanged = [this](int index) { setPage(index); };
     // The active page must participate in the dialog's intrinsic height.
