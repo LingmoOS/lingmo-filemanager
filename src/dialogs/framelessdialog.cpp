@@ -12,7 +12,6 @@
 #include "ui/theme.h"
 
 #include <cmath>
-#include <algorithm>
 
 namespace fm {
 
@@ -67,8 +66,8 @@ public:
 
     double fittedHeight() const
     {
-        const double content = m_content ? std::ceil(m_content->heightForWidth(m_width - m_horizontal * 2)) : 0;
-        return std::max(320.0, content + m_header + m_top + m_bottom);
+        return m_content ? std::ceil(m_content->heightForWidth(m_width - m_horizontal * 2)) + m_header + m_top + m_bottom
+                         : 0;
     }
 
     double width() const { return m_width; }
