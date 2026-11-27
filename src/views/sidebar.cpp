@@ -65,6 +65,7 @@ public:
         setName("places");
         m_favorites = addChild<ui::Label>(tr("Favorites"));
         m_computer = addChild<ui::SidebarItem>("computer", tr("Computer"), "computer-symbolic");
+        m_computer->setIconBackgroundVisible(false);
         m_computer->onActivated = [this] {
             if (m_sidebar->onClicked)
                 m_sidebar->onClicked("computer:///");
